@@ -24,7 +24,7 @@
 #
 # $Id: OpenSSOAgentBootstrap.template,v 1.1 2009/01/21 18:28:42 kanduls Exp $
 #
-# Portions Copyrighted 2010-2013 ForgeRock Inc.
+# Portions Copyrighted 2010-2013 ForgeRock AS.
 
 #------------------------------------------------------------------------------
 # J2EE Agents Bootstrap File

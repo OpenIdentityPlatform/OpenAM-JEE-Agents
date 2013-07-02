@@ -26,7 +26,7 @@
  */
 
 /**
- * Portions Copyrighted 2012-2013 ForgeRock, Inc.
+ * Portions Copyrighted 2012-2013 ForgeRock AS.
  */
 package com.sun.identity.agents.jetty.v7;
 

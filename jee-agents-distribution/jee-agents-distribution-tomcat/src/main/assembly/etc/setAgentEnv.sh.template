@@ -25,7 +25,7 @@
 #
 # $Id: setAgentEnv.sh.template,v 1.2 2008/11/28 12:26:58 saueree Exp $
 
-# Portions Copyrighted 2013 ForgeRock Inc.
+# Portions Copyrighted 2013 ForgeRock AS.
 #
 # *************************************************************************
 # This script is used to set up your environment for OpenAM

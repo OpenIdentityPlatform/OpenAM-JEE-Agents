@@ -32,7 +32,7 @@
 -->        
 
 <!--
-    Portions Copyrighted 2013 ForgeRock, Inc.
+    Portions Copyrighted 2013 ForgeRock AS.
 -->
         <style type="text/css">
             

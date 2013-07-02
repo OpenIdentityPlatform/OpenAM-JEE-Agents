@@ -27,7 +27,7 @@ REM $Id: agentadmin.bat,v 1.4 2009/04/07 17:19:09 leiming Exp $
 REM
 REM
 
-REM Portions Copyrighted 2010-2013 ForgeRock, Inc.
+REM Portions Copyrighted 2010-2013 ForgeRock AS.
 
 setlocal
 if "%AGENT_HOME%"=="" set AGENT_HOME=%~dp0..

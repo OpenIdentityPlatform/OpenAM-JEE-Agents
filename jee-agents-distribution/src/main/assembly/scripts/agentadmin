@@ -28,7 +28,7 @@
 #
 #
 
-# Portions Copyrighted 2010-2013 ForgeRock, Inc.
+# Portions Copyrighted 2010-2013 ForgeRock AS.
 
 if [ -z "$AGENT_HOME" ]; then
     AGENT_HOME=`dirname $0`/..

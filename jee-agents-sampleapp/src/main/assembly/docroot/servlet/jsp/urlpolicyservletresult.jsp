@@ -30,7 +30,7 @@
 -->
 
 <!--
-    Portions Copyrighted 2013 ForgeRock, Inc.
+    Portions Copyrighted 2013 ForgeRock AS.
 -->
 <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"> 
 <title>Sample Application</title>

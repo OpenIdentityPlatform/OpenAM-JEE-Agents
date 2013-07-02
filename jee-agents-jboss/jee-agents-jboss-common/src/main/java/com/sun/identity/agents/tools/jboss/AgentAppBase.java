@@ -27,7 +27,7 @@
  */
 
 /*
- * Portions Copyrighted 2010-2013 ForgeRock, Inc.
+ * Portions Copyrighted 2010-2013 ForgeRock AS.
  */
 
 package com.sun.identity.agents.tools.jboss;
