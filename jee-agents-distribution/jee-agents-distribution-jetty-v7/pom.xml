@@ -50,7 +50,7 @@
                               <goal>single</goal>
                           </goals>
                           <configuration>
-                              <finalName>jetty_v7_agent_${project.version}</finalName>
+                              <finalName>Jetty-v7-Agent-${project.version}</finalName>
                               <appendAssemblyId>false</appendAssemblyId>
                               <tarLongFileMode>gnu</tarLongFileMode>
                               <descriptors>

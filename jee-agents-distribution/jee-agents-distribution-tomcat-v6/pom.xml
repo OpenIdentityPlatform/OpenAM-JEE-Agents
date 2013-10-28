@@ -50,7 +50,7 @@
                              <goal>single</goal>
                          </goals>
                          <configuration>
-                             <finalName>tomcat_v6_agent_${project.version}</finalName>
+                             <finalName>Tomcat-v6-7-Agent-${project.version}</finalName>
                              <appendAssemblyId>false</appendAssemblyId>
                              <tarLongFileMode>gnu</tarLongFileMode>
                              <descriptors>

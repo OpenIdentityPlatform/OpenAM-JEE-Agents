@@ -50,7 +50,7 @@
                              <goal>single</goal>
                          </goals>
                          <configuration>
-                             <finalName>jboss_v7_agent_${project.version}</finalName>
+                             <finalName>JBoss-EAPv6-ASv7-Agent-${project.version}</finalName>
                              <appendAssemblyId>false</appendAssemblyId>
                              <tarLongFileMode>gnu</tarLongFileMode>
                              <descriptors>

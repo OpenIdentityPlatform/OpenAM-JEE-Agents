@@ -50,7 +50,7 @@
                              <goal>single</goal>
                          </goals>
                          <configuration>
-                             <finalName>appserver_v10_agent_${project.version}</finalName>
+                             <finalName>Glassfish-v2-3-Agent-${project.version}</finalName>
                              <appendAssemblyId>false</appendAssemblyId>
                              <tarLongFileMode>gnu</tarLongFileMode>
                              <descriptors>

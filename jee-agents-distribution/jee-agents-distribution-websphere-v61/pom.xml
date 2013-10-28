@@ -50,7 +50,7 @@
                              <goal>single</goal>
                          </goals>
                          <configuration>
-                             <finalName>websphere_v61_agent_${project.version}</finalName>
+                             <finalName>WebSphere-v7-8.5-Agent-${project.version}</finalName>
                              <appendAssemblyId>false</appendAssemblyId>
                              <tarLongFileMode>gnu</tarLongFileMode>
                              <descriptors>
