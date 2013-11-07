@@ -72,9 +72,16 @@
     <fileSets>
         <fileSet>
             <outputDirectory>legal-notices</outputDirectory>
-            <directory>${project.build.directory}/legal-notices</directory>
+            <directory>${project.parent.parent.build.directory}/legal-notices</directory>
             <includes>
                 <include>**/**</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <outputDirectory></outputDirectory>
+            <directory>${project.parent.parent.build.directory}/legal-notices</directory>
+            <includes>
+                <include>license.txt</include>
             </includes>
         </fileSet>
         <fileSet>
