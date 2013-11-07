@@ -35,6 +35,34 @@
         <jee-agents.properties>jee-agents.properties</jee-agents.properties>
         <openam.version>11.0.0</openam.version>
     </properties>
+
+    <profiles>
+        <profile>
+            <id>binary-licensing</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-scm-plugin</artifactId>
+                        <inherited>false</inherited>
+                        <executions>
+                            <execution>
+                                <id>Grab binary license</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>checkout</goal>
+                                </goals>
+                                <configuration>
+                                    <connectionUrl>scm:svn:https://svn.forgerock.org/internal/trunk/QA/OpenDJ/builds/b2.6/license/</connectionUrl>
+                                    <checkoutDirectory>${project.build.directory}/legal-notices</checkoutDirectory>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
     <modules>
         <!-- OpenAM JavaEE Policy Agent Modules -->
         <module>jee-agents-sdk</module>
