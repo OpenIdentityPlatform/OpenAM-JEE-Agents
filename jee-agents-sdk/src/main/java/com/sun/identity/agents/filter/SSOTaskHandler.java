@@ -89,8 +89,11 @@ implements ISSOTaskHandler {
                 ApplicationLogoutHandler handler = (ApplicationLogoutHandler) 
                                 ServiceFactory.getServiceInstance(getManager(),
                                 applicationLogoutHandlerImplClass);
-                handler.initialize(ssoContext, ctx.getFilterMode());
-                result = handler.process(ctx);
+                if (ctx.getHttpServletRequest().getAttribute(AmFilterResult.class.getName())==null){
+	                handler.initialize(ssoContext, ctx.getFilterMode());
+	                result = handler.process(ctx);
+                }else
+			result = (AmFilterResult)ctx.getHttpServletRequest().getAttribute(AmFilterResult.class.getName());
             } catch (Exception ex) {
                 logError("SSOTaskHandler: Error while " + 
                          " delegating to ApplicationLogoutHandler.", ex);

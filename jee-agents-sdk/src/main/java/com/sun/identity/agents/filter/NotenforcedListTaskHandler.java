@@ -132,10 +132,15 @@ implements INotenforcedListTaskHandler {
                            + requestURL + " was found in Not Enforced List");
             }
 
-            refreshSessionIdletime(ctx);
-
             result = ctx.getContinueResult();
-            result.markAsNotEnforced();
+		result.markAsNotEnforced();
+
+            if (!getConfigurationBoolean(CONFIG_NOTENFORCED_REFRESH_SESSION_IDLETIME,DEFAULT_CONFIG_NOTENFORCED_REFRESH_SESSION_IDLETIME)){
+		refreshSessionIdletime(ctx); //refresh seesion idle in SSOTaskHandler (notenforced.refresh.session.idletime=true allow com.sun.identity.agents.config.notenforced.url.attributes.enable=true)
+            }else{
+		ctx.getHttpServletRequest().setAttribute(AmFilterResult.class.getName(), result);
+		result=null;
+            }
 
             if (isModeJ2EEPolicyActive()) {
                 if ((request.getUserPrincipal() != null || request.getRemoteUser() != null)
