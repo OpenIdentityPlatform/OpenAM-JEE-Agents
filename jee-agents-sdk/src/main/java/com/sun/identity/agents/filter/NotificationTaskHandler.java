@@ -24,6 +24,7 @@
  *
  * $Id: NotificationTaskHandler.java,v 1.8 2008/06/25 05:51:48 qcheng Exp $
  *
+ * Portions Copyrighted 2015 ForgeRock AS.
  */
 
 package com.sun.identity.agents.filter;
@@ -43,6 +44,7 @@ import com.iplanet.services.comm.share.NotificationSet;
 import com.sun.identity.agents.arch.AgentConfiguration;
 import com.sun.identity.agents.arch.AgentException;
 import com.sun.identity.agents.arch.Manager;
+import com.sun.identity.idm.remote.IdRemoteServicesProviderImpl;
 
 /**
  * <p>
@@ -89,7 +91,7 @@ public class NotificationTaskHandler extends AmFilterTaskHandler
             logMessage(message);
         }
     }
-    
+
     /**
      * Checks to see if the incoming request is that of a notification and
      * suggests any action needed to handle such notifications appropriately.
@@ -132,33 +134,32 @@ public class NotificationTaskHandler extends AmFilterTaskHandler
     
     protected AmFilterResult handleNotification(AmFilterRequestContext ctx) {
         AmFilterResult result = null;
-        String notificationData = getNotificationDataString(
-                ctx.getHttpServletRequest());
+        String notificationData = getNotificationDataString(ctx.getHttpServletRequest());
         if (isLogMessageEnabled()) {
-            logMessage("NotificationTaskHandler.handleNotification:"
-                    + " notification Data: " + NEW_LINE + notificationData);
+            logMessage("NotificationTaskHandler.handleNotification: notification Data: " + NEW_LINE + notificationData);
         }
-        NotificationSet notificationSet =
-                NotificationSet.parseXML(notificationData);
+        NotificationSet notificationSet = NotificationSet.parseXML(notificationData);
         Vector notifications = notificationSet.getNotifications();
-        if (notifications != null && notifications.size() > 0) {
+        if (notifications != null && !notifications.isEmpty()) {
             String serviceID = notificationSet.getServiceID();
             if (isLogMessageEnabled()) {
-                logMessage("NotificationTaskHandler.handleNotification:"
-                        + " received " + serviceID + " notification");
+                logMessage("NotificationTaskHandler.handleNotification: received " + serviceID + " notification");
             }
             if (serviceID != null) {
                 String response = STR_NOTIFICATION_PROCESSING_FAILED;
                 if (isServiceNotificationEnabled(serviceID)) {
-                    NotificationHandler handler =
-                            PLLClient.getNotificationHandler(serviceID);
+                    NotificationHandler handler = PLLClient.getNotificationHandler(serviceID);
                     if (handler == null) {
-                        logError("NotificationTaskHandler.handleNotification:"
-                                + " NotificationHandler for "
+                        logWarning("NotificationTaskHandler.handleNotification: NotificationHandler for "
                                 + serviceID + " not found");
                     } else {
                         handler.process(notifications);
                         response = STR_NOTIFICATION_PROCESSING_SUCCESS;
+                    }
+                } else {
+                    if (isLogMessageEnabled()) {
+                        logMessage("NotificationTaskHandler.handleNotification: " + serviceID
+                                + " notification is not enabled");
                     }
                 }
                 result = ctx.getServeDataResult(response);
@@ -172,23 +173,21 @@ public class NotificationTaskHandler extends AmFilterTaskHandler
      * Checks if the policy,session, or agent configuration notifications 
      * are enabled when receiving one of those notification types.
      *
-     * @param serviceID is the service ID attrbute contained inside a
+     * @param serviceID is the service ID attribute contained inside a
      *        notification xml message and identifies the type of notification
      */               
     private boolean isServiceNotificationEnabled(String serviceID) {
         boolean enabled = false;
         if (serviceID != null) {
-            if(serviceID.equals(SERVICE_ID_POLICY) 
-                                         && isPolicyNotificationEnabled()) {
+            if(serviceID.equals(SERVICE_ID_POLICY) && isPolicyNotificationEnabled()) {
                 enabled = true;
-            } else if(serviceID.equals(SERVICE_ID_SESSION) 
-                                         && isSessionNotificationEnabled()) {
+            } else if(serviceID.equals(SERVICE_ID_SESSION) && isSessionNotificationEnabled()) {
                 enabled = true;
             } else if(serviceID.equals(SERVICE_ID_AGENT_CONFIGURATION)) {
                 enabled = true;
             } else if (serviceID.equals(SERVICE_ID_SMSOBJECT)) {
                 enabled = true;
-            } else if (serviceID.equals(SERVICE_ID_IDREPOSERVICE)) {
+            } else if (serviceID.equals(SERVICE_ID_IDREPOSERVICE) && IdRemoteServicesProviderImpl.isCachingEnabled()) {
                 enabled = true;
             } 
         }
@@ -218,7 +217,7 @@ public class NotificationTaskHandler extends AmFilterTaskHandler
         }
         return result;
     }
-    
+
     private void initSessionNotificationEnabledFlag() {
         boolean flag = AgentConfiguration.isSessionNotificationEnabled();
         setSessionNotificationEnabledFlag(flag);
@@ -228,7 +227,7 @@ public class NotificationTaskHandler extends AmFilterTaskHandler
         boolean flag = AgentConfiguration.isPolicyNotificationEnabled();
         setPolicyNotificationEnabledFlag(flag);
     }
-    
+
     //URI used for session, policy, and agent configuration notices
     private void initNotificationURI() {     
         if (isActive()) {
