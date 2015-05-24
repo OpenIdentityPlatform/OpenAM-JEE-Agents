@@ -27,10 +27,14 @@ import com.iplanet.dpro.session.Session;
 import com.iplanet.dpro.session.SessionID;
 import com.sun.identity.agents.arch.AgentException;
 import com.sun.identity.agents.common.ICookieResetHelper;
+
 import java.util.Hashtable;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.forgerock.openam.session.SessionCache;
 
 /**
  * Logout helper class, this class is intended to make it possible to use the same
@@ -171,7 +175,7 @@ public class LogoutHelper {
     private void removeSSOToken(AmFilterRequestContext ctx) {
         HttpServletRequest request = ctx.getHttpServletRequest();
         String rawToken = parent.getSSOTokenValidator().getSSOTokenValue(request);
-        Session.removeSID(new SessionID(rawToken));
+        SessionCache.getInstance().removeSID(new SessionID(rawToken));
     }
 
     private void doCookiesReset(AmFilterRequestContext ctx) {

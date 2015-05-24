@@ -33,7 +33,7 @@
     <artifactId>jee-agents</artifactId>
     <packaging>pom</packaging>
     <properties>
-        <openam.version>12.0.0-1</openam.version>
+        <openam.version>13.0.0-SNAPSHOT</openam.version>
         <websphere.libraries.v61.system.path>/var/tmp/extlib/websphere/v61</websphere.libraries.v61.system.path>
         <com.ibm.ws.runtime.v61.version>6.1.0</com.ibm.ws.runtime.v61.version>
         <weblogic.libraries.v10.system.path>/var/tmp/extlib/weblogic/v10</weblogic.libraries.v10.system.path>
