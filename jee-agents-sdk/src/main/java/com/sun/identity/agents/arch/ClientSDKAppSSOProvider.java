@@ -73,7 +73,7 @@ public class ClientSDKAppSSOProvider implements AppSSOTokenProvider {
             result = provider.getApplicationSSOToken(false);
             if (getDebug().messageEnabled()) {
                 getDebug().message("ClientSDKAppSSOProvider.getAppSSOToken:" +
-                        " got SSO Token =" + result);
+                        " got SSO Token =" + ((result==null)?result:result.getTokenID().toString()));
             }
         } catch (AgentException aex) {
             getDebug().error("ClientSDKAppSSOProvider.getAppSSOToken: Unable" +
