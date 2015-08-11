@@ -24,10 +24,7 @@
  *
  * $Id: AgentConfiguration.java,v 1.39 2009/04/02 00:02:11 leiming Exp $
  *
- */
-
-/*
- * Portions Copyrighted 2010-2013 ForgeRock AS.
+ * Portions Copyrighted 2010-2015 ForgeRock AS.
  */
 
 package com.sun.identity.agents.arch;
@@ -39,6 +36,7 @@ import java.net.URL;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Vector;
 
@@ -54,16 +52,15 @@ import com.iplanet.sso.SSOTokenManager;
 import com.sun.identity.agents.common.CommonFactory;
 import com.sun.identity.agents.common.IApplicationSSOTokenProvider;
 import com.sun.identity.agents.util.AgentRemoteConfigUtils;
-import com.sun.identity.agents.util.ResourceReader;
 
 import com.sun.identity.common.DebugPropertiesObserver;
 import com.sun.identity.common.GeneralTaskRunnable;
 import com.sun.identity.common.SystemTimer;
 import com.sun.identity.shared.Constants;
 import com.sun.identity.shared.debug.Debug;
-import com.sun.identity.install.tools.util.FileUtils;
 
 import org.forgerock.openam.util.Version;
+import org.forgerock.openam.utils.StringUtils;
 
 /**
  * <p>
@@ -545,9 +542,15 @@ public class AgentConfiguration implements
         if (!isInitialized()) {
             BufferedInputStream instream = null;
             try {
-                instream = new BufferedInputStream(
-                    new FileInputStream(getConfigFilePath()));
+                instream = new BufferedInputStream(new FileInputStream(getConfigFilePath()));
                 result.load(instream);
+                for (final Map.Entry<Object, Object> filePropEntry : result.entrySet()) {
+                    final String filePropName = (String) filePropEntry.getKey();
+                    final String sysPropVal = System.getProperty(filePropName);
+                    if (StringUtils.isNotEmpty(sysPropVal)) {
+                        filePropEntry.setValue(sysPropVal);
+                    }
+                }
                 setBootstrapProperties(result);
             } catch (Exception ex) {
                 throw ex;
