@@ -24,9 +24,7 @@
  *
  * $Id: ConfigureAgentAppTask.java,v 1.1 2008/12/11 14:36:05 naghaon Exp $
  *
- */
-/**
- * Portions Copyrighted 2013 ForgeRock, Inc.
+ * Portions Copyrighted 2013-2015 ForgeRock AS.
  */
 package com.sun.identity.agents.tools.jboss;
 
@@ -38,8 +36,6 @@ import java.util.Map;
 import static org.forgerock.agents.tools.jboss.CommonConstants.*;
 
 /**
- * @author sevani
- *
  * Deploys agentapp.war to JBoss server instance's deploy directory.
  */
 public class ConfigureAgentAppTask extends AgentAppBase implements ITask {
@@ -48,7 +44,13 @@ public class ConfigureAgentAppTask extends AgentAppBase implements ITask {
     public static final String LOC_TSK_MSG_CONFIGURE_AGENT_APP_ROLLBACK = "TSK_MSG_CONFIGURE_AGENT_APP_ROLLBACK";
 
     public boolean execute(String name, IStateAccess stateAccess, Map properties) throws InstallException {
-        return copyAgentAppWarFile(stateAccess);
+
+        // Only Standalone mode supports auto deployment of web applications.
+        if (STR_STANDALONE.equals(stateAccess.get(STR_INSTANCE_NAME))) {
+            return copyAgentAppWarFile(stateAccess);
+        } else {
+            return true;
+        }
     }
 
     public LocalizedMessage getExecutionMessage(IStateAccess stateAccess, Map properties) {
@@ -67,6 +69,12 @@ public class ConfigureAgentAppTask extends AgentAppBase implements ITask {
     }
 
     public boolean rollBack(String name, IStateAccess stateAccess, Map properties) throws InstallException {
-        return removeAgentAppWar(stateAccess);
+
+        // Only Standalone mode supports auto deployment of web applications.
+        if (STR_STANDALONE.equals(stateAccess.get(STR_INSTANCE_NAME))) {
+            return removeAgentAppWar(stateAccess);
+        } else {
+            return true;
+        }
     }
 }

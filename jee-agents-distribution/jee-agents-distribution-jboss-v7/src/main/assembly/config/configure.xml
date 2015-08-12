@@ -25,10 +25,9 @@
 
    $Id: configure.xml,v 1.2 2009/02/16 09:23:38 naghaon Exp $
 
+   Portions Copyrighted 2013-2015 ForgeRock AS.
 -->
-<!--
-   Portions Copyrighted 2013 ForgeRock, Inc.
--->
+
 <configure>
     <class-prefix>
         <package type="system" name="com.sun.identity.install.tools.configurator" />
@@ -76,6 +75,17 @@
                     </validation>
                     <validation name="VALID_VERSION">
                         <class name="JBossValidator" type="custom" />
+                    </validation>
+                </validations>
+            </interaction>
+            <interaction lookupkey="INSTALL_PROFILE_NAME">
+                <skipIf key="INSTANCE_NAME" ignorecase="true">
+                    <value>standalone</value>
+                </skipIf>
+                <i18n key="INT_INSTALL_PROFILE_NAME" group="jbossv7-tools"/>
+                <validations>
+                    <validation name="VALID_STRING">
+                        <class name="StringValidator" type="system" />
                     </validation>
                 </validations>
             </interaction>

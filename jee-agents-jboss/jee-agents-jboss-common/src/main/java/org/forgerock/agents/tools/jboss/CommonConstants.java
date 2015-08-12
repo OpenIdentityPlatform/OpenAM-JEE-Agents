@@ -1,7 +1,7 @@
 /**
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2013 ForgeRock, Inc. All Rights Reserved
+ * Copyright (c) 2013-2015 ForgeRock AS. All Rights Reserved
  *
  * The contents of this file are subject to the terms
  * of the Common Development and Distribution License
@@ -27,11 +27,12 @@ package org.forgerock.agents.tools.jboss;
 /**
  * Provides common constants that needs to be shared across different agent installer versions.
  *
- * @author Peter Major
  */
 public class CommonConstants {
 
     public static final String STR_KEY_JB_INST_DEPLOY_DIR = "DEPLOY_DIR";
     public static final String STR_AGENT_APP_WAR_FILE = "agentapp.war";
     public static final String STR_JBOSS_I18N_FILE = "I18N_FILE";
+    public static final String STR_INSTANCE_NAME = "INSTANCE_NAME";
+    public static final String STR_STANDALONE = "standalone";
 }

@@ -1,7 +1,7 @@
 /**
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2013 ForgeRock, Inc. All Rights Reserved
+ * Copyright (c) 2013-2015 ForgeRock AS. All Rights Reserved
  *
  * The contents of this file are subject to the terms
  * of the Common Development and Distribution License
@@ -27,15 +27,14 @@ package org.forgerock.openam.agents.jboss.install;
 /**
  * Provides constants for the JBoss installer component.
  *
- * @author Peter Major
  */
 public class InstallerConstants {
 
     public static final String BUNDLE_NAME = "jbossv7-tools";
     public static final String HOME_DIR = "HOME_DIR";
-    public static final String INSTANCE_NAME = "INSTANCE_NAME";
     public static final String CONFIG_FILE = "CONFIG_FILE";
     public static final String GLOBAL_MODULE = "GLOBAL_MODULE";
+    public static final String PROFILE_NAME = "INSTALL_PROFILE_NAME";
     public static final String LOC_HOME_DIR_INVALID = "HOME_DIR_INVALID";
     public static final String LOC_HOME_DIR_VALID = "HOME_DIR_VALID";
     public static final String LOC_VERSION_INVALID = "VERSION_INVALID";

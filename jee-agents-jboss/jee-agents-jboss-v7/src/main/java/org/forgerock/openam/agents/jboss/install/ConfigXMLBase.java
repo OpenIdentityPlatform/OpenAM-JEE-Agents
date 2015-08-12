@@ -1,7 +1,7 @@
 /**
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2013 ForgeRock, Inc. All Rights Reserved
+ * Copyright (c) 2013-2015 ForgeRock AS. All Rights Reserved
  *
  * The contents of this file are subject to the terms
  * of the Common Development and Distribution License
@@ -31,6 +31,8 @@ import com.sun.identity.install.tools.util.ConfigUtil;
 import com.sun.identity.install.tools.util.Debug;
 import com.sun.identity.install.tools.util.xml.XMLDocument;
 import com.sun.identity.install.tools.util.xml.XMLElement;
+import org.forgerock.openam.utils.StringUtils;
+
 import java.io.File;
 import java.text.MessageFormat;
 import java.util.List;
@@ -40,13 +42,14 @@ import static org.forgerock.openam.agents.jboss.install.InstallerConstants.*;
  * Provides functionality for manipulating JBoss configuration XML file (both for adding and removing agent related
  * settings).
  *
- * @author Peter Major
  */
 public class ConfigXMLBase {
 
     private static final String EXTENSIONS = "extensions";
     private static final String GLOBAL_MODULES = "global-modules";
     private static final String PROFILE = "profile";
+    private static final String PROFILES = "profiles";
+    private static final String PROFILES_NAME_ATTRIBUTE = "name";
     private static final String SUBSYSTEM = "subsystem";
     private static final String SECURITY_DOMAINS = "security-domains";
     private static final String SYSTEM_PROPERTIES = "system-properties";
@@ -87,10 +90,13 @@ public class ConfigXMLBase {
             XMLElement xmlRoot = xml.getRootElement();
             addSystemProperty(xml, xmlRoot, property);
 
+            // Might be null if in standalone mode
+            String profileName = (String)state.get(PROFILE_NAME);
+
             if (Boolean.valueOf((String) state.get(GLOBAL_MODULE))) {
-                addGlobalModule(xml, xmlRoot);
+                addGlobalModule(xml, xmlRoot, profileName);
             }
-            addSecurityDomain(xml, xmlRoot);
+            addSecurityDomain(xml, xmlRoot, profileName);
             xml.store();
         } catch (Exception ex) {
             Debug.log("An error occurred while updating the config XML", ex);
@@ -118,8 +124,8 @@ public class ConfigXMLBase {
         }
     }
 
-    private void addGlobalModule(XMLDocument xml, XMLElement xmlRoot) throws Exception {
-        XMLElement subsystem = getSubsystemForNamespace(xmlRoot, EE_NAMESPACE_PREFIX);
+    private void addGlobalModule(XMLDocument xml, XMLElement xmlRoot, String profileName) throws Exception {
+        XMLElement subsystem = getSubsystemForNamespace(xmlRoot, EE_NAMESPACE_PREFIX, profileName);
         List<XMLElement> existingGlobalModules = subsystem.getNamedChildElements(GLOBAL_MODULES);
         if (existingGlobalModules.isEmpty()) {
             XMLElement globalModules = xml.newElementFromXMLFragment(GLOBAL_MODULES_TAG);
@@ -129,8 +135,8 @@ public class ConfigXMLBase {
         }
     }
 
-    private void addSecurityDomain(XMLDocument xml, XMLElement xmlRoot) throws Exception {
-        XMLElement subsystem = getSubsystemForNamespace(xmlRoot, SECURITY_NAMESPACE_PREFIX);
+    private void addSecurityDomain(XMLDocument xml, XMLElement xmlRoot, String profileName) throws Exception {
+        XMLElement subsystem = getSubsystemForNamespace(xmlRoot, SECURITY_NAMESPACE_PREFIX, profileName);
         List<XMLElement> existingSecurityDomains = subsystem.getNamedChildElements(SECURITY_DOMAINS);
         existingSecurityDomains.get(0).addChildElementAt(xml.newElementFromXMLFragment(SECURITY_DOMAIN_TAG), 0, true);
     }
@@ -148,14 +154,17 @@ public class ConfigXMLBase {
      */
     public boolean rollbackChanges(IStateAccess state) {
         try {
+            // Might be null if in standalone mode
+            String profileName = (String)state.get(PROFILE_NAME);
+
             XMLDocument xml = getXMLDocument(state);
             XMLElement xmlRoot = xml.getRootElement();
             removeSystemProperty(xmlRoot);
-            removeGlobalModule(xmlRoot);
-            removeSecurityDomain(xmlRoot);
+            removeGlobalModule(xmlRoot, profileName);
+            removeSecurityDomain(xmlRoot, profileName);
             xml.store();
         } catch (Exception ex) {
-            Debug.log("An error occured while trying to roll back changes", ex);
+            Debug.log("An error occurred while trying to roll back changes", ex);
             return false;
         }
         return true;
@@ -166,14 +175,14 @@ public class ConfigXMLBase {
         removeSettingOrParentTagWithName(propertiesRoot, CONFIG_JVM_OPTION_NAME);
     }
 
-    private void removeGlobalModule(XMLElement xmlRoot) throws Exception {
-        XMLElement subsystem = getSubsystemForNamespace(xmlRoot, EE_NAMESPACE_PREFIX);
+    private void removeGlobalModule(XMLElement xmlRoot, String profileName) throws Exception {
+        XMLElement subsystem = getSubsystemForNamespace(xmlRoot, EE_NAMESPACE_PREFIX, profileName);
         List<XMLElement> globalModulesRoot = subsystem.getNamedChildElements(GLOBAL_MODULES);
         removeSettingOrParentTagWithName(globalModulesRoot, AGENT_MODULE_NAME);
     }
 
-    private void removeSecurityDomain(XMLElement xmlRoot) throws Exception {
-        XMLElement subsystem = getSubsystemForNamespace(xmlRoot, SECURITY_NAMESPACE_PREFIX);
+    private void removeSecurityDomain(XMLElement xmlRoot, String profileName) throws Exception {
+        XMLElement subsystem = getSubsystemForNamespace(xmlRoot, SECURITY_NAMESPACE_PREFIX, profileName);
         List<XMLElement> securityDomainsRoot = subsystem.getNamedChildElements(SECURITY_DOMAINS);
         removeSettingOrParentTagWithName(securityDomainsRoot, AM_REALM);
     }
@@ -215,17 +224,52 @@ public class ConfigXMLBase {
         return new XMLDocument(new File(configFile));
     }
 
-    private XMLElement getSubsystemForNamespace(XMLElement xmlRoot, String namespace) {
-        List<XMLElement> profile = xmlRoot.getNamedChildElements(PROFILE);
-        if (!profile.isEmpty()) {
-            List<XMLElement> subsystems = profile.get(0).getNamedChildElements(SUBSYSTEM);
-            for (XMLElement subsystem : subsystems) {
-                String xmlns = subsystem.getAttributeValue(XMLNS);
-                if (xmlns != null && xmlns.startsWith(namespace)) {
-                    return subsystem;
+    private XMLElement getSubsystemForNamespace(XMLElement xmlRoot, String namespace, String profileName) {
+
+        StringBuilder errorMessage = new StringBuilder("Unable to find EE subsystem in configuration XML");
+
+        XMLElement profileSubsystem = null;
+
+        if (StringUtils.isNotEmpty(profileName)) {
+            // Agent being installed in Domain mode, iterate through all of the profiles looking for the named profile
+            List<XMLElement> profiles = xmlRoot.getNamedChildElements(PROFILES);
+            if (!profiles.isEmpty()) {
+                List<XMLElement> profileElements = profiles.get(0).getNamedChildElements(PROFILE);
+                for (XMLElement profileElement : profileElements) {
+                    if (profileName.equals(profileElement.getAttributeValue(PROFILES_NAME_ATTRIBUTE))) {
+                        profileSubsystem = getProfileSubsystem(profileElement, namespace);
+                        break;
+                    }
                 }
             }
+        } else {
+            // Agent being installed in Standalone mode
+            List<XMLElement> profile = xmlRoot.getNamedChildElements(PROFILE);
+            if (!profile.isEmpty()) {
+                profileSubsystem = getProfileSubsystem(profile.get(0), namespace);
+            }
         }
-        throw new IllegalStateException("Unable to find EE subsystem in configuration XML");
+
+        if (profileSubsystem == null) {
+            if (profileName != null) {
+                errorMessage.append(" for profile: ").append(profileName);
+            }
+            throw new IllegalStateException(errorMessage.toString());
+        }
+
+        return profileSubsystem;
+    }
+
+    private XMLElement getProfileSubsystem(XMLElement profileElement, String namespace) {
+
+        List<XMLElement> subsystems = profileElement.getNamedChildElements(SUBSYSTEM);
+        for (XMLElement subsystem : subsystems) {
+            String xmlns = subsystem.getAttributeValue(XMLNS);
+            if (xmlns != null && xmlns.startsWith(namespace)) {
+                return subsystem;
+            }
+        }
+
+        return null;
     }
 }
