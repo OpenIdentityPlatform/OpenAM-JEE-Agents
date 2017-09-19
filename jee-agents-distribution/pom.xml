@@ -52,8 +52,8 @@
         <module>jee-agents-distribution-appserver-v10</module>
         <module>jee-agents-distribution-jboss-v42</module>
         <module>jee-agents-distribution-jboss-v7</module>
-        <module>jee-agents-distribution-weblogic-v10</module>
-        <module>jee-agents-distribution-websphere-v61</module>
+<!--         <module>jee-agents-distribution-weblogic-v10</module> -->
+<!--         <module>jee-agents-distribution-websphere-v61</module> -->
         <module>jee-agents-distribution-jsr196</module>
     </modules>
 
