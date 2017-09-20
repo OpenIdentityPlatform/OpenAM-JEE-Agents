@@ -727,7 +727,11 @@ public class AgentConfiguration implements
                 setProfileName();
                 
                 // instantiate the instance of DebugPropertiesObserver
-                debugObserver = DebugPropertiesObserver.getInstance();
+                try{
+                	debugObserver = DebugPropertiesObserver.getInstance();
+                }catch(Throwable e){
+                	logError("DebugPropertiesObserver",e);
+                }
 
                 Vector attrServiceURLs = getAttributeServiceURLs();
                 //if OpenSSO server 8.0
