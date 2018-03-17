@@ -73,14 +73,14 @@
             </includes>
             <useProjectArtifact>false</useProjectArtifact>
         </dependencySet>
-        <dependencySet>
-            <outputFileNameMapping>license.txt</outputFileNameMapping>
-            <outputDirectory>legal-notices</outputDirectory>
-            <includes>
-                <include>${forgerock.license.groupId}:${forgerock.license.artifactId}:txt</include>
-            </includes>
-            <useProjectArtifact>false</useProjectArtifact>
-        </dependencySet>
+<!--         <dependencySet> -->
+<!--             <outputFileNameMapping>license.txt</outputFileNameMapping> -->
+<!--             <outputDirectory>legal-notices</outputDirectory> -->
+<!--             <includes> -->
+<!--                 <include>${forgerock.license.groupId}:${forgerock.license.artifactId}:txt</include> -->
+<!--             </includes> -->
+<!--             <useProjectArtifact>false</useProjectArtifact> -->
+<!--         </dependencySet> -->
     </dependencySets>
     <fileSets>
         <fileSet>

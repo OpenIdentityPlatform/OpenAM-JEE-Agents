@@ -46,7 +46,7 @@
                              <goal>single</goal>
                          </goals>
                          <configuration>
-                             <finalName>tomcat_v6_agent_${project.version}</finalName>
+                             <finalName>tomcat_v6_v7_v8_agent_${project.version}</finalName>
                              <appendAssemblyId>false</appendAssemblyId>
                              <tarLongFileMode>gnu</tarLongFileMode>
                              <descriptors>
@@ -103,11 +103,11 @@
             <artifactId>jee-agents-sampleapp-tomcat</artifactId>
             <type>war</type>
         </dependency>
-        <dependency>
-            <groupId>${forgerock.license.groupId}</groupId>
-            <artifactId>${forgerock.license.artifactId}</artifactId>
-            <version>${forgerock.license.version}</version>
-            <type>txt</type>
-        </dependency>
+<!--         <dependency> -->
+<!--             <groupId>${forgerock.license.groupId}</groupId> -->
+<!--             <artifactId>${forgerock.license.artifactId}</artifactId> -->
+<!--             <version>${forgerock.license.version}</version> -->
+<!--             <type>txt</type> -->
+<!--         </dependency> -->
     </dependencies>
 </project>

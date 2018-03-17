@@ -21,19 +21,21 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- Parent Project -->
-    <parent>
-        <groupId>org.forgerock.openam.agents</groupId>
-        <artifactId>openam-agents</artifactId>
-        <version>4.0.0-SNAPSHOT</version>
-    </parent>
+<!--     <parent> -->
+<!--         <groupId>org.forgerock.openam.agents</groupId> -->
+<!--         <artifactId>openam-agents</artifactId> -->
+<!--         <version>4.0.0-SNAPSHOT</version> -->
+<!--     </parent> -->
 
     <!-- Component Definition -->
     <name>OpenAM JavaEE Policy Agents</name>
     <description>OpenAM JavaEE Policy Agents</description>
+    <groupId>org.forgerock.openam.agents</groupId>
     <artifactId>jee-agents</artifactId>
+    <version>4.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <properties>
-        <openam.version>13.0.0-SNAPSHOT</openam.version>
+        <openam.version>14.0.5-SNAPSHOT</openam.version>
         <websphere.libraries.v61.system.path>/var/tmp/extlib/websphere/v61</websphere.libraries.v61.system.path>
         <com.ibm.ws.runtime.v61.version>6.1.0</com.ibm.ws.runtime.v61.version>
         <weblogic.libraries.v10.system.path>/var/tmp/extlib/weblogic/v10</weblogic.libraries.v10.system.path>
@@ -318,12 +320,16 @@
                 <artifactId>commons-io</artifactId>
                 <version>1.4</version>
             </dependency>
+<!--             <dependency> -->
+<!--                 <groupId>external</groupId> -->
+<!--                 <artifactId>esapiport</artifactId> -->
+<!--                 <version>2013-12-04</version> -->
+<!--             </dependency> -->
             <dependency>
-                <groupId>external</groupId>
-                <artifactId>esapiport</artifactId>
-                <version>2013-12-04</version>
+                <groupId>org.owasp.esapi</groupId>
+                <artifactId>esapi</artifactId>
+                <version>2.1.0.1</version>
             </dependency>
-
             <!-- Agent version specific dependencies -->
             <dependency>
                 <groupId>org.apache.tomcat</groupId>

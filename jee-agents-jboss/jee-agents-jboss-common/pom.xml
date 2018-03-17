@@ -48,11 +48,11 @@
                         <manifestEntries>
                             <Specification-Title>OpenAM JavaEE Policy Agents JBoss</Specification-Title>
                             <Specification-Version>${project.version} - ${maven.build.timestamp}</Specification-Version>
-                            <Specification-Vendor>ForgeRock</Specification-Vendor>
+                            <Specification-Vendor>Open Identity Platform Community</Specification-Vendor>
                             <Implementation-Title>OpenAM JavaEE Policy Agents JBoss</Implementation-Title>
                             <Implementation-Version>${project.version} - ${maven.build.timestamp}
                             </Implementation-Version>
-                            <Implementation-Vendor>ForgeRock</Implementation-Vendor>
+                            <Implementation-Vendor>Open Identity Platform Community</Implementation-Vendor>
                             <Built-By>${user.name}</Built-By>
                             <Build-Jdk>${java.version}</Build-Jdk>
                             <Build-Time>${maven.build.timestamp}</Build-Time>
