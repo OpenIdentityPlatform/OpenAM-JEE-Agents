@@ -36,12 +36,12 @@
     <packaging>pom</packaging>
     <properties>
         <openam.version>14.0.6-SNAPSHOT</openam.version>
-        <websphere.libraries.v61.system.path>/var/tmp/extlib/websphere/v61</websphere.libraries.v61.system.path>
-        <com.ibm.ws.runtime.v61.version>6.1.0</com.ibm.ws.runtime.v61.version>
-        <weblogic.libraries.v10.system.path>/var/tmp/extlib/weblogic/v10</weblogic.libraries.v10.system.path>
-        <com.bea.core.common.security.api.v10.version>1.0.0.0_5-1-0-0</com.bea.core.common.security.api.v10.version>
-        <com.bea.core.weblogic.security.auth.v10.version>1.0.0.0</com.bea.core.weblogic.security.auth.v10.version>
-        <com.bea.core.weblogic.security.v10.version>1.0.0.0_5-1-0-0</com.bea.core.weblogic.security.v10.version>
+<!--         <websphere.libraries.v61.system.path>/var/tmp/extlib/websphere/v61</websphere.libraries.v61.system.path> -->
+<!--         <com.ibm.ws.runtime.v61.version>6.1.0</com.ibm.ws.runtime.v61.version> -->
+<!--         <weblogic.libraries.v10.system.path>/var/tmp/extlib/weblogic/v10</weblogic.libraries.v10.system.path> -->
+<!--         <com.bea.core.common.security.api.v10.version>1.0.0.0_5-1-0-0</com.bea.core.common.security.api.v10.version> -->
+<!--         <com.bea.core.weblogic.security.auth.v10.version>1.0.0.0</com.bea.core.weblogic.security.auth.v10.version> -->
+<!--         <com.bea.core.weblogic.security.v10.version>1.0.0.0_5-1-0-0</com.bea.core.weblogic.security.v10.version> -->
 
         <!-- Guice -->
         <guice.version>3.0</guice.version>
@@ -55,8 +55,8 @@
         <module>jee-agents-jboss</module>
         <module>jee-agents-jetty</module>
         <module>jee-agents-appserver</module>
-        <module>jee-agents-weblogic</module>
-        <module>jee-agents-websphere</module>
+<!--         <module>jee-agents-weblogic</module> -->
+<!--         <module>jee-agents-websphere</module> -->
         <module>jee-agents-jsr196</module>
         <module>jee-agents-sampleapp</module>
         <module>jee-agents-distribution</module>
@@ -458,13 +458,13 @@
 <!--                 <scope>system</scope> -->
 <!--                 <systemPath>${weblogic.libraries.v10.system.path}/weblogic.jar</systemPath> -->
 <!--             </dependency> -->
-            <dependency>
-                <groupId>websphere</groupId>
-                <artifactId>com.ibm.ws.runtime</artifactId>
-                <version>${com.ibm.ws.runtime.v61.version}</version>
-                <scope>system</scope>
-                <systemPath>${websphere.libraries.v61.system.path}/com.ibm.ws.runtime_${com.ibm.ws.runtime.v61.version}.jar</systemPath>
-            </dependency>
+<!--             <dependency> -->
+<!--                 <groupId>websphere</groupId> -->
+<!--                 <artifactId>com.ibm.ws.runtime</artifactId> -->
+<!--                 <version>${com.ibm.ws.runtime.v61.version}</version> -->
+<!--                 <scope>system</scope> -->
+<!--                 <systemPath>${websphere.libraries.v61.system.path}/com.ibm.ws.runtime_${com.ibm.ws.runtime.v61.version}.jar</systemPath> -->
+<!--             </dependency> -->
 
             <!-- OpenAM project dependencies -->
             <dependency>
