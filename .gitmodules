@@ -1,0 +1,3 @@
+[submodule "OpenAM"]
+	path = OpenAM
+	url = https://github.com/OpenIdentityPlatform/OpenAM
