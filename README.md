@@ -16,7 +16,7 @@ This project is licensed under the [Common Development and Distribution License 
 ## Downloads 
 * [OpenAM Java Policy Agent (Tomcat v6 v7 v8 ZIP)](https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/releases) (All OS)
 * [OpenAM Java Policy Agent (Jetty v61 ZIP)](https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/releases) (All OS)
-* [OpenAM Java Policy Agent (etty v7-v8 ZIP)](https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/releases) (All OS)
+* [OpenAM Java Policy Agent (Jetty v7-v8 ZIP)](https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/releases) (All OS)
 * [OpenAM Java Policy Agent (Appserver v10 ZIP)](https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/releases) (All OS)
 * [OpenAM Java Policy Agent (JBoss v42 ZIP)](https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/releases) (All OS)
 * [OpenAM Java Policy Agent (JBoss v7 ZIP)](https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/releases) (All OS)
