@@ -34,15 +34,15 @@ mvn install -f OpenAM-JEE-Agents
 ```
 
 ## Support and Mailing List Information
-* OpenAM Community Mailing List: open-identity-platform-openam@googlegroups.com
-* OpenAM Community Archive: https://groups.google.com/d/forum/open-identity-platform-openam
-* OpenAM Community on Gitter: https://gitter.im/OpenIdentityPlatform/OpenAM
-* OpenAM Commercial support RFP: support@openam.org.ru (English, Russian)
+* OpenAM Java Policy Agent Community Mailing List: open-identity-platform-openam@googlegroups.com
+* OpenAM Java Policy Agent Community Archive: https://groups.google.com/d/forum/open-identity-platform-openam
+* OpenAM Java Policy Agent Community on Gitter: https://gitter.im/OpenIdentityPlatform/OpenAM
+* OpenAM Java Policy Agent Commercial support RFP: support@openam.org.ru (English, Russian)
 
 ## Contributing
 Please, make [Pull request](https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/pulls)
 
-## Thanks for OpenAM
+## Thanks for OpenAM Java Policy Agent
 * Sun Access Manager
 * Sun OpenSSO
 * Oracle OpenSSO
