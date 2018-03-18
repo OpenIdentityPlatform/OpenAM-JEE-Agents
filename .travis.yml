@@ -29,8 +29,13 @@ matrix:
       overwrite: true
       file_glob: true
       file: 
-        - "openig-war/target/*.war"
-        - "openig-docker/target/Dockerfile"
+        - "jee-agents-distribution/jee-agents-distribution-appserver-v10/target/*.zip"
+        - "jee-agents-distribution/jee-agents-distribution-jboss-v42/target/*.zip"
+        - "jee-agents-distribution/jee-agents-distribution-jboss-v7/target/*.zip"
+        - "jee-agents-distribution/jee-agents-distribution-jetty-v61/target/*.zip"
+        - "jee-agents-distribution/jee-agents-distribution-jetty-v7/target/*.zip"
+        - "jee-agents-distribution/jee-agents-distribution-jsr196/target/*.zip"
+        - "jee-agents-distribution/jee-agents-distribution-tomcat-v6/target/*.zip"
       on:
         repo: OpenIdentityPlatform/OpenAM-JEE-Agents
         tags: false
