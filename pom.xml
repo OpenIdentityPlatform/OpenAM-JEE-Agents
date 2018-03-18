@@ -61,7 +61,12 @@
         <module>jee-agents-sampleapp</module>
         <module>jee-agents-distribution</module>
     </modules>
-
+    <scm>
+        <connection>scm:git:https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com:OpenIdentityPlatform/OpenAM-JEE-Agents.git</developerConnection>
+        <url>https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents</url>
+      	<tag>HEAD</tag>
+  	</scm>
     <build>
         <pluginManagement>
             <plugins>
