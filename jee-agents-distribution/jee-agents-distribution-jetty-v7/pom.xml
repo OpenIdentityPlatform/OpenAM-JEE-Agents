@@ -27,9 +27,9 @@
         <version>4.0.0-SNAPSHOT</version>
     </parent>
 
-    <name>OpenAM JavaEE Policy Agents Distribution Jetty v7</name>
-    <description>OpenAM JavaEE Policy Agents Distribution Jetty v7</description>
-    <artifactId>jee-agents-distribution-jetty-v7</artifactId>
+    <name>OpenAM JavaEE Policy Agents Distribution Jetty v7-v8</name>
+    <description>OpenAM JavaEE Policy Agents Distribution Jetty v7-v8</description>
+    <artifactId>jee-agents-distribution-jetty-v7-v8</artifactId>
     <packaging>pom</packaging>
 
      <!-- Build -->
@@ -46,7 +46,7 @@
                               <goal>single</goal>
                           </goals>
                           <configuration>
-                              <finalName>jetty_v7_agent_${project.version}</finalName>
+                              <finalName>jetty_v7_v8_agent_${project.version}</finalName>
                               <appendAssemblyId>false</appendAssemblyId>
                               <tarLongFileMode>gnu</tarLongFileMode>
                               <descriptors>

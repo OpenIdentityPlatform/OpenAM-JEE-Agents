@@ -147,7 +147,7 @@
             <source>${project.basedir}/src/main/assembly/sampleapp/readme.txt</source>
         </file>
         <file>
-            <source>${project.basedir}/../../legal/README.TXT</source>
+            <source>${project.basedir}/../../README.MD</source>
         </file>
     </files>
 </assembly>
