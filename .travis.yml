@@ -1,0 +1,71 @@
+language: java
+git:
+  depth: 9999
+matrix:
+  include:
+  - os: linux
+    jdk: openjdk8
+    sudo: required
+    services:
+      - docker
+    before_deploy: 
+      - git config --local user.name "Open Identity Platform Community" && git config --local user.email "open-identity-platform-openam@googlegroups.com"
+      - git checkout -f $TRAVIS_BRANCH
+      - git tag -f $git_version && git tag -d $git_version
+      - mvn -q -B -DreleaseVersion="$git_version" -DignoreSnapshots=true  -DpushChanges=false -DscmCommentPrefix="[ci skip] $TRAVIS_REPO_SLUG " -DskipTests -Darguments=-DskipTests -Dresume=false clean release:prepare 
+      - git push --quiet --force https://$GITHUBKEY@github.com/$TRAVIS_REPO_SLUG.git >/dev/null 2>&1
+      - git push --quiet --force https://$GITHUBKEY@github.com/$TRAVIS_REPO_SLUG.git $git_version >/dev/null 2>&1
+    deploy:
+      provider: releases
+      draft: false
+      prerelease: false
+      target_commitish: $(git rev-list -n 1 $git_version)
+      tag_name: $git_version
+      name: $git_version
+      body: "compare: $(git rev-list -n 1 $git_version_last)...$(git rev-list -n 1 $git_version)"
+      api_key:
+       secure: eh6zJBoNPHeaCVxW3/+hRnI/IkxJIexL1Sika91Gh6e4gSe0QehV1q2czeHESJcVFZssih1ErT+P1o9Gzxhoo+P36syWxLEMF0yBhTPW1OCIfx0qocI79PBwQSTsNaMUWFeSnX0mU/9rmkcfAa0kC8pZjRGxW4tZQEs1wsrs5J9AayEj2urfaZuak6WhkwXb49A9Mespt17bI+KM8SiOBJQBdugWMzVU9plq5MaT3zIjeR7c52c6f3L6LFK/SmuV8mKqPudqLF7LigFSH0BNkwDJBYutcSlryEcUusJ4fBt1OIE2tslDi3Xl1YijlrW+vG+Asdp60RUuBx4FA79W+FrA/3AwxQYbPkJS+rEhAwLKT+efxHgnBKGtv3TaY/jnittO9CKZqbO5n7Cm021OCvDisrHv6o2y+yqEPn1uJtJw4T3MHhTU/mWhRijxHZB9J/cVMHuCzJ3eo1vd2Lkzck8pzVuEGMnx2VR+U3tkIwYfZVgnlDsh9m5cZGrkPatQNriW5eTMdX/a7MvHQBUbKMj/GsJeDqfjrabUqlbHryfYEDqP/fuMZEGWAzzMFAu8qu/naT6d4U22nvtrxGtSFSzTzhAXTWO/vBG1TQk+tYy2T908p/xPmtjlYtnL1kwheratDIY1tKI3rVXKfiElg17RbFv24tIbSdYxUavhpR4=
+      skip_cleanup: true
+      overwrite: true
+      file_glob: true
+      file: 
+        - "openig-war/target/*.war"
+        - "openig-docker/target/Dockerfile"
+      on:
+        repo: OpenIdentityPlatform/OpenAM-JEE-Agents
+        tags: false
+        branch: 
+          - master
+          - travis
+    after_deploy:
+      - echo 'after_deploy'
+  - os: linux
+    jdk: oraclejdk8
+  - os: osx
+    osx_image: xcode9.1
+  allow_failures:
+  - os: osx
+branches:
+  except:
+    - /[0-9]+\.[0-9]+\.[0-9]+$/
+notifications:
+  email:
+  - open-identity-platform-openam@googlegroups.com
+before_install:
+  - date -u
+  - uname -a
+  - # if [[ "$TRAVIS_OS_NAME" == "osx" ]] ; then brew install rpm wine; else sudo apt-get install -y rpm wine; fi 
+  - git fetch -t
+  - export git_version_last="$(git describe --abbrev=0 --tags --always)"
+  - export git_version="$(echo $git_version_last | awk -F . '{ printf "%d.%d.%d", $1,$2,$3 + 1}')"
+  - env | sort
+  - git log `git describe --tags --abbrev=0 HEAD^ --always`..HEAD --oneline 
+install:
+  - mvn -q -B -DskipTests -Dmaven.javadoc.skip=true install -f OpenAM/OpenDJ/forgerock-parent
+  - mvn -q -B clean -f OpenAM/OpenDJ/forgerock-parent
+  - mvn -q -B -DskipTests -Dmaven.javadoc.skip=true install -f OpenAM/OpenDJ -P '!man-pages,!distribution'
+  - mvn -q -B clean -f OpenAM/OpenDJ -P '!man-pages,!distribution'
+  - mvn -q -B -DskipTests -Dmaven.javadoc.skip=true install -f OpenAM
+  - mvn -q -B clean -f OpenAM
+script:
+  - mvn -B install
