@@ -42,7 +42,7 @@ mvn install -f OpenAM-JEE-Agents
 ## Contributing
 Please, make [Pull request](https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/pulls)
 
-## Thanks for OpenAM
+## Thanks for OpenAM Java Policy Agent
 * Sun Access Manager
 * Sun OpenSSO
 * Oracle OpenSSO
