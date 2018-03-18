@@ -78,7 +78,7 @@
                     <artifactSet>
                         <includes>
                             <include>org.forgerock.openam.agents:jee-agents-sdk</include>
-                            <include>external:esapiport</include>
+                            <include>org.owasp.esapi:esapiport</include>
                         </includes>
                     </artifactSet>
                 </configuration>
