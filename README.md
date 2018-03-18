@@ -11,7 +11,7 @@
 OpenAM Java EE Policy Agents is an OpenAM add-on component that functions as a Policy Enforcement Point (PEP) for applications deployed on a Java EE-based servlet container or application server. The policy agent protects web-based applications and implements single sign-on (SSO) capabilities for the applications deployed in the container.
 
 ## License
-This project is licensed under the [Common Development and Distribution License (CDDL)](https://github.com/OpenIdentityPlatform/OpenAM/blob/master/LICENSE.md). 
+This project is licensed under the [Common Development and Distribution License (CDDL)](https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/blob/master/LICENSE.md). 
 
 ## Downloads 
 * [OpenAM Java Policy Agent (Tomcat v6 v7 v8 ZIP)](https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/releases) (All OS)
