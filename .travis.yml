@@ -13,8 +13,8 @@ matrix:
       - git checkout -f $TRAVIS_BRANCH
       - git tag -f $git_version && git tag -d $git_version
       - mvn -B -X -DreleaseVersion="$git_version" -DignoreSnapshots=true  -DpushChanges=false -DscmCommentPrefix="[ci skip] $TRAVIS_REPO_SLUG " -DskipTests -Darguments=-DskipTests clean release:prepare 
-      - git push --quiet --force https://$GITHUBKEY@github.com/$TRAVIS_REPO_SLUG.git >/dev/null 2>&1
-      - git push --quiet --force https://$GITHUBKEY@github.com/$TRAVIS_REPO_SLUG.git $git_version >/dev/null 2>&1
+      - git log `git describe --tags --abbrev=0 HEAD^ --always`..HEAD --oneline;git push --quiet --force https://$GITHUBKEY@github.com/$TRAVIS_REPO_SLUG.git #>/dev/null 2>&1
+      - git push --quiet --force https://$GITHUBKEY@github.com/$TRAVIS_REPO_SLUG.git $git_version #>/dev/null 2>&1
     deploy:
       provider: releases
       draft: false
