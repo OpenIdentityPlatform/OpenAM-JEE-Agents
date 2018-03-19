@@ -20,13 +20,6 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- Parent Project -->
-<!--     <parent> -->
-<!--         <groupId>org.forgerock.openam.agents</groupId> -->
-<!--         <artifactId>openam-agents</artifactId> -->
-<!--         <version>4.0.0-SNAPSHOT</version> -->
-<!--     </parent> -->
-
     <!-- Component Definition -->
     <name>OpenAM JavaEE Policy Agents</name>
     <description>OpenAM JavaEE Policy Agents</description>
@@ -94,6 +87,11 @@
                     <artifactId>maven-shade-plugin</artifactId>
                     <version>2.3</version>
                 </plugin>
+                <plugin>
+		        		<groupId>org.apache.maven.plugins</groupId>
+		        		<artifactId>maven-release-plugin</artifactId>
+		        		<version>2.5.3</version>
+		      	</plugin>
             </plugins>
         </pluginManagement>
     </build>
@@ -208,11 +206,6 @@
                  <artifactId>jee-agents-sampleapp-websphere-ear</artifactId>
                  <version>${project.version}</version>
                  <type>ear</type>
-             </dependency>
-             <dependency>
-                 <groupId>org.forgerock.openam</groupId>
-                 <artifactId>openam-installtools-launcher</artifactId>
-                 <version>${openam.version}</version>
              </dependency>
             <dependency>
                 <groupId>org.forgerock.openam.agents</groupId>
@@ -473,16 +466,13 @@
 
             <!-- OpenAM project dependencies -->
             <dependency>
-                <groupId>org.forgerock.openam</groupId>
-                <artifactId>openam-clientsdk</artifactId>
-                <version>${openam.version}</version>
+            			<groupId>org.forgerock.openam</groupId>
+			        <artifactId>openam</artifactId>
+			        <version>${openam.version}</version>
+			        <type>pom</type>
+			        <scope>import</scope>
             </dependency>
-            <dependency>
-                <groupId>org.forgerock.openam</groupId>
-                <artifactId>openam-installtools</artifactId>
-                <version>${openam.version}</version>
-            </dependency>
-
+             
             <!-- Testing dependencies -->
             <dependency>
                 <groupId>org.testng</groupId>
