@@ -23,7 +23,7 @@
     <parent>
         <groupId>org.forgerock.openam.agents</groupId>
         <artifactId>jee-agents</artifactId>
-        <version>4.0.2-SNAPSHOT</version>
+        <version>4.0.1</version>
     </parent>
 
     <!-- Component Definition -->
