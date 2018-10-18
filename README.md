@@ -34,6 +34,7 @@ mvn install -f OpenAM-JEE-Agents
 ```
 
 ## Support and Mailing List Information
+* OpenAM Java Policy Agent Community Wiki: https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/wiki
 * OpenAM Java Policy Agent Community Mailing List: open-identity-platform-openam@googlegroups.com
 * OpenAM Java Policy Agent Community Archive: https://groups.google.com/d/forum/open-identity-platform-openam
 * OpenAM Java Policy Agent Community on Gitter: https://gitter.im/OpenIdentityPlatform/OpenAM
