@@ -27,7 +27,7 @@
     <version>4.0.3-SNAPSHOT</version>
     <packaging>pom</packaging>
     <properties>
-        <openam.version>14.1.11-SNAPSHOT</openam.version>
+        <openam.version>14.1.17-SNAPSHOT</openam.version>
 <!--         <websphere.libraries.v61.system.path>/var/tmp/extlib/websphere/v61</websphere.libraries.v61.system.path> -->
 <!--         <com.ibm.ws.runtime.v61.version>6.1.0</com.ibm.ws.runtime.v61.version> -->
 <!--         <weblogic.libraries.v10.system.path>/var/tmp/extlib/weblogic/v10</weblogic.libraries.v10.system.path> -->
