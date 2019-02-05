@@ -23,7 +23,7 @@
     <parent>
         <groupId>org.forgerock.openam.agents</groupId>
         <artifactId>jee-agents-sampleapp-jsr196</artifactId>
-        <version>4.0.4</version>
+        <version>4.0.5-SNAPSHOT</version>
     </parent>
 
     <name>OpenAM JavaEE Policy Agents SampleApp JSR196 EJB</name>

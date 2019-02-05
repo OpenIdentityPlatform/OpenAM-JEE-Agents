@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.forgerock.openam.agents</groupId>
         <artifactId>jee-agents-distribution</artifactId>
-        <version>4.0.4</version>
+        <version>4.0.5-SNAPSHOT</version>
     </parent>
 
     <name>OpenAM JavaEE Policy Agents Distribution Jetty v61</name>
