@@ -210,6 +210,8 @@ public class TomcatVersionValidator extends ValidatorBase
                 result = TOMCAT_VER_70;
             } else if (versionLine.startsWith("8.0")) {
                 result = TOMCAT_VER_80;
+            } else if (versionLine.startsWith("8.5")) {
+                result = TOMCAT_VER_85;
             }
 
             Debug.log("TomcatVersionValidator.getTomcatVersion() - version:" + versionLine +

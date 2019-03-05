@@ -114,6 +114,7 @@ public interface IConstants {
     public static final String TOMCAT_VER_60 = "TOMCAT_VER_60";
     public static final String TOMCAT_VER_70 = "TOMCAT_VER_70";
     public static final String TOMCAT_VER_80 = "TOMCAT_VER_80";
+    public static final String TOMCAT_VER_85 = "TOMCAT_VER_85";
     public static final String STR_WEBAPP_DIR = "webapps";
     public static final String STR_AGENT_APP_WAR_FILE = "agentapp.war";
     public static final String INSTANCE_CONFIG_DIR_NAME = "config";
