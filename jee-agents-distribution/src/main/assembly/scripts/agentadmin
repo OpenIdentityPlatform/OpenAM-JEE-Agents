@@ -30,6 +30,12 @@
 
 # Portions Copyrighted 2010-2013 ForgeRock AS.
 
+if [[ $# -ge 1 ]] && [[ $1 == "debug" ]] ; then
+   echo "Enabled debug mode"
+   shift
+   JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005:${JAVA_OPTS}
+fi
+
 if [ -z "$AGENT_HOME" ]; then
     AGENT_HOME=`dirname $0`/..
 fi
@@ -49,6 +55,6 @@ else
     AGENT_OPTS=
 fi
 
-AGENT_CLASSPATH=\${AGENT_HOME}/lib/openam-installtools-launcher-${openam.version}.jar:\${AGENT_HOME}/lib/commons-io-1.4.jar
+AGENT_CLASSPATH=${AGENT_HOME}/lib/openam-installtools-${openam.version}.jar:${AGENT_HOME}/lib/commons-io-1.4.jar:${AGENT_HOME}/locale:${AGENT_HOME}/lib/openssoclientsdk.jar:${AGENT_HOME}/lib/agent.jar
 
-$JAVA_VM -classpath "$AGENT_CLASSPATH"  $AGENT_OPTS com.sun.identity.install.tools.launch.AdminToolLauncher $*
+$JAVA_VM ${JAVA_OPTS} -cp $AGENT_CLASSPATH $AGENT_OPTS com.sun.identity.install.tools.launch.AdminToolLauncher $*
