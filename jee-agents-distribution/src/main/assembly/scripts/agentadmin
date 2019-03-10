@@ -34,7 +34,7 @@ if [ -z "$AGENT_HOME" ]; then
     AGENT_HOME=`dirname $0`/..
 fi
 
-if [ -z "$JAVA_HOME" ]; then
+if [ -z "$JAVA_HOME/bin/java" ]; then
     JAVA_VM=java
 else
     JAVA_VM=\${JAVA_HOME}/bin/java
