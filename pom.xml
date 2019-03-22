@@ -24,10 +24,10 @@
     <description>OpenAM JavaEE Policy Agents</description>
     <groupId>org.forgerock.openam.agents</groupId>
     <artifactId>jee-agents</artifactId>
-    <version>4.1.2-SNAPSHOT</version>
+    <version>4.1.3-SNAPSHOT</version>
     <packaging>pom</packaging>
     <properties>
-        <openam.version>14.2.2-SNAPSHOT</openam.version>
+        <openam.version>14.2.3-SNAPSHOT</openam.version>
 <!--         <websphere.libraries.v61.system.path>/var/tmp/extlib/websphere/v61</websphere.libraries.v61.system.path> -->
 <!--         <com.ibm.ws.runtime.v61.version>6.1.0</com.ibm.ws.runtime.v61.version> -->
 <!--         <weblogic.libraries.v10.system.path>/var/tmp/extlib/weblogic/v10</weblogic.libraries.v10.system.path> -->
