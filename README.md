@@ -21,8 +21,10 @@ This project is licensed under the [Common Development and Distribution License 
 * [OpenAM Java Policy Agent (JBoss v42 ZIP)](https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/releases) (All OS)
 * [OpenAM Java Policy Agent (JBoss v7 ZIP)](https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/releases) (All OS)
 * [OpenAM Java Policy Agent (JSR196 ZIP)](https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/releases) (All OS)
-* Docker
-    * [OpenAM Java Policy Agent on Tomcat](https://hub.docker.com/r/openidentityplatform/openam-j2ee-agent-tomcat)
+* Docker:
+    * [OpenAM Java Policy Agent on Tomcat](https://hub.docker.com/r/openidentityplatform/openam-j2ee-agent-tomcat):
+        * openidentityplatform/openam-j2ee-agent-tomcat:tomcat
+        * openidentityplatform/openam-j2ee-agent-tomcat:tomee-8-jre-7.1.0-plus
 
 Java 1.8+ required
 
