@@ -50,7 +50,8 @@
 <!--         <module>jee-agents-weblogic</module> -->
 <!--         <module>jee-agents-websphere</module> -->
         <module>jee-agents-jsr196</module>
-        <module>jee-agents-sampleapp</module>
+	<module>jee-agents-sampleapp</module>
+	<module>jee-agents-clientsdk-tomee</module>
         <module>jee-agents-distribution</module>
     </modules>
     <scm>

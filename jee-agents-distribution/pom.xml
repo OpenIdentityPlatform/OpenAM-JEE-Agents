@@ -45,6 +45,7 @@
     <modules>
         <!-- Distribution Modules -->
         <module>jee-agents-distribution-tomcat-v6</module>
+        <module>jee-agents-distribution-tomee</module>
         <module>jee-agents-distribution-jetty-v61</module>
         <module>jee-agents-distribution-jetty-v7</module>
         <module>jee-agents-distribution-appserver-v10</module>
