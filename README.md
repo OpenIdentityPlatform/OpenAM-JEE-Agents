@@ -30,7 +30,7 @@ Java 1.8+ required
 
 ## How-to build
 ```bash
-git clone --recursive  https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents.git
+git clone --recursive  https://github.com/spetix/OpenAM-JEE-Agents.git
 mvn -DskipTests -Dmaven.javadoc.skip=true install -f OpenAM-JEE-Agents/OpenAM/OpenDJ/forgerock-parent
 mvn -DskipTests -Dmaven.javadoc.skip=true install -f OpenAM-JEE-Agents/OpenAM/OpenDJ -P '!man-pages,!distribution'
 mvn -DskipTests -Dmaven.javadoc.skip=true install -f OpenAM-JEE-Agents/OpenAM
