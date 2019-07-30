@@ -55,8 +55,6 @@ matrix:
       -   sed -i -e 's/tomcat:8\.5-jre8/tomee:8-jre-7\.1\.0-plus/g' Dockerfile
       -   docker build . -t $DOCKER_USERNAME/openam-j2ee-agent-tomcat:$git_version-tomee-8-jre-7.1.0-plus
       -   docker push 		$DOCKER_USERNAME/openam-j2ee-agent-tomcat:tomee-8-jre-7.1.0-plus
-  - os: linux
-    jdk: oraclejdk8
   - os: osx
     osx_image: xcode9.1
   allow_failures:
