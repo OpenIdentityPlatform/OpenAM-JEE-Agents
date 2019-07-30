@@ -23,7 +23,7 @@
     <parent>
         <groupId>org.forgerock.openam.agents</groupId>
         <artifactId>jee-agents-sampleapp-jboss</artifactId>
-        <version>4.1.4-SNAPSHOT</version>
+        <version>4.1.4</version>
     </parent>
 
     <name>OpenAM JavaEE Policy Agents SampleApp JBoss EJB</name>
