@@ -22,12 +22,12 @@
     <!-- Component Definition -->
     <name>OpenAM JavaEE Policy Agents</name>
     <description>OpenAM JavaEE Policy Agents</description>
-    <groupId>org.forgerock.openam.agents</groupId>
+    <groupId>org.openidentityplatform.openam.agents</groupId>
     <artifactId>jee-agents</artifactId>
     <version>4.1.5-SNAPSHOT</version>
     <packaging>pom</packaging>
     <properties>
-        <openam.version>14.4.2-SNAPSHOT</openam.version>
+        <openam.version>14.7.3</openam.version>
 <!--         <websphere.libraries.v61.system.path>/var/tmp/extlib/websphere/v61</websphere.libraries.v61.system.path> -->
 <!--         <com.ibm.ws.runtime.v61.version>6.1.0</com.ibm.ws.runtime.v61.version> -->
 <!--         <weblogic.libraries.v10.system.path>/var/tmp/extlib/weblogic/v10</weblogic.libraries.v10.system.path> -->
@@ -59,6 +59,13 @@
         <url>https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents</url>
       	<tag>HEAD</tag>
   	</scm>
+    <repositories>
+        <repository>
+            <id>jboss-nexus-public</id>
+            <name>JBoss Nexus Public Repository</name>
+            <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+        </repository>
+    </repositories>
     <build>
         <pluginManagement>
             <plugins>
@@ -103,189 +110,189 @@
         <dependencies>
             <!-- Project dependencies -->
             <dependency>
-                <groupId>org.forgerock.openam.agents</groupId>
+                <groupId>org.openidentityplatform.openam.agents</groupId>
                 <artifactId>jee-agents-sdk</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.forgerock.openam.agents</groupId>
+                <groupId>org.openidentityplatform.openam.agents</groupId>
                 <artifactId>jee-agents-appserver-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
              <dependency>
-                 <groupId>org.forgerock.openam.agents</groupId>
+                 <groupId>org.openidentityplatform.openam.agents</groupId>
                  <artifactId>jee-agents-agentapp</artifactId>
                  <type>war</type>
                  <version>${project.version}</version>
              </dependency>
              <dependency>
-                 <groupId>org.forgerock.openam.agents</groupId>
+                 <groupId>org.openidentityplatform.openam.agents</groupId>
                  <artifactId>jee-agents-appserver-v81</artifactId>
                  <version>${project.version}</version>
              </dependency>
             <dependency>
-                <groupId>org.forgerock.openam.agents</groupId>
+                <groupId>org.openidentityplatform.openam.agents</groupId>
                 <artifactId>jee-agents-sampleapp-appserver-ear</artifactId>
                 <version>${project.version}</version>
                 <type>ear</type>
             </dependency>
             <dependency>
-                <groupId>org.forgerock.openam.agents</groupId>
+                <groupId>org.openidentityplatform.openam.agents</groupId>
                 <artifactId>jee-agents-jboss-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
              <dependency>
-                 <groupId>org.forgerock.openam.agents</groupId>
+                 <groupId>org.openidentityplatform.openam.agents</groupId>
                  <artifactId>jee-agents-jboss-v7</artifactId>
                  <version>${project.version}</version>
              </dependency>
              <dependency>
-                 <groupId>org.forgerock.openam.agents</groupId>
+                 <groupId>org.openidentityplatform.openam.agents</groupId>
                  <artifactId>jee-agents-jboss-v40</artifactId>
                  <version>${project.version}</version>
              </dependency>
             <dependency>
-                <groupId>org.forgerock.openam.agents</groupId>
+                <groupId>org.openidentityplatform.openam.agents</groupId>
                 <artifactId>jee-agents-sampleapp-jboss-ear</artifactId>
                 <version>${project.version}</version>
                 <type>ear</type>
             </dependency>
              <dependency>
-                 <groupId>org.forgerock.openam.agents</groupId>
+                 <groupId>org.openidentityplatform.openam.agents</groupId>
                  <artifactId>jee-agents-jetty-v7</artifactId>
                  <version>${project.version}</version>
              </dependency>
              <dependency>
-                 <groupId>org.forgerock.openam.agents</groupId>
+                 <groupId>org.openidentityplatform.openam.agents</groupId>
                  <artifactId>jee-agents-jetty-v61</artifactId>
                  <version>${project.version}</version>
              </dependency>
             <dependency>
-                <groupId>org.forgerock.openam.agents</groupId>
+                <groupId>org.openidentityplatform.openam.agents</groupId>
                 <artifactId>jee-agents-sampleapp-jetty</artifactId>
                 <version>${project.version}</version>
                 <type>war</type>
             </dependency>
              <dependency>
-                 <groupId>org.forgerock.openam.agents</groupId>
+                 <groupId>org.openidentityplatform.openam.agents</groupId>
                  <artifactId>jee-agents-jsr196</artifactId>
                  <version>${project.version}</version>
              </dependency>
              <dependency>
-                 <groupId>org.forgerock.openam.agents</groupId>
+                 <groupId>org.openidentityplatform.openam.agents</groupId>
                  <artifactId>jee-agents-sampleapp-jsr196-ear</artifactId>
                  <version>${project.version}</version>
                  <type>ear</type>
              </dependency>
              <dependency>
-                 <groupId>org.forgerock.openam.agents</groupId>
+                 <groupId>org.openidentityplatform.openam.agents</groupId>
                  <artifactId>jee-agents-tomcat-v6</artifactId>
                  <version>${project.version}</version>
              </dependency>
             <dependency>
-                <groupId>org.forgerock.openam.agents</groupId>
+                <groupId>org.openidentityplatform.openam.agents</groupId>
                 <artifactId>jee-agents-sampleapp-tomcat</artifactId>
                 <type>war</type>
                 <version>${project.version}</version>
             </dependency>
              <dependency>
-                 <groupId>org.forgerock.openam.agents</groupId>
+                 <groupId>org.openidentityplatform.openam.agents</groupId>
                  <artifactId>jee-agents-weblogic-v10</artifactId>
                  <version>${project.version}</version>
              </dependency>
             <dependency>
-                <groupId>org.forgerock.openam.agents</groupId>
+                <groupId>org.openidentityplatform.openam.agents</groupId>
                 <artifactId>jee-agents-sampleapp-weblogic-ear</artifactId>
                 <version>${project.version}</version>
                 <type>ear</type>
             </dependency>
              <dependency>
-                 <groupId>org.forgerock.openam.agents</groupId>
+                 <groupId>org.openidentityplatform.openam.agents</groupId>
                  <artifactId>jee-agents-websphere-v61</artifactId>
                  <version>${project.version}</version>
              </dependency>
              <dependency>
-                 <groupId>org.forgerock.openam.agents</groupId>
+                 <groupId>org.openidentityplatform.openam.agents</groupId>
                  <artifactId>jee-agents-sampleapp-websphere-ear</artifactId>
                  <version>${project.version}</version>
                  <type>ear</type>
              </dependency>
             <dependency>
-                <groupId>org.forgerock.openam.agents</groupId>
+                <groupId>org.openidentityplatform.openam.agents</groupId>
                 <artifactId>jee-agents-websphere-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.forgerock.openam.agents</groupId>
+                <groupId>org.openidentityplatform.openam.agents</groupId>
                 <artifactId>jee-agents-sampleapp-webservlet</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.forgerock.openam.agents</groupId>
+                <groupId>org.openidentityplatform.openam.agents</groupId>
                 <artifactId>jee-agents-sampleapp-ejb</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.forgerock.openam.agents</groupId>
+                <groupId>org.openidentityplatform.openam.agents</groupId>
                 <artifactId>jee-agents-sampleapp-ejbservlet</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.forgerock.openam.agents</groupId>
+                <groupId>org.openidentityplatform.openam.agents</groupId>
                 <artifactId>jee-agents-sampleapp-appserver-war</artifactId>
                 <version>${project.version}</version>
                 <type>war</type>
             </dependency>
             <dependency>
-                <groupId>org.forgerock.openam.agents</groupId>
+                <groupId>org.openidentityplatform.openam.agents</groupId>
                 <artifactId>jee-agents-sampleapp-appserver-ejb</artifactId>
                 <version>${project.version}</version>
                 <type>ejb</type>
             </dependency>
             <dependency>
-                <groupId>org.forgerock.openam.agents</groupId>
+                <groupId>org.openidentityplatform.openam.agents</groupId>
                 <artifactId>jee-agents-sampleapp-jboss-war</artifactId>
                 <version>${project.version}</version>
                 <type>war</type>
             </dependency>
             <dependency>
-                <groupId>org.forgerock.openam.agents</groupId>
+                <groupId>org.openidentityplatform.openam.agents</groupId>
                 <artifactId>jee-agents-sampleapp-jboss-ejb</artifactId>
                 <version>${project.version}</version>
                 <type>ejb</type>
             </dependency>
             <dependency>
-                <groupId>org.forgerock.openam.agents</groupId>
+                <groupId>org.openidentityplatform.openam.agents</groupId>
                 <artifactId>jee-agents-sampleapp-jsr196-war</artifactId>
                 <version>${project.version}</version>
                 <type>war</type>
             </dependency>
             <dependency>
-                <groupId>org.forgerock.openam.agents</groupId>
+                <groupId>org.openidentityplatform.openam.agents</groupId>
                 <artifactId>jee-agents-sampleapp-jsr196-ejb</artifactId>
                 <version>${project.version}</version>
                 <type>ejb</type>
             </dependency>
             <dependency>
-                <groupId>org.forgerock.openam.agents</groupId>
+                <groupId>org.openidentityplatform.openam.agents</groupId>
                 <artifactId>jee-agents-sampleapp-weblogic-war</artifactId>
                 <version>${project.version}</version>
                 <type>war</type>
             </dependency>
             <dependency>
-                <groupId>org.forgerock.openam.agents</groupId>
+                <groupId>org.openidentityplatform.openam.agents</groupId>
                 <artifactId>jee-agents-sampleapp-weblogic-ejb</artifactId>
                 <version>${project.version}</version>
                 <type>ejb</type>
             </dependency>
             <dependency>
-                <groupId>org.forgerock.openam.agents</groupId>
+                <groupId>org.openidentityplatform.openam.agents</groupId>
                 <artifactId>jee-agents-sampleapp-websphere-war</artifactId>
                 <version>${project.version}</version>
                 <type>war</type>
             </dependency>
             <dependency>
-                <groupId>org.forgerock.openam.agents</groupId>
+                <groupId>org.openidentityplatform.openam.agents</groupId>
                 <artifactId>jee-agents-sampleapp-websphere-ejb</artifactId>
                 <version>${project.version}</version>
                 <type>ejb</type>
@@ -469,7 +476,7 @@
 
             <!-- OpenAM project dependencies -->
             <dependency>
-            			<groupId>org.forgerock.openam</groupId>
+            			<groupId>org.openidentityplatform.openam</groupId>
 			        <artifactId>openam</artifactId>
 			        <version>${openam.version}</version>
 			        <type>pom</type>

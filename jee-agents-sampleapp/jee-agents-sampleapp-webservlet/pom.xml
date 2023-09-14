@@ -21,7 +21,7 @@
 
     <!-- Parent Project -->
     <parent>
-        <groupId>org.forgerock.openam.agents</groupId>
+        <groupId>org.openidentityplatform.openam.agents</groupId>
         <artifactId>jee-agents-sampleapp</artifactId>
         <version>4.1.5-SNAPSHOT</version>
     </parent>

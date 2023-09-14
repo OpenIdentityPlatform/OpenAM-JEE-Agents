@@ -21,7 +21,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.forgerock.openam.agents</groupId>
+        <groupId>org.openidentityplatform.openam.agents</groupId>
         <artifactId>jee-agents-sampleapp-appserver</artifactId>
         <version>4.1.5-SNAPSHOT</version>
     </parent>
@@ -46,7 +46,7 @@
                         <configuration>
                             <filters>
                                 <filter>
-                                    <artifact>org.forgerock.openam.agents:jee-agents-sampleapp-ejb</artifact>
+                                    <artifact>org.openidentityplatform.openam.agents:jee-agents-sampleapp-ejb</artifact>
                                     <includes>
                                         <include>**/*.class</include>
                                     </includes>
@@ -65,7 +65,7 @@
     </build>
     <dependencies>
         <dependency>
-            <groupId>org.forgerock.openam.agents</groupId>
+            <groupId>org.openidentityplatform.openam.agents</groupId>
             <artifactId>jee-agents-sampleapp-ejb</artifactId>
             <scope>runtime</scope>
         </dependency>

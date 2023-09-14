@@ -22,7 +22,7 @@
 
     <!-- Parent Project -->
     <parent>
-        <groupId>org.forgerock.openam.agents</groupId>
+        <groupId>org.openidentityplatform.openam.agents</groupId>
         <artifactId>jee-agents-websphere</artifactId>
         <version>4.0.0-SNAPSHOT</version>
     </parent>
@@ -79,8 +79,8 @@
                 <configuration>
                     <artifactSet>
                         <includes>
-                            <include>org.forgerock.openam.agents:jee-agents-websphere-common</include>
-                            <include>org.forgerock.openam.agents:jee-agents-sdk</include>
+                            <include>org.openidentityplatform.openam.agents:jee-agents-websphere-common</include>
+                            <include>org.openidentityplatform.openam.agents:jee-agents-sdk</include>
                             <include>org.owasp.esapi:esapiport</include>
                         </includes>
                     </artifactSet>
@@ -90,11 +90,11 @@
     </build>
     <dependencies>
         <dependency>
-            <groupId>org.forgerock.openam</groupId>
+            <groupId>org.openidentityplatform.openam</groupId>
             <artifactId>openam-installtools</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.forgerock.openam.agents</groupId>
+            <groupId>org.openidentityplatform.openam.agents</groupId>
             <artifactId>jee-agents-websphere-common</artifactId>
         </dependency>
         <dependency>
