@@ -15,6 +15,8 @@
  * Header, with the fields enclosed by brackets [] replaced by your own identifying
  * information: "Portions copyright [year] [name of copyright owner]".
  *
+ * Portions copyright 2023 3A Systems LLC
+ *
 -->
 <assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -32,8 +34,8 @@
             <outputDirectory>lib</outputDirectory>
             <!-- Include fully packaged Modules -->
             <includes>
-                <include>org.forgerock.openam:openam-installtools</include>
-                <include>org.forgerock.openam:openam-installtools-launcher</include>
+                <include>org.openidentityplatform.openam:openam-installtools</include>
+                <include>org.openidentityplatform.openam:openam-installtools-launcher</include>
             </includes>
             <useProjectArtifact>false</useProjectArtifact>
         </dependencySet>
@@ -42,7 +44,7 @@
             <outputFileNameMapping>agent.jar</outputFileNameMapping>
             <outputDirectory>lib</outputDirectory>
             <includes>
-                <include>org.forgerock.openam.agents:jee-agents-jboss-v40</include>
+                <include>org.openidentityplatform.openam.agents:jee-agents-jboss-v40</include>
             </includes>
             <useProjectArtifact>false</useProjectArtifact>
         </dependencySet>
@@ -51,7 +53,7 @@
             <outputFileNameMapping>openssoclientsdk.jar</outputFileNameMapping>
             <outputDirectory>lib</outputDirectory>
             <includes>
-                <include>org.forgerock.openam:openam-clientsdk</include>
+                <include>org.openidentityplatform.openam:openam-clientsdk</include>
             </includes>
             <useProjectArtifact>false</useProjectArtifact>
         </dependencySet>
@@ -60,7 +62,7 @@
             <outputFileNameMapping>agentapp.war</outputFileNameMapping>
             <outputDirectory>etc</outputDirectory>
             <includes>
-                <include>org.forgerock.openam.agents:jee-agents-agentapp:war</include>
+                <include>org.openidentityplatform.openam.agents:jee-agents-agentapp:war</include>
             </includes>
             <useProjectArtifact>false</useProjectArtifact>
         </dependencySet>
@@ -68,7 +70,7 @@
             <outputFileNameMapping>agentsample.ear</outputFileNameMapping>
             <outputDirectory>sampleapp/dist</outputDirectory>
             <includes>
-                <include>org.forgerock.openam.agents:jee-agents-sampleapp-jboss-ear:ear</include>
+                <include>org.openidentityplatform.openam.agents:jee-agents-sampleapp-jboss-ear:ear</include>
             </includes>
             <useProjectArtifact>false</useProjectArtifact>
         </dependencySet>

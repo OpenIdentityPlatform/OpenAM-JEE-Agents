@@ -26,13 +26,14 @@
    $Id: configure.xml,v 1.2 2009/02/16 09:23:38 naghaon Exp $
 
    Portions Copyrighted 2013-2015 ForgeRock AS.
+   Portions copyright 2023 3A Systems LLC
 -->
 
 <configure>
     <class-prefix>
         <package type="system" name="com.sun.identity.install.tools.configurator" />
         <package type="common" name="com.sun.identity.agents.tools.jboss" />
-        <package type="custom" name="org.forgerock.openam.agents.jboss.install" />
+        <package type="custom" name="org.openidentityplatform.openam.agents.jboss.install" />
         <package type="agentsdk" name="com.sun.identity.agents.install.configurator" />
     </class-prefix>
     <welcome-message>
