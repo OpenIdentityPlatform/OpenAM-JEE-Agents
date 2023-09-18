@@ -15,12 +15,14 @@
  * Header, with the fields enclosed by brackets [] replaced by your own identifying
  * information: "Portions copyright [year] [name of copyright owner]".
  *
+ * Portions copyright 2023 3A Systems LLC
+ *
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.forgerock.openam.agents</groupId>
+        <groupId>org.openidentityplatform.openam.agents</groupId>
         <artifactId>jee-agents-distribution</artifactId>
         <version>4.1.5-SNAPSHOT</version>
     </parent>
@@ -84,20 +86,20 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.forgerock.openam.agents</groupId>
+            <groupId>org.openidentityplatform.openam.agents</groupId>
             <artifactId>jee-agents-sdk</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.forgerock.openam.agents</groupId>
+            <groupId>org.openidentityplatform.openam.agents</groupId>
             <artifactId>jee-agents-agentapp</artifactId>
             <type>war</type>
         </dependency>
         <dependency>
-            <groupId>org.forgerock.openam.agents</groupId>
+            <groupId>org.openidentityplatform.openam.agents</groupId>
             <artifactId>jee-agents-jsr196</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.forgerock.openam.agents</groupId>
+            <groupId>org.openidentityplatform.openam.agents</groupId>
             <artifactId>jee-agents-sampleapp-jsr196-ear</artifactId>
             <type>ear</type>
         </dependency>
