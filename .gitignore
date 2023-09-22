@@ -2,7 +2,6 @@
 target
 /RemoteSystems*
 .metadata
-*.log
 .project
 .settings
 .classpath
@@ -11,3 +10,5 @@ target
 dependency-reduced-pom.xml
 logs
 jee-agents-sdk/src/main/java/org/forgerock/openam/util/Version.java
+*.iml
+.idea/

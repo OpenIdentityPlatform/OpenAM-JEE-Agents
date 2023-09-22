@@ -40,6 +40,8 @@
         <!-- Guice -->
         <guice.version>3.0</guice.version>
 <!--         <forgerock.guice.version>1.0.0</forgerock.guice.version> -->
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
     </properties>
     <modules>
         <!-- OpenAM JavaEE Policy Agent Modules -->
@@ -104,6 +106,14 @@
 		          <artifactId>maven-assembly-plugin</artifactId>
 		          <version>3.1.1</version>
 		        </plugin>
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <source>${maven.compiler.source}</source>
+                        <target>${maven.compiler.target}</target>
+                        <encoding>UTF-8</encoding>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
@@ -478,11 +488,11 @@
 
             <!-- OpenAM project dependencies -->
             <dependency>
-            			<groupId>org.openidentityplatform.openam</groupId>
-			        <artifactId>openam</artifactId>
-			        <version>${openam.version}</version>
-			        <type>pom</type>
-			        <scope>import</scope>
+                <groupId>org.openidentityplatform.openam</groupId>
+                <artifactId>openam</artifactId>
+                <version>${openam.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
              
             <!-- Testing dependencies -->

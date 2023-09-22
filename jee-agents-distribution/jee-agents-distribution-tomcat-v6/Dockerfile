@@ -15,15 +15,12 @@ ADD run.sh bin/run.sh
 
 WORKDIR $CATALINA_HOME
 
-RUN apt-get install -y unzip
+RUN apt update && apt install -y unzip \
+    && rm -fr $CATALINA_HOME/webapps/* && unzip *.zip && rm -rf *.zip
 
-RUN rm -fr $CATALINA_HOME/webapps/*
-
-RUN unzip *.zip && rm -rf *.zip
-
-RUN useradd -m -r -u 1001 -g root $USER
-RUN chgrp -R 0 $CATALINA_HOME && chmod -R g=u $CATALINA_HOME
-RUN chmod ugo+x bin/run.sh
+RUN useradd -m -r -u 1001 -g root $USER \
+  && chgrp -R 0 $CATALINA_HOME && chmod -R g=u $CATALINA_HOME \
+  && chmod ugo+x bin/run.sh
 
 USER $USER
 
