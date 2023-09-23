@@ -83,6 +83,15 @@ public class TomcatVersionValidatorTest {
     		"Architecture:   amd64\n" + 
     		"JVM Version:    1.8.0_181-b13\n" + 
     		"JVM Vendor:     Oracle Corporation\n";
+    
+    public static final String LINUX_TOMCAT90_SERVERINFO = "Server version: Apache Tomcat/9.0.80\n" + 
+                "Server built:   Aug 23 2023 21:59:38 UTC\n" + 
+                "Server number:  9.0.80.0\n" + 
+                "OS Name:        Linux\n" + 
+                "OS Version:     5.15.0-83-generic\n" + 
+                "Architecture:   amd64\n" + 
+                "JVM Version:    11.0.20.1+1-post-Ubuntu-0ubuntu122.04\n" + 
+                "JVM Vendor:     Ubuntu\n";
 
     @Test
     public void testCheckTomcatVersionIsValid() {
@@ -93,6 +102,7 @@ public class TomcatVersionValidatorTest {
         Assert.assertEquals(IConstants.TOMCAT_VER_70, TomcatVersionValidator.getTomcatVersion(LINUX_TOMCAT7_SERVERINFO));
         Assert.assertEquals(IConstants.TOMCAT_VER_80, TomcatVersionValidator.getTomcatVersion(LINUX_TOMCAT8_SERVERINFO));
         Assert.assertEquals(IConstants.TOMCAT_VER_85, TomcatVersionValidator.getTomcatVersion(LINUX_TOMCAT85_SERVERINFO));
+        Assert.assertEquals(IConstants.TOMCAT_VER_90, TomcatVersionValidator.getTomcatVersion(LINUX_TOMCAT90_SERVERINFO));
 
         Assert.assertNull(TomcatVersionValidator.getTomcatVersion(LINUX_TOMCAT5_SERVERINFO));
         Assert.assertNull(TomcatVersionValidator.getTomcatVersion(null));
