@@ -212,6 +212,8 @@ public class TomcatVersionValidator extends ValidatorBase
                 result = TOMCAT_VER_80;
             } else if (versionLine.startsWith("8.5")) {
                 result = TOMCAT_VER_85;
+            } else if (versionLine.startsWith("9.0")) {
+                result = TOMCAT_VER_90;
             }
 
             Debug.log("TomcatVersionValidator.getTomcatVersion() - version:" + versionLine +

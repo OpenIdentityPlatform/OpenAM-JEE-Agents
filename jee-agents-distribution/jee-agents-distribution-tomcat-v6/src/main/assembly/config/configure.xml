@@ -101,6 +101,7 @@
                     <value>TOMCAT_VER_70</value>
                     <value>TOMCAT_VER_80</value>
                     <value>TOMCAT_VER_85</value>
+                    <value>TOMCAT_VER_90</value>
                 </skipIf>
                 <i18n key="INT_GLOBAL_WEB_XML" group="tomcatv6Tools"/>
                 <default-value-finder>
