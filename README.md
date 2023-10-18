@@ -29,12 +29,11 @@ This project is licensed under the [Common Development and Distribution License 
 Java 1.8+ required
 
 ## How-to build
+Build tested with Java 8 and Java 11.
+
 ```bash
-git clone --recursive  https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents.git
-mvn -DskipTests -Dmaven.javadoc.skip=true install -f OpenAM-JEE-Agents/OpenAM/OpenDJ/forgerock-parent
-mvn -DskipTests -Dmaven.javadoc.skip=true install -f OpenAM-JEE-Agents/OpenAM/OpenDJ -P '!man-pages,!distribution'
-mvn -DskipTests -Dmaven.javadoc.skip=true install -f OpenAM-JEE-Agents/OpenAM
-mvn install -f OpenAM-JEE-Agents
+git clone https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents.git
+mvn clean install -f OpenAM-JEE-Agents
 ```
 
 ## Support and Mailing List Information
