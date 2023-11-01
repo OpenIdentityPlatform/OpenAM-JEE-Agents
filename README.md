@@ -1,6 +1,7 @@
 ## OpenAM Java EE Policy Agents
 [![Latest release](https://img.shields.io/github/release/OpenIdentityPlatform/OpenAM-JEE-Agents.svg)](https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/releases)
-[![Build Status](https://travis-ci.org/OpenIdentityPlatform/OpenAM-JEE-Agents.svg)](https://travis-ci.org/OpenIdentityPlatform/OpenAM-JEE-Agents)
+[![Build](https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/actions/workflows/build.yml/badge.svg)](https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/actions/workflows/build.yml)
+[![Deploy](https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/actions/workflows/deploy.yml/badge.svg)](https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/actions/workflows/deploy.yml)
 [![Issues](https://img.shields.io/github/issues/OpenIdentityPlatform/OpenAM-JEE-Agents.svg)](https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/issues)
 [![Last commit](https://img.shields.io/github/last-commit/OpenIdentityPlatform/OpenAM-JEE-Agents.svg)](https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/commits/master)
 [![License](https://img.shields.io/badge/license-CDDL-blue.svg)](https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/blob/master/LICENSE.md)
@@ -14,7 +15,7 @@ OpenAM Java EE Policy Agents is an OpenAM add-on component that functions as a P
 This project is licensed under the [Common Development and Distribution License (CDDL)](https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/blob/master/LICENSE.md). 
 
 ## Downloads 
-* [OpenAM Java Policy Agent (Tomcat v6 v7 v8 ZIP)](https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/releases) (All OS)
+* [OpenAM Java Policy Agent (Tomcat v6-v9 ZIP)](https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/releases) (All OS)
 * [OpenAM Java Policy Agent (Jetty v61 ZIP)](https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/releases) (All OS)
 * [OpenAM Java Policy Agent (Jetty v7-v8 ZIP)](https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/releases) (All OS)
 * [OpenAM Java Policy Agent (Appserver v10 ZIP)](https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/releases) (All OS)
@@ -29,7 +30,6 @@ This project is licensed under the [Common Development and Distribution License 
 Java 1.8+ required
 
 ## How-to build
-Build tested with Java 8 and Java 11.
 
 ```bash
 git clone https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents.git
@@ -38,15 +38,14 @@ mvn clean install -f OpenAM-JEE-Agents
 
 ## Support and Mailing List Information
 * OpenAM Java Policy Agent Community Wiki: https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/wiki
-* OpenAM Java Policy Agent Community Mailing List: open-identity-platform-openam@googlegroups.com
-* OpenAM Java Policy Agent Community Archive: https://groups.google.com/d/forum/open-identity-platform-openam
-* OpenAM Java Policy Agent Community on Gitter: https://gitter.im/OpenIdentityPlatform/OpenAM
+* OpenAM Java Policy Agent Community Discussions: https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/discussions
+* OpenAM Java Policy Agent Community Issues: https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/issues
 * OpenAM Java Policy Agent Commercial support RFP: support@openam.org.ru (English, Russian)
 
 ## Contributing
 Please, make [Pull request](https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/pulls)
 
-## Thanks for OpenAM Java Policy Agent
+## Thanks for OpenAM Java Policy Agent 🥰
 * Sun Access Manager
 * Sun OpenSSO
 * Oracle OpenSSO
