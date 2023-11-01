@@ -57,19 +57,67 @@
         <module>jee-agents-sampleapp</module>
         <module>jee-agents-distribution</module>
     </modules>
+    <licenses>
+        <license>
+            <name>CDDL-1.1</name>
+            <url>https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/blob/master/LICENSE.md</url>
+            <comments>Common Development and Distribution License (CDDL) 1.1.
+                This license applies to OpenDJ source code as indicated in the
+                source files.
+            </comments>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <developers>
+    	<developer>
+    		<id>Open Identity Platform Community</id>
+    		<name>Open Identity Platform Community</name>
+    		<email>open-identity-platform@googlegroups.com</email>
+    		<organization>Open Identity Platform Community</organization>
+    		<organizationUrl>https://www.openidentityplatform.org/</organizationUrl>
+    		<url>https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents</url>
+    	</developer>
+    </developers>
+     <issueManagement>
+        <system>github.com</system>
+        <url>https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/issues</url>
+    </issueManagement>
     <scm>
         <connection>scm:git:https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com:OpenIdentityPlatform/OpenAM-JEE-Agents.git</developerConnection>
+        <developerConnection>scm:git:https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents.git</developerConnection>
         <url>https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents</url>
       	<tag>HEAD</tag>
   	</scm>
     <repositories>
-        <repository>
-            <id>jboss-nexus-public</id>
-            <name>JBoss Nexus Public Repository</name>
-            <url>https://repository.jboss.org/nexus/content/groups/public/</url>
-        </repository>
-    </repositories>
+		<repository>
+			<id>ossrh-snapshots</id>
+			<name>Sonatype OSS Repository</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+			<snapshots><enabled>true</enabled></snapshots>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>ossrh-snapshots</id>
+			<name>Sonatype OSS Repository</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+	<distributionManagement>
+		<repository>
+			<id>ossrh</id>
+			<name>Sonatype OSS Repository</name>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+		</repository>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<name>Sonatype OSS Repository</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
     <build>
         <pluginManagement>
             <plugins>
