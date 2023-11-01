@@ -95,6 +95,11 @@
 			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
 			<snapshots><enabled>true</enabled></snapshots>
 		</repository>
+		<repository>
+           <id>jboss-nexus-public</id>
+           <name>JBoss Nexus Public Repository</name>
+           <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+       </repository>
 	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
