@@ -58,6 +58,15 @@ jobs:
         with:
           fetch-depth: 0
           submodules: recursive
+      - name: Set up Java for publishing to Maven Central Repository OSS
+        uses: actions/setup-java@v3
+        with:
+          java-version: '8'
+          distribution: 'temurin'
+      - name: Build with Maven
+        env:
+          MAVEN_OPTS: -Dhttps.protocols=TLSv1.2 -Dmaven.wagon.httpconnectionManager.ttlSeconds=120 -Dmaven.wagon.http.retryHandler.requestSentEnabled=true -Dmaven.wagon.http.retryHandler.count=10
+        run: mvn --batch-mode --errors --update-snapshots package --file pom.xml 
       - name: Get latest release version
         shell: bash
         run:   |
