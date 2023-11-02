@@ -13,7 +13,7 @@ ENV CATALINA_OPTS="-Xmx2048m -server -Dcom.iplanet.services.debug.level=error -D
 ADD target/*.zip .
 ADD run.sh bin/run.sh
 
-WORKDIR $CATALINA_HOME
+ENV CATALINA_HOME=${CATALINA_HOME:-.}
 
 RUN apt update && apt install -y unzip \
     && rm -fr $CATALINA_HOME/webapps/* && unzip *.zip && rm -rf *.zip
