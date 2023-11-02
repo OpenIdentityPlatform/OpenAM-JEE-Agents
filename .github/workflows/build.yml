@@ -46,7 +46,7 @@ jobs:
           jee-agents-distribution/jee-agents-distribution-jetty-v7/target/*.zip
           jee-agents-distribution/jee-agents-distribution-jsr196/target/*.zip
           jee-agents-distribution/jee-agents-distribution-tomcat-v6/target/*.zip
-  build-docker-tomcat8-jre8:
+  build-docker-tomcat-8-5-jre8:
     runs-on: 'ubuntu-latest'
     services:
       registry:
@@ -104,8 +104,8 @@ jobs:
       - name: Docker test
         shell: bash
         run: |
-          docker run --rm -it --name=test localhost:5000/${GITHUB_REPOSITORY,,}:${{ env.release_version }} || echo "see logs"
-  build-docker-tomee-8-jre-7-plus:
+          docker run --it --name=test localhost:5000/${GITHUB_REPOSITORY,,}:${{ env.release_version }} ||  docker logs test | grep -q "Naming service connection failed"
+  build-docker-tomee-7-1-plus-jre8:
     runs-on: 'ubuntu-latest'
     services:
       registry:
@@ -164,4 +164,4 @@ jobs:
       - name: Docker test
         shell: bash
         run: |
-          docker run --rm -it --name=test localhost:5000/${GITHUB_REPOSITORY,,}:${{ env.release_version }} || echo "see logs"
+          docker run -it --name=test localhost:5000/${GITHUB_REPOSITORY,,}:${{ env.release_version }}  ||  docker logs test | grep -q "Naming service connection failed"
