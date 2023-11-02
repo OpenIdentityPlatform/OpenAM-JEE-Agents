@@ -124,6 +124,29 @@
 		</snapshotRepository>
 	</distributionManagement>
     <build>
+		<plugins>
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+			      <artifactId>nexus-staging-maven-plugin</artifactId>
+			      <version>1.6.13</version>
+			      <extensions>true</extensions>
+			      <configuration>
+			        <serverId>ossrh</serverId>
+			        <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+			        <autoReleaseAfterClose>false</autoReleaseAfterClose>
+			        <stagingProgressTimeoutMinutes>15</stagingProgressTimeoutMinutes>
+			        <keepStagingRepositoryOnFailure>true</keepStagingRepositoryOnFailure>
+			        <keepStagingRepositoryOnCloseRuleFailure>true</keepStagingRepositoryOnCloseRuleFailure>
+			      </configuration>
+			      <dependencies>
+			      	<dependency>
+				        <groupId>com.google.guava</groupId>
+				        <artifactId>guava</artifactId>
+				        <version>15.0</version>
+				     </dependency>
+			      </dependencies>
+		    </plugin>
+		</plugins>
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -557,5 +580,43 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+    <profiles>
+		<profile>
+	        <id>release-sign-artifacts</id>
+	        <activation>
+	            <property>
+			        <name>gpg.passphrase</name>
+			    </property>
+	        </activation>
+	        <build>
+	            <plugins>
+	                <plugin>
+				      <groupId>org.apache.maven.plugins</groupId>
+				      <artifactId>maven-gpg-plugin</artifactId>
+				      <version>1.6</version>
+				      <configuration>
+                      	<passphrase>${gpg.passphrase}</passphrase>
+                        <useAgent>true</useAgent>
+                      </configuration>
+				      <executions>
+				        <execution>
+				          <id>sign-artifacts</id>
+				          <phase>verify</phase>
+				          <goals>
+				            <goal>sign</goal>
+				          </goals>
+				          <configuration>
+				                <gpgArguments>
+				                    <arg>--pinentry-mode</arg>
+				                    <arg>loopback</arg>
+				                </gpgArguments>
+				            </configuration>
+				        </execution>
+				      </executions>
+				    </plugin>
+	            </plugins>
+	        </build>
+	    </profile>
+	</profiles>
 </project>
 
