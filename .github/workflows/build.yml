@@ -85,10 +85,72 @@ jobs:
           images: |
             localhost:5000/${{ github.repository }}
           tags: |
-            type=raw,value=latest
             type=raw,value=${{ env.release_version }}
-            type=raw,value=${{ env.release_version }}-tomcat
-            type=raw,value=tomcat
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+        with:
+          driver-opts: network=host
+      - name: Build image
+        uses: docker/build-push-action@v3
+        continue-on-error: true
+        with:
+          context: ./jee-agents-distribution/jee-agents-distribution-tomcat-v6
+          file: ./jee-agents-distribution/jee-agents-distribution-tomcat-v6/Dockerfile
+          build-args: |
+            VERSION=${{ env.release_version }}
+          platforms: linux/amd64, linux/arm64/8, linux/arm/v7, linux/ppc64le
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+      - name: Docker test
+        shell: bash
+        run: |
+          docker run -it -d --name=test localhost:5000/${GITHUB_REPOSITORY,,}:${{ env.release_version }}
+          timeout 2m bash -c 'until docker logs test | grep -q "Naming service connection failed"; do sleep 5; done'
+  build-docker-tomcat-9-jre8:
+    runs-on: 'ubuntu-latest'
+    services:
+      registry:
+        image: registry:2
+        ports:
+          - 5000:5000
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          submodules: recursive
+      - name: Set up Java for publishing to Maven Central Repository OSS
+        uses: actions/setup-java@v3
+        with:
+          java-version: '8'
+          distribution: 'temurin'
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-m2-repository-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2-repository
+      - name: Build with Maven
+        env:
+          MAVEN_OPTS: -Dhttps.protocols=TLSv1.2 -Dmaven.wagon.httpconnectionManager.ttlSeconds=120 -Dmaven.wagon.http.retryHandler.requestSentEnabled=true -Dmaven.wagon.http.retryHandler.count=10
+        run: |
+          mvn --batch-mode --errors --update-snapshots package --file pom.xml 
+          sed -i -e 's/tomcat:8\.5-jre8/tomcat:9-jre8/g' jee-agents-distribution/jee-agents-distribution-tomcat-v6/Dockerfile
+      - name: Get latest release version
+        shell: bash
+        run:   |
+          git fetch -t; export git_version_last="$(git describe --abbrev=0 --tags)" ; echo "last release: $git_version_last"
+          echo "release_version=$git_version_last" >> $GITHUB_ENV
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            localhost:5000/${{ github.repository }}
+          tags: |
+            type=raw,value=${{ env.release_version }}
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
       - name: Set up Docker Buildx
@@ -148,8 +210,6 @@ jobs:
             localhost:5000/${{ github.repository }}
           tags: |
             type=raw,value=${{ env.release_version }}
-            type=raw,value=${{ env.release_version }}-tomee-8-jre-7.1.0-plus
-            type=raw,value=tomee-8-jre-7.1.0-plus
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
       - name: Set up Docker Buildx
