@@ -104,7 +104,8 @@ jobs:
       - name: Docker test
         shell: bash
         run: |
-          docker run --it --name=test localhost:5000/${GITHUB_REPOSITORY,,}:${{ env.release_version }} ||  docker logs test | grep -q "Naming service connection failed"
+          docker run -it -d --name=test localhost:5000/${GITHUB_REPOSITORY,,}:${{ env.release_version }}
+          timeout 2m bash -c 'until docker logs test | grep -q "Naming service connection failed"; do sleep 5; done'
   build-docker-tomee-7-1-plus-jre8:
     runs-on: 'ubuntu-latest'
     services:
@@ -164,4 +165,5 @@ jobs:
       - name: Docker test
         shell: bash
         run: |
-          docker run -it --name=test localhost:5000/${GITHUB_REPOSITORY,,}:${{ env.release_version }}  ||  docker logs test | grep -q "Naming service connection failed"
+          docker run -it -d --name=test localhost:5000/${GITHUB_REPOSITORY,,}:${{ env.release_version }}
+          timeout 2m bash -c 'until docker logs test | grep -q "Naming service connection failed"; do sleep 5; done'
