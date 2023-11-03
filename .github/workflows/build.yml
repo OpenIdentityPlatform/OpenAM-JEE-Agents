@@ -73,11 +73,6 @@ jobs:
         env:
           MAVEN_OPTS: -Dhttps.protocols=TLSv1.2 -Dmaven.wagon.httpconnectionManager.ttlSeconds=120 -Dmaven.wagon.http.retryHandler.requestSentEnabled=true -Dmaven.wagon.http.retryHandler.count=10
         run: mvn --batch-mode --errors --update-snapshots package --file pom.xml 
-      - name: Get latest release version
-        shell: bash
-        run:   |
-          git fetch -t; export git_version_last="$(git describe --abbrev=0 --tags)" ; echo "last release: $git_version_last"
-          echo "release_version=$git_version_last" >> $GITHUB_ENV
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v4
@@ -85,7 +80,7 @@ jobs:
           images: |
             localhost:5000/${{ github.repository }}
           tags: |
-            type=raw,value=${{ env.release_version }}
+            type=raw,value=test
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
       - name: Set up Docker Buildx
@@ -98,8 +93,6 @@ jobs:
         with:
           context: ./jee-agents-distribution/jee-agents-distribution-tomcat-v6
           file: ./jee-agents-distribution/jee-agents-distribution-tomcat-v6/Dockerfile
-          build-args: |
-            VERSION=${{ env.release_version }}
           platforms: linux/amd64, linux/arm64/8, linux/arm/v7, linux/ppc64le
           push: true
           tags: ${{ steps.meta.outputs.tags }}
@@ -107,7 +100,7 @@ jobs:
       - name: Docker test
         shell: bash
         run: |
-          docker run -it -d --name=test localhost:5000/${GITHUB_REPOSITORY,,}:${{ env.release_version }}
+          docker run -it -d --name=test localhost:5000/${GITHUB_REPOSITORY,,}:test
           timeout 2m bash -c 'until docker logs test | grep -q "Naming service connection failed"; do sleep 5; done'
   build-docker-tomcat-9-jre8:
     runs-on: 'ubuntu-latest'
@@ -138,11 +131,6 @@ jobs:
         run: |
           mvn --batch-mode --errors --update-snapshots package --file pom.xml 
           sed -i -e 's/tomcat:8\.5-jre8/tomcat:9-jre8/g' jee-agents-distribution/jee-agents-distribution-tomcat-v6/Dockerfile
-      - name: Get latest release version
-        shell: bash
-        run:   |
-          git fetch -t; export git_version_last="$(git describe --abbrev=0 --tags)" ; echo "last release: $git_version_last"
-          echo "release_version=$git_version_last" >> $GITHUB_ENV
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v4
@@ -150,7 +138,7 @@ jobs:
           images: |
             localhost:5000/${{ github.repository }}
           tags: |
-            type=raw,value=${{ env.release_version }}
+            type=raw,value=test
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
       - name: Set up Docker Buildx
@@ -163,8 +151,6 @@ jobs:
         with:
           context: ./jee-agents-distribution/jee-agents-distribution-tomcat-v6
           file: ./jee-agents-distribution/jee-agents-distribution-tomcat-v6/Dockerfile
-          build-args: |
-            VERSION=${{ env.release_version }}
           platforms: linux/amd64, linux/arm64/8, linux/arm/v7, linux/ppc64le
           push: true
           tags: ${{ steps.meta.outputs.tags }}
@@ -172,7 +158,7 @@ jobs:
       - name: Docker test
         shell: bash
         run: |
-          docker run -it -d --name=test localhost:5000/${GITHUB_REPOSITORY,,}:${{ env.release_version }}
+          docker run -it -d --name=test localhost:5000/${GITHUB_REPOSITORY,,}:test
           timeout 2m bash -c 'until docker logs test | grep -q "Naming service connection failed"; do sleep 5; done'
   build-docker-tomee-7-1-plus-jre8:
     runs-on: 'ubuntu-latest'
@@ -197,11 +183,6 @@ jobs:
         run: |
           mvn --batch-mode --errors --update-snapshots package --file pom.xml 
           sed -i -e 's/tomcat:8\.5-jre8/tomee:8-jre-7\.1\.0-plus/g' jee-agents-distribution/jee-agents-distribution-tomcat-v6/Dockerfile
-      - name: Get latest release version
-        shell: bash
-        run:   |
-          git fetch -t; export git_version_last="$(git describe --abbrev=0 --tags)" ; echo "last release: $git_version_last"
-          echo "release_version=$git_version_last" >> $GITHUB_ENV
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v4
@@ -209,7 +190,7 @@ jobs:
           images: |
             localhost:5000/${{ github.repository }}
           tags: |
-            type=raw,value=${{ env.release_version }}
+            type=raw,value=test
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
       - name: Set up Docker Buildx
@@ -222,8 +203,6 @@ jobs:
         with:
           context: ./jee-agents-distribution/jee-agents-distribution-tomcat-v6
           file: ./jee-agents-distribution/jee-agents-distribution-tomcat-v6/Dockerfile
-          build-args: |
-            VERSION=${{ env.release_version }}
           platforms: linux/amd64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
@@ -231,5 +210,5 @@ jobs:
       - name: Docker test
         shell: bash
         run: |
-          docker run -it -d --name=test localhost:5000/${GITHUB_REPOSITORY,,}:${{ env.release_version }}
+          docker run -it -d --name=test localhost:5000/${GITHUB_REPOSITORY,,}:test
           timeout 2m bash -c 'until docker logs test | grep -q "Naming service connection failed"; do sleep 5; done'
