@@ -75,3 +75,154 @@ jobs:
             jee-agents-distribution/jee-agents-distribution-jetty-v7/target/*.zip
             jee-agents-distribution/jee-agents-distribution-jsr196/target/*.zip
             jee-agents-distribution/jee-agents-distribution-tomcat-v6/target/*.zip
+  release-docker-tomcat-v8:
+    runs-on: 'ubuntu-latest'
+    needs:
+      - release-maven
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.inputs.releaseVersion }}
+          fetch-depth: 1
+          submodules: recursive
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            ${{ github.repository }}
+            ghcr.io/${{ github.repository }}/${{ github.event.repository.name }}
+          tags: |
+            type=raw,value=tomcat-v8
+            type=raw,value=${{ github.event.inputs.releaseVersion }}-tomcat-v8
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Login to GHCR
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push image
+        uses: docker/build-push-action@v3
+        continue-on-error: true
+        with:
+          context: ./jee-agents-distribution/jee-agents-distribution-tomcat-v6
+          file: ./jee-agents-distribution/jee-agents-distribution-tomcat-v6/Dockerfile
+          build-args: |
+            VERSION=${{ github.event.inputs.releaseVersion }}
+          platforms: linux/amd64, linux/arm64/8, linux/arm/v7, linux/ppc64le
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+  release-docker-tomcat-v9:
+    runs-on: 'ubuntu-latest'
+    needs:
+      - release-maven
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.inputs.releaseVersion }}
+          fetch-depth: 1
+          submodules: recursive
+      - name: Set source
+        run: sed -i -e 's/tomcat:8\.5-jre8/tomcat:9-jre8/g' jee-agents-distribution/jee-agents-distribution-tomcat-v6/Dockerfile
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            ${{ github.repository }}
+            ghcr.io/${{ github.repository }}/${{ github.event.repository.name }}
+          tags: |
+            type=raw,value=latest
+            type=raw,value=tomcat
+            type=raw,value=tomcat-v9
+            type=raw,value=${{ github.event.inputs.releaseVersion }}
+            type=raw,value=${{ github.event.inputs.releaseVersion }}-tomcat
+            type=raw,value=${{ github.event.inputs.releaseVersion }}-tomcat-v9
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Login to GHCR
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push image
+        uses: docker/build-push-action@v3
+        continue-on-error: true
+        with:
+          context: ./jee-agents-distribution/jee-agents-distribution-tomcat-v6
+          file: ./jee-agents-distribution/jee-agents-distribution-tomcat-v6/Dockerfile
+          build-args: |
+            VERSION=${{ github.event.inputs.releaseVersion }}
+          platforms: linux/amd64, linux/arm64/8, linux/arm/v7, linux/ppc64le
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+  release-docker-tomee:
+    runs-on: 'ubuntu-latest'
+    needs:
+      - release-maven
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.inputs.releaseVersion }}
+          fetch-depth: 1
+          submodules: recursive
+      - name: Set source
+        run: sed -i -e 's/tomcat:8\.5-jre8/tomee:8-jre-7\.1\.0-plus/g' jee-agents-distribution/jee-agents-distribution-tomcat-v6/Dockerfile
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            ${{ github.repository }}
+            ghcr.io/${{ github.repository }}/${{ github.event.repository.name }}
+          tags: |
+            type=raw,value=tomee
+            type=raw,value=tomee-v7
+            type=raw,value=${{ github.event.inputs.releaseVersion }}-tomee
+            type=raw,value=${{ github.event.inputs.releaseVersion }}-tomee-v7
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Login to GHCR
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push image
+        uses: docker/build-push-action@v3
+        continue-on-error: true
+        with:
+          context: ./jee-agents-distribution/jee-agents-distribution-tomcat-v6
+          file: ./jee-agents-distribution/jee-agents-distribution-tomcat-v6/Dockerfile
+          build-args: |
+            VERSION=${{ github.event.inputs.releaseVersion }}
+          platforms: linux/amd64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
