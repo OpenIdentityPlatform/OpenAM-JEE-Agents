@@ -46,7 +46,7 @@
                              <goal>single</goal>
                          </goals>
                          <configuration>
-                             <finalName>tomcat_v6_v7_v8_agent_${project.version}</finalName>
+                             <finalName>tomcat_v6_v7_v8_v9_agent_${project.version}</finalName>
                              <appendAssemblyId>false</appendAssemblyId>
                              <tarLongFileMode>gnu</tarLongFileMode>
                              <descriptors>

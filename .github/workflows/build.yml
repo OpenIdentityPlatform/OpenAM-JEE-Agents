@@ -1,0 +1,214 @@
+name: Build 
+
+on:
+  push:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build-maven:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        java: [ '8', '11' ]
+        os: [ 'ubuntu-latest', 'macos-latest', 'windows-latest' ]
+      fail-fast: false
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+        submodules: recursive
+    - name: Java ${{ matrix.Java }} (${{ matrix.os }})
+      uses: actions/setup-java@v3
+      with:
+        java-version: ${{ matrix.java }}
+        distribution: 'temurin'
+    - name: Cache Maven packages
+      uses: actions/cache@v3
+      with:
+         path: ~/.m2/repository
+         key: ${{ runner.os }}-m2-repository-${{ hashFiles('**/pom.xml') }}
+         restore-keys: ${{ runner.os }}-m2-repository
+    - name: Build with Maven
+      env:
+        MAVEN_OPTS: -Dhttps.protocols=TLSv1.2 -Dmaven.wagon.httpconnectionManager.ttlSeconds=120 -Dmaven.wagon.http.retryHandler.requestSentEnabled=true -Dmaven.wagon.http.retryHandler.count=10
+      run: mvn --batch-mode --errors --update-snapshots verify --file pom.xml 
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ matrix.os }}-${{ matrix.java }}
+        retention-days: 5
+        path:  |
+          jee-agents-distribution/jee-agents-distribution-appserver-v10/target/*.zip
+          jee-agents-distribution/jee-agents-distribution-jboss-v42/target/*.zip
+          jee-agents-distribution/jee-agents-distribution-jboss-v7/target/*.zip
+          jee-agents-distribution/jee-agents-distribution-jetty-v61/target/*.zip
+          jee-agents-distribution/jee-agents-distribution-jetty-v7/target/*.zip
+          jee-agents-distribution/jee-agents-distribution-jsr196/target/*.zip
+          jee-agents-distribution/jee-agents-distribution-tomcat-v6/target/*.zip
+  build-docker-tomcat-8-5-jre8:
+    runs-on: 'ubuntu-latest'
+    services:
+      registry:
+        image: registry:2
+        ports:
+          - 5000:5000
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          submodules: recursive
+      - name: Set up Java for publishing to Maven Central Repository OSS
+        uses: actions/setup-java@v3
+        with:
+          java-version: '8'
+          distribution: 'temurin'
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-m2-repository-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2-repository
+      - name: Build with Maven
+        env:
+          MAVEN_OPTS: -Dhttps.protocols=TLSv1.2 -Dmaven.wagon.httpconnectionManager.ttlSeconds=120 -Dmaven.wagon.http.retryHandler.requestSentEnabled=true -Dmaven.wagon.http.retryHandler.count=10
+        run: mvn --batch-mode --errors --update-snapshots package --file pom.xml 
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            localhost:5000/${{ github.repository }}
+          tags: |
+            type=raw,value=test
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+        with:
+          driver-opts: network=host
+      - name: Build image
+        uses: docker/build-push-action@v3
+        continue-on-error: true
+        with:
+          context: ./jee-agents-distribution/jee-agents-distribution-tomcat-v6
+          file: ./jee-agents-distribution/jee-agents-distribution-tomcat-v6/Dockerfile
+          platforms: linux/amd64, linux/arm64/8, linux/arm/v7, linux/ppc64le
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+      - name: Docker test
+        shell: bash
+        run: |
+          docker run -it -d --name=test localhost:5000/${GITHUB_REPOSITORY,,}:test
+          timeout 2m bash -c 'until docker logs test | grep -q "Naming service connection failed"; do sleep 5; done'
+  build-docker-tomcat-9-jre8:
+    runs-on: 'ubuntu-latest'
+    services:
+      registry:
+        image: registry:2
+        ports:
+          - 5000:5000
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          submodules: recursive
+      - name: Set up Java for publishing to Maven Central Repository OSS
+        uses: actions/setup-java@v3
+        with:
+          java-version: '8'
+          distribution: 'temurin'
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-m2-repository-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2-repository
+      - name: Build with Maven
+        env:
+          MAVEN_OPTS: -Dhttps.protocols=TLSv1.2 -Dmaven.wagon.httpconnectionManager.ttlSeconds=120 -Dmaven.wagon.http.retryHandler.requestSentEnabled=true -Dmaven.wagon.http.retryHandler.count=10
+        run: |
+          mvn --batch-mode --errors --update-snapshots package --file pom.xml 
+          sed -i -e 's/tomcat:8\.5-jre8/tomcat:9-jre8/g' jee-agents-distribution/jee-agents-distribution-tomcat-v6/Dockerfile
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            localhost:5000/${{ github.repository }}
+          tags: |
+            type=raw,value=test
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+        with:
+          driver-opts: network=host
+      - name: Build image
+        uses: docker/build-push-action@v3
+        continue-on-error: true
+        with:
+          context: ./jee-agents-distribution/jee-agents-distribution-tomcat-v6
+          file: ./jee-agents-distribution/jee-agents-distribution-tomcat-v6/Dockerfile
+          platforms: linux/amd64, linux/arm64/8, linux/arm/v7, linux/ppc64le
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+      - name: Docker test
+        shell: bash
+        run: |
+          docker run -it -d --name=test localhost:5000/${GITHUB_REPOSITORY,,}:test
+          timeout 2m bash -c 'until docker logs test | grep -q "Naming service connection failed"; do sleep 5; done'
+  build-docker-tomee-7-1-plus-jre8:
+    runs-on: 'ubuntu-latest'
+    services:
+      registry:
+        image: registry:2
+        ports:
+          - 5000:5000
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          submodules: recursive
+      - name: Set up Java for publishing to Maven Central Repository OSS
+        uses: actions/setup-java@v3
+        with:
+          java-version: '8'
+          distribution: 'temurin'
+      - name: Build with Maven
+        env:
+          MAVEN_OPTS: -Dhttps.protocols=TLSv1.2 -Dmaven.wagon.httpconnectionManager.ttlSeconds=120 -Dmaven.wagon.http.retryHandler.requestSentEnabled=true -Dmaven.wagon.http.retryHandler.count=10
+        run: |
+          mvn --batch-mode --errors --update-snapshots package --file pom.xml 
+          sed -i -e 's/tomcat:8\.5-jre8/tomee:8-jre-7\.1\.0-plus/g' jee-agents-distribution/jee-agents-distribution-tomcat-v6/Dockerfile
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            localhost:5000/${{ github.repository }}
+          tags: |
+            type=raw,value=test
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+        with:
+          driver-opts: network=host
+      - name: Build image
+        uses: docker/build-push-action@v3
+        continue-on-error: true
+        with:
+          context: ./jee-agents-distribution/jee-agents-distribution-tomcat-v6
+          file: ./jee-agents-distribution/jee-agents-distribution-tomcat-v6/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+      - name: Docker test
+        shell: bash
+        run: |
+          docker run -it -d --name=test localhost:5000/${GITHUB_REPOSITORY,,}:test
+          timeout 2m bash -c 'until docker logs test | grep -q "Naming service connection failed"; do sleep 5; done'
