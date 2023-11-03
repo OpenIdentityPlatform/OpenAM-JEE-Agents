@@ -19,7 +19,7 @@ ENV CATALINA_HOME=${CATALINA_HOME:-.}
 RUN apt update && apt install -y curl unzip && rm -fr $CATALINA_HOME/webapps/*
 
 ARG VERSION
-RUN if [ ! -z "$VERSION" ] ; then rm -rf ./*.zip ; curl -L https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/releases/download/$VERSION/tomcat_v6_v7_v8_agent_$VERSION.zip --output $VERSION.zip ; fi
+RUN if [ ! -z "$VERSION" ] ; then rm -rf ./*.zip ; curl -L https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/releases/download/$VERSION/tomcat_v6_v7_v8_v9_agent_$VERSION.zip --output $VERSION.zip ; fi
 RUN  unzip *.zip && rm -rf *.zip
 
 RUN useradd -m -r -u 1001 -g root $USER \
