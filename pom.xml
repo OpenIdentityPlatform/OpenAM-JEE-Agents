@@ -42,6 +42,7 @@
 <!--         <forgerock.guice.version>1.0.0</forgerock.guice.version> -->
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
+        <javadoc.opts>-Xdoclint:none</javadoc.opts>
     </properties>
     <modules>
         <!-- OpenAM JavaEE Policy Agent Modules -->
