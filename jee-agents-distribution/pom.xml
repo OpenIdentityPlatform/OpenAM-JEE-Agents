@@ -24,7 +24,7 @@
     <parent>
         <groupId>org.openidentityplatform.openam.agents</groupId>
         <artifactId>jee-agents</artifactId>
-        <version>4.1.5-SNAPSHOT</version>
+        <version>4.2.0</version>
     </parent>
 
     <name>OpenAM JavaEE Policy Agents Distribution</name>
