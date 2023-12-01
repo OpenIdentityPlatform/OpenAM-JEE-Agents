@@ -28,6 +28,7 @@
     <artifactId>jee-agents</artifactId>
     <version>4.1.5-SNAPSHOT</version>
     <packaging>pom</packaging>
+    <url>https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents</url>
     <properties>
         <openam.version>14.8.1</openam.version>
 <!--         <websphere.libraries.v61.system.path>/var/tmp/extlib/websphere/v61</websphere.libraries.v61.system.path> -->
@@ -150,8 +151,17 @@
 		        <groupId>org.apache.maven.plugins</groupId>
 		        <artifactId>maven-javadoc-plugin</artifactId>
 		        <version>3.6.2</version>
+		        <executions>
+				    <execution>
+				      <id>attach-javadocs</id>
+				      <goals>
+				        <goal>jar</goal>
+				      </goals>
+				    </execution>
+				  </executions>
 		        <configuration>
 					<doclint>none</doclint>
+					<encoding>UTF-8</encoding>
 		        </configuration>
     	      </plugin>
 		</plugins>
