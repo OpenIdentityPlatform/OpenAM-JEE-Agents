@@ -5,7 +5,6 @@
 [![Issues](https://img.shields.io/github/issues/OpenIdentityPlatform/OpenAM-JEE-Agents.svg)](https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/issues)
 [![Last commit](https://img.shields.io/github/last-commit/OpenIdentityPlatform/OpenAM-JEE-Agents.svg)](https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/commits/master)
 [![License](https://img.shields.io/badge/license-CDDL-blue.svg)](https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/blob/master/LICENSE.md)
-[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/OpenIdentityPlatform/OpenAM)
 [![Top language](https://img.shields.io/github/languages/top/OpenIdentityPlatform/OpenAM-JEE-Agents.svg)](https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents)
 [![Code size in bytes](https://img.shields.io/github/languages/code-size/OpenIdentityPlatform/OpenAM-JEE-Agents.svg)](https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents)
 
@@ -33,14 +32,14 @@ Java 1.8+ required
 
 ```bash
 git clone https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents.git
-mvn clean install -f OpenAM-JEE-Agents
+mvn install -f OpenAM-JEE-Agents
 ```
 
 ## Support and Mailing List Information
-* OpenAM Java Policy Agent Community Wiki: https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/wiki
-* OpenAM Java Policy Agent Community Discussions: https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/discussions
-* OpenAM Java Policy Agent Community Issues: https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/issues
-* OpenAM Java Policy Agent Commercial support RFP: support@openam.org.ru (English, Russian)
+* OpenAM Java Policy Agent Community [documentation](https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/wiki)
+* OpenAM Java Policy Agent Community [discussions](https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/discussions)
+* OpenAM Java Policy Agent Community [issues](https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/issues)
+* OpenAM Java Policy Agent [commercial support](https://github.com/OpenIdentityPlatform/.github/wiki/Approved-Vendor-List)
 
 ## Contributing
 Please, make [Pull request](https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents/pulls)
