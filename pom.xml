@@ -15,7 +15,7 @@
  * Header, with the fields enclosed by brackets [] replaced by your own identifying
  * information: "Portions copyright [year] [name of copyright owner]".
  *
- * Portions copyright 2023 3A Systems LLC
+ * Portions copyright 2023-2024 3A Systems LLC
  *
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
@@ -428,11 +428,6 @@
                 <artifactId>javax.servlet-api</artifactId>
                 <version>3.0.1</version>
                 <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>commons-io</groupId>
-                <artifactId>commons-io</artifactId>
-                <version>2.14.0</version>
             </dependency>
             <dependency>
                 <groupId>org.owasp.esapi</groupId>
