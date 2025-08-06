@@ -19,20 +19,20 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
         run: echo "$GITHUB_CONTEXT"
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           submodules: recursive
       - name: Set up Java for publishing to Maven Central Repository OSS
         uses: actions/setup-java@v3
         with:
-          java-version: '8'
+          java-version: ${{ github.event.workflow_run.head_branch == 'release/5.0.0-SNAPSHOT' && '11' || '8'}}
           distribution: 'temurin'
           server-id: ossrh
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
       - name: Cache Maven packages
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
          path: ~/.m2/repository
          key: ${{ runner.os }}-m2-repository-${{ hashFiles('**/pom.xml') }}
@@ -59,7 +59,7 @@ jobs:
         if: ${{ env.MAVEN_USERNAME!='' && env.MAVEN_PASSWORD!='' }}
         run: mvn --batch-mode -Darguments="-Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }}" -DsignTag=true -DtagNameFormat="${{ github.event.inputs.releaseVersion }}" -DreleaseVersion=${{ github.event.inputs.releaseVersion }} -DdevelopmentVersion=${{ github.event.inputs.developmentVersion }} release:prepare release:perform --file pom.xml
       - name: Release on GitHub
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           name: ${{ github.event.inputs.releaseVersion }}
           tag_name: ${{ github.event.inputs.releaseVersion }}
@@ -80,14 +80,14 @@ jobs:
     needs:
       - release-maven
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.inputs.releaseVersion }}
           fetch-depth: 1
           submodules: recursive
       - name: Docker meta
         id: meta
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@v5
         with:
           images: |
             ${{ github.repository }}
@@ -96,22 +96,22 @@ jobs:
             type=raw,value=tomcat-v8
             type=raw,value=${{ github.event.inputs.releaseVersion }}-tomcat-v8
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
       - name: Login to DockerHub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Login to GHCR
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push image
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v5
         continue-on-error: true
         with:
           context: ./jee-agents-distribution/jee-agents-distribution-tomcat-v6
@@ -127,7 +127,7 @@ jobs:
     needs:
       - release-maven
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.inputs.releaseVersion }}
           fetch-depth: 1
@@ -136,7 +136,7 @@ jobs:
         run: sed -i -e 's/tomcat:8\.5-jre8/tomcat:9-jre8/g' jee-agents-distribution/jee-agents-distribution-tomcat-v6/Dockerfile
       - name: Docker meta
         id: meta
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@v5
         with:
           images: |
             ${{ github.repository }}
@@ -149,22 +149,22 @@ jobs:
             type=raw,value=${{ github.event.inputs.releaseVersion }}-tomcat
             type=raw,value=${{ github.event.inputs.releaseVersion }}-tomcat-v9
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
       - name: Login to DockerHub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Login to GHCR
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push image
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v5
         continue-on-error: true
         with:
           context: ./jee-agents-distribution/jee-agents-distribution-tomcat-v6
@@ -180,7 +180,7 @@ jobs:
     needs:
       - release-maven
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.inputs.releaseVersion }}
           fetch-depth: 1
@@ -189,7 +189,7 @@ jobs:
         run: sed -i -e 's/tomcat:8\.5-jre8/tomee:8-jre-7\.1\.0-plus/g' jee-agents-distribution/jee-agents-distribution-tomcat-v6/Dockerfile
       - name: Docker meta
         id: meta
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@v5
         with:
           images: |
             ${{ github.repository }}
@@ -200,22 +200,22 @@ jobs:
             type=raw,value=${{ github.event.inputs.releaseVersion }}-tomee
             type=raw,value=${{ github.event.inputs.releaseVersion }}-tomee-v7
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
       - name: Login to DockerHub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Login to GHCR
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push image
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v5
         continue-on-error: true
         with:
           context: ./jee-agents-distribution/jee-agents-distribution-tomcat-v6
