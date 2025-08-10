@@ -26,7 +26,7 @@
     <parent>
         <groupId>org.openidentityplatform.openam.agents</groupId>
         <artifactId>jee-agents</artifactId>
-        <version>4.2.1-SNAPSHOT</version>
+        <version>4.2.1</version>
     </parent>
 
     <!-- Component Definition -->
