@@ -28,15 +28,15 @@
 
 /**
  * Portions Copyrighted 2012 ForgeRock Inc
+ * Portions Copyrighted 2025 3A Systems LLC.
  */
 package com.sun.identity.agents.filter;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import com.sun.identity.agents.arch.AgentBase;
 import com.sun.identity.agents.arch.AgentConfiguration;

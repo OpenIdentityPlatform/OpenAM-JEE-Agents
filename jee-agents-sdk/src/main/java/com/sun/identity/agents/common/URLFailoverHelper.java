@@ -25,6 +25,7 @@
  * $Id: URLFailoverHelper.java,v 1.5 2008/06/25 05:51:42 qcheng Exp $
  *
  * Portions Copyrighted 2012-2014 ForgeRock AS.
+ * Portions Copyrighted 2025 3A Systems LLC.
  */
 package com.sun.identity.agents.common;
 
@@ -40,7 +41,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
 import java.util.Set;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 
 /**

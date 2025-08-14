@@ -24,11 +24,12 @@
  *
  * $Id: ISSOContext.java,v 1.4 2008/07/02 18:27:12 leiming Exp $
  *
+ * Portions Copyrighted 2025 3A Systems LLC.
  */
 
 package com.sun.identity.agents.filter;
 
-import javax.servlet.http.Cookie;
+import jakarta.servlet.http.Cookie;
 
 import com.sun.identity.agents.arch.AgentException;
 import com.sun.identity.agents.common.ICookieResetHelper;

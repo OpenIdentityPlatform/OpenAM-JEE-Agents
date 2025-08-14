@@ -27,14 +27,15 @@
  */
 /**
  * Portions Copyrighted 2014 ForgeRock AS
+ * Portions Copyrighted 2025 3A Systems LLC.
  */
 package com.sun.identity.agents.common;
 
 import java.util.Map;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import com.sun.identity.agents.arch.Module;
 import com.sun.identity.agents.arch.SurrogateBase;

@@ -24,6 +24,7 @@
  *
  * $Id: WebServiceTaskHandler.java,v 1.5 2008/10/07 17:32:31 huacui Exp $
  *
+ * Portions Copyrighted 2025 3A Systems LLC.
  */
 
 package com.sun.identity.agents.filter;
@@ -40,7 +41,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import com.iplanet.sso.SSOToken;
 import com.sun.identity.agents.arch.AgentException;

@@ -24,6 +24,7 @@
  *
  * $Id: WebServiceDefaultAuthenticator.java,v 1.2 2009/01/26 22:42:33 leiming Exp $
  *
+ * Portions Copyrighted 2025 3A Systems LLC.
  */
 
 package com.sun.identity.agents.filter;
@@ -40,10 +41,10 @@ import com.sun.identity.agents.arch.ISystemAccess;
 import com.sun.identity.wss.security.WSSUtils;
 import com.sun.identity.wss.security.handler.SOAPRequestHandler;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.xml.soap.MessageFactory;
-import javax.xml.soap.MimeHeaders;
-import javax.xml.soap.SOAPMessage;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.xml.soap.MessageFactory;
+import jakarta.xml.soap.MimeHeaders;
+import jakarta.xml.soap.SOAPMessage;
 import javax.security.auth.Subject;
 
 /**

@@ -25,6 +25,7 @@
  * $Id: AgentConfiguration.java,v 1.39 2009/04/02 00:02:11 leiming Exp $
  *
  * Portions Copyrighted 2010-2015 ForgeRock AS.
+ * Portions Copyrighted 2025 3A Systems LLC.
  */
 
 package com.sun.identity.agents.arch;
@@ -721,7 +722,7 @@ public class AgentConfiguration implements
                 setServiceResolver();
                 setApplicationUser();
                 setApplicationPassword();               
-		setPolicyAdminLoc();
+                setPolicyAdminLoc();
                 setAppSSOToken();
                 setLockConfig();
                 setProfileName();

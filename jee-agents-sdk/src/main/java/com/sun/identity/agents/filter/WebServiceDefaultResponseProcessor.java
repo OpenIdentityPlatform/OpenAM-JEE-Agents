@@ -24,29 +24,25 @@
  *
  * $Id: WebServiceDefaultResponseProcessor.java,v 1.1 2008/10/07 17:36:32 huacui Exp $
  *
+ * Portions Copyrighted 2025 3A Systems LLC.
  */
 
 package com.sun.identity.agents.filter;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
 
-import com.iplanet.sso.SSOToken;
 import com.sun.identity.agents.arch.AgentException;
 import com.sun.identity.agents.arch.ISystemAccess;
 import com.sun.identity.wss.security.handler.SOAPRequestHandler;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.xml.soap.MessageFactory;
-import javax.xml.soap.MimeHeaders;
-import javax.xml.soap.SOAPMessage;
-import javax.security.auth.Subject;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.xml.soap.MessageFactory;
+import jakarta.xml.soap.MimeHeaders;
+import jakarta.xml.soap.SOAPMessage;
 
 /**
  * WebServiceDefaultResponseProcessor class provides default implementation of 

@@ -24,12 +24,14 @@
  *
  * $Id: OpenSSOServletInputStream.java,v 1.1 2008/10/07 17:36:32 huacui Exp $
  *
+ * Portions Copyrighted 2025 3A Systems LLC.
  */
 
 package com.sun.identity.agents.filter;
 
-import javax.servlet.ServletInputStream;
-import java.io.ByteArrayInputStream;
+import jakarta.servlet.ReadListener;
+import jakarta.servlet.ServletInputStream;
+
 import java.io.InputStream;
 import java.io.IOException;
 
@@ -46,5 +48,24 @@ public class OpenSSOServletInputStream extends ServletInputStream
 
     public int read() throws IOException {
         return is.read();
+    }
+
+    @Override
+    public boolean isFinished() {
+        try {
+            return is.available() == 0;
+        } catch (IOException e) {
+            return true;
+        }
+    }
+
+    @Override
+    public boolean isReady() {
+        return true;
+    }
+
+    @Override
+    public void setReadListener(ReadListener readListener) {
+        throw new UnsupportedOperationException();
     }
 }

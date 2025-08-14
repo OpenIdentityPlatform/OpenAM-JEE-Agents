@@ -23,6 +23,8 @@
  * "Portions Copyrighted [year] [name of copyright owner]"
  *
  * $Id: AmTomcatCDSSOTaskHandler.java,v 1.2 2008/11/28 12:35:31 saueree Exp $
+ *
+ * Portions Copyrighted 2025 3A Systems LLC.
  */
 
 
@@ -33,7 +35,7 @@ import com.sun.identity.agents.filter.AmFilterRequestContext;
 import com.sun.identity.agents.filter.AmFilterResult;
 import com.sun.identity.agents.arch.AgentException;
 import com.sun.identity.agents.arch.Manager;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * This task handler provides the necessary functionality to process incoming

@@ -28,6 +28,7 @@
 
 /*
  * Portions Copyrighted 2010-2013 ForgeRock AS
+ * Portions Copyrighted 2025 3A Systems LLC.
  */
 package com.sun.identity.agents.arch;
 
@@ -551,7 +552,7 @@ public abstract class ServiceResolver {
     
     static {      
         try {
-            Class c = Class.forName("javax.ejb.EJBContext");
+            Class c = Class.forName("jakarta.ejb.EJBContext");
             if (c != null) {
                 _ejbContextAvailable = true;
             }

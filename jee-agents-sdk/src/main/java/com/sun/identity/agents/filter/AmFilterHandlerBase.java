@@ -24,13 +24,14 @@
  *
  * $Id: AmFilterHandlerBase.java,v 1.2 2008/06/25 05:51:43 qcheng Exp $
  *
+ * Portions Copyrighted 2025 3A Systems LLC.
  */
 
 package com.sun.identity.agents.filter;
 
 import java.io.InputStream;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import com.sun.identity.agents.arch.AgentBase;
 import com.sun.identity.agents.arch.AgentException;

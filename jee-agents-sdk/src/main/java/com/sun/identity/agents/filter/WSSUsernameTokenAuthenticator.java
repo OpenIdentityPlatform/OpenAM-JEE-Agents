@@ -27,6 +27,7 @@
  */
 /**
  * Portions Copyrighted 2012 ForgeRock Inc
+ * Portions Copyrighted 2025 3A Systems LLC.
  */
 package com.sun.identity.agents.filter;
 
@@ -37,7 +38,7 @@ import javax.security.auth.callback.Callback;
 import javax.security.auth.callback.NameCallback;
 import javax.security.auth.callback.PasswordCallback;
 import javax.security.auth.callback.UnsupportedCallbackException;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import javax.xml.parsers.SAXParser;
 
 import org.xml.sax.InputSource;

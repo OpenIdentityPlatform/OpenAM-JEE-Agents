@@ -27,6 +27,7 @@
 
 /**
  * Portions Copyrighted 2012-2014 ForgeRock AS
+ * Portions Copyrighted 2025 3A Systems LLC.
  */
 package com.sun.identity.agents.filter;
 
@@ -38,8 +39,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 
 import com.sun.identity.agents.arch.ServiceFactory;
 import com.sun.identity.agents.arch.ICrypt;

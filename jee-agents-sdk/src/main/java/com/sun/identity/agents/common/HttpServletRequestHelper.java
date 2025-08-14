@@ -27,6 +27,7 @@
  */
 /**
  * Portions Copyrighted 2012-2013 ForgeRock AS
+ * Portions Copyrighted 2025 3A Systems LLC.
  */
 package com.sun.identity.agents.common;
 
@@ -35,11 +36,10 @@ package com.sun.identity.agents.common;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import javax.servlet.ServletInputStream;
+import jakarta.servlet.ServletInputStream;
 
 import com.sun.identity.agents.arch.Module;
 import com.sun.identity.agents.arch.SurrogateBase;

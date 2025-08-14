@@ -24,13 +24,14 @@
  *
  * $Id: OpenSSOHttpServletRequest.java,v 1.1 2008/10/07 17:36:32 huacui Exp $
  *
+ * Portions Copyrighted 2025 3A Systems LLC.
  */
 
 package com.sun.identity.agents.filter;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
-import javax.servlet.ServletInputStream;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequestWrapper;
+import jakarta.servlet.ServletInputStream;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;

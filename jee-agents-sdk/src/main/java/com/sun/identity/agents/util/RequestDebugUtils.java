@@ -24,14 +24,15 @@
  *
  * $Id: RequestDebugUtils.java,v 1.3 2009/01/21 18:57:44 kanduls Exp $
  *
+ * Portions Copyrighted 2025 3A Systems LLC.
  */
 
 package com.sun.identity.agents.util;
 
 
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Enumeration;
 
