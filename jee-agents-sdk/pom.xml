@@ -114,7 +114,6 @@
                             <Build-Time>${maven.build.timestamp}</Build-Time>
                             <Version>${project.version}</Version>
                             <Create-On>${maven.build.timestamp}</Create-On>
-                            <SVN-Revision>${svn-revision.revision}</SVN-Revision>
                             <!-- TODO Add License to Manifest -->
                             <License />
                         </manifestEntries>
@@ -159,6 +158,12 @@
          <dependency>
          	<groupId>org.owasp.esapi</groupId>
             <artifactId>esapi</artifactId>
+             <exclusions>
+                 <exclusion>
+                     <groupId>org.owasp.antisamy</groupId>
+                     <artifactId>antisamy</artifactId>
+                 </exclusion>
+             </exclusions>
         </dependency>
         <!-- OpenAM project dependencies -->
         <dependency>
@@ -185,6 +190,18 @@
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-core</artifactId>
             <version>10.1.44</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers</artifactId>
+            <version>1.21.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
