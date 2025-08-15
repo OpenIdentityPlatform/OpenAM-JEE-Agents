@@ -16,12 +16,15 @@
 
 package org.openidentityplatform.agents;
 
+import org.forgerock.openam.sdk.com.fasterxml.jackson.core.type.TypeReference;
+import org.forgerock.openam.sdk.com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testcontainers.containers.Container;
 import org.testcontainers.containers.ExecConfig;
 import org.testcontainers.containers.FixedHostPortGenericContainer;
 import org.testcontainers.containers.GenericContainer;
+import org.testcontainers.containers.Network;
 import org.testcontainers.containers.output.Slf4jLogConsumer;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.images.ImagePullPolicy;
@@ -32,11 +35,16 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Duration;
+import java.util.Map;
 
 public class OpenAmDockerRunTest {
 
@@ -44,12 +52,35 @@ public class OpenAmDockerRunTest {
 
     GenericContainer<?> openam;
 
+    GenericContainer<?> tomcat;
+
+    Network network = Network.newNetwork();
+//    Network network = new Network() {
+//        @Override
+//        public String getId() {
+//            return "openam";
+//        }
+//
+//        @Override
+//        public void close() {
+//
+//        }
+//
+//        @Override
+//        public Statement apply(Statement base, Description description) {
+//            return null;
+//        }
+//    };
+
     @BeforeClass
     public void setup() throws IOException, InterruptedException {
-        //setupOpenAmDockerContainer();
+        setupOpenAmDockerContainer();
+
+//        Thread.sleep(1000 * 60 * 10);
+
         setupTomcatDockerContainer();
 
-        Thread.sleep(1000 * 60 * 10);
+        //Thread.sleep(1000 * 60 * 10);
 
     }
 
@@ -69,8 +100,10 @@ public class OpenAmDockerRunTest {
         }
 
 
-        GenericContainer<?> tomcat = new FixedHostPortGenericContainer<>("tomcat:10.1-jdk11")
+        tomcat = new FixedHostPortGenericContainer<>("tomcat:10.1-jdk11")
                 .withFixedExposedPort(8081, 8080)
+                .withExposedPorts(8080)
+                .withNetwork(network)
                 .withLogConsumer(new Slf4jLogConsumer(logger))
                 .withCopyToContainer(
                         MountableFile.forClasspathResource("docker/index.html"),
@@ -79,17 +112,21 @@ public class OpenAmDockerRunTest {
                 .withCopyToContainer(MountableFile.forHostPath(jeeAgentsSdkPath), "/usr/local/tomcat/lib/jee-agents-sdk-uber.jar")
                 .withCopyToContainer(MountableFile.forClasspathResource("docker/tomcat/web.xml"), "/usr/local/tomcat/conf/web.xml")
                 .withCopyToContainer(MountableFile.forClasspathResource("/"), "/usr/local/tomcat/lib/")
-                .waitingFor(Wait.forListeningPort());
+                .waitingFor(Wait.forHttp("/demo/").forPort(8080));
 
         tomcat.start();
 
     }
 
     private void setupOpenAmDockerContainer() throws IOException, InterruptedException {
-        String imageName1 = "openam-configured:latest";
+//        String imageName = "openam-configured:latest";
+//        String imageName = "openam-configured-agents-policies";
         String imageName = "openidentityplatform/openam:latest";
-        openam = new GenericContainer<>(DockerImageName.parse(imageName1))
-                .withImagePullPolicy(new NoPullPolicy())
+        openam = new FixedHostPortGenericContainer<>(imageName)
+                .withFixedExposedPort(8080, 8080)
+                .withExposedPorts(8080)
+                .withNetwork(network)
+                .withImagePullPolicy(new NeverPullPolicy())
                 .withCopyToContainer(
                         MountableFile.forClasspathResource("docker/openam.conf"),
                         "/usr/openam/ssoconfiguratortools/openam.conf"
@@ -98,8 +135,12 @@ public class OpenAmDockerRunTest {
                         MountableFile.forClasspathResource("docker/agent.properties"),
                         "/usr/openam/ssoadmintools/agent.properties"
                 )
+                .withCopyToContainer(
+                        MountableFile.forClasspathResource("docker/policies.json"),
+                        "/usr/openam/ssoadmintools/policies.json"
+                )
                 .withLogConsumer(new Slf4jLogConsumer(logger))
-                .withExposedPorts(8080)
+
                 .withCreateContainerCmdModifier(it -> it.withHostName("openam.example.org"))
                 //.waitingFor(Wait.forListeningPort())
                 .waitingFor(Wait.forHealthcheck())
@@ -107,8 +148,9 @@ public class OpenAmDockerRunTest {
         ;
 
         openam.start();
-//        executeDockerCommand("java -jar openam-configurator-tool*.jar --file openam.conf",
-//                "/usr/openam/ssoconfiguratortools/");
+
+        executeDockerCommand("java -jar openam-configurator-tool*.jar --file openam.conf",
+                "/usr/openam/ssoconfiguratortools/");
 
         executeDockerCommand("./setup -p $OPENAM_DATA_DIR " +
                         "-d /usr/openam/ssoadmintools/debug -d /usr/openam/ssoadmintools/log --acceptLicense",
@@ -118,8 +160,14 @@ public class OpenAmDockerRunTest {
 
         executeDockerCommand("./openam/bin/ssoadm create-agent " +
                         "--realm / --agentname myAgent --agenttype J2EEAgent --adminid amadmin " +
-                        "--password-file /tmp/pwd.txt --datafile agent.properties"
-                , "/usr/openam/ssoadmintools");
+                        "--password-file /tmp/pwd.txt --datafile agent.properties",
+                "/usr/openam/ssoadmintools");
+
+        executeDockerCommand("./openam/bin/ssoadm policy-import " +
+                        "--servername http://openam.example.org:8080/openam " +
+                        "--realm / --jsonfile policies.json --adminid amadmin --password-file /tmp/pwd.txt",
+                "/usr/openam/ssoadmintools");
+
     }
 
     private void executeDockerCommand(String command, String workdir) throws IOException, InterruptedException {
@@ -134,7 +182,7 @@ public class OpenAmDockerRunTest {
         }
     }
 
-    public static class NoPullPolicy implements ImagePullPolicy {
+    public static class NeverPullPolicy implements ImagePullPolicy {
 
         @Override
         public boolean shouldPull(DockerImageName imageName) {
@@ -147,9 +195,54 @@ public class OpenAmDockerRunTest {
         if (openam != null) {
             openam.close();
         }
+        if (tomcat != null) {
+            tomcat.close();
+        }
     }
 
+    HttpClient client = HttpClient.newHttpClient();
+
     @Test
-    public void runDockerContainer() throws IOException {
+    public void runDockerContainer() throws IOException, InterruptedException {
+        //Thread.sleep(1000 * 60 * 10);
+        callServlet("");
+        String token = getAuthenticationToken();
+        callServlet(token);
+
+        Thread.sleep(1000 * 60 * 10);
+    }
+
+    private String getAuthenticationToken() throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://openam.example.org:8080/openam/json/authenticate"))
+                .header("X-OpenAM-Username", "demo")
+                .header("X-OpenAM-Password", "changeit")
+                .POST(HttpRequest.BodyPublishers.noBody())
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        ObjectMapper mapper = new ObjectMapper();
+        String body = response.body();
+        Map<String, String> responseMap = mapper.readValue(body, new TypeReference<>() {
+        });
+
+        return responseMap.get("tokenId");
+    }
+
+    private void callServlet(String token) {
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:8081/demo/"))
+                .header("Cookie", "iPlanetDirectoryPro="+ token)
+                //.header("iPlanetDirectoryPro", token)
+                .GET()
+                .build();
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println("Status Code: " + response.statusCode());
+            System.out.println("Response Body:\n" + response.body());
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

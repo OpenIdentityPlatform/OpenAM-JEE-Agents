@@ -17,12 +17,6 @@
 package org.openidentityplatform.agents;
 
 import com.sun.identity.agents.filter.AmAgentFilter;
-import jakarta.servlet.Filter;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.FilterConfig;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -130,30 +124,30 @@ public class OpenAM_IT {
         }
     }
 
-    public static class LoggingFilter implements Filter {
-
-        @Override
-        public void init(FilterConfig filterConfig) {
-            System.out.println("LoggingFilter initialized.");
-        }
-
-        @Override
-        public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-                throws IOException, ServletException {
-
-            HttpServletRequest httpReq = (HttpServletRequest) request;
-
-            System.out.println("[LoggingFilter] Request received: " + httpReq.getMethod() + " " + httpReq.getRequestURI());
-
-            // Continue filter chain
-            chain.doFilter(request, response);
-
-            System.out.println("[LoggingFilter] Response sent.");
-        }
-
-        @Override
-        public void destroy() {
-            System.out.println("LoggingFilter destroyed.");
-        }
-    }
+//    public static class LoggingFilter implements Filter {
+//
+//        @Override
+//        public void init(FilterConfig filterConfig) {
+//            System.out.println("LoggingFilter initialized.");
+//        }
+//
+//        @Override
+//        public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+//                throws IOException, ServletException {
+//
+//            HttpServletRequest httpReq = (HttpServletRequest) request;
+//
+//            System.out.println("[LoggingFilter] Request received: " + httpReq.getMethod() + " " + httpReq.getRequestURI());
+//
+//            // Continue filter chain
+//            chain.doFilter(request, response);
+//
+//            System.out.println("[LoggingFilter] Response sent.");
+//        }
+//
+//        @Override
+//        public void destroy() {
+//            System.out.println("LoggingFilter destroyed.");
+//        }
+//    }
 }
