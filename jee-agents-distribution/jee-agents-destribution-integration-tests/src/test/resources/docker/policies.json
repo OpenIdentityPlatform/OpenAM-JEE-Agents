@@ -1,0 +1,73 @@
+{
+  "resourcetypes" : {
+    "resources" : [ {
+      "_id" : "76656a38-5f8e-401b-83aa-4ccb74ce88d2",
+      "uuid" : "76656a38-5f8e-401b-83aa-4ccb74ce88d2",
+      "name" : "URL",
+      "description" : "The built-in URL Resource Type available to OpenAM Policies.",
+      "patterns" : [ "*://*:*/*", "*://*:*/*?*" ],
+      "actions" : {
+        "HEAD" : true,
+        "DELETE" : true,
+        "POST" : true,
+        "GET" : true,
+        "OPTIONS" : true,
+        "PUT" : true,
+        "PATCH" : true
+      },
+      "createdBy" : "id=dsameuser,ou=user,dc=openam,dc=openidentityplatform,dc=org",
+      "creationDate" : 1422892465848,
+      "lastModifiedBy" : "id=dsameuser,ou=user,dc=openam,dc=openidentityplatform,dc=org",
+      "lastModifiedDate" : 1422892465848
+    } ],
+    "version" : "1.0"
+  },
+  "applications" : {
+    "resources" : [ {
+      "_id" : "iPlanetAMWebAgentService",
+      "name" : "iPlanetAMWebAgentService",
+      "displayName" : "Default Policy Set",
+      "conditions" : [ "LEAuthLevel", "Script", "AuthenticateToService", "SimpleTime", "AMIdentityMembership", "OR", "IPv6", "IPv4", "SessionProperty", "AuthScheme", "AuthLevel", "NOT", "AuthenticateToRealm", "AND", "ResourceEnvIP", "LDAPFilter", "OAuth2Scope", "Session" ],
+      "description" : "The built-in Application used by OpenAM Policy Agents.",
+      "attributeNames" : [ ],
+      "createdBy" : "id=dsameuser,ou=user,dc=openam,dc=example,dc=org",
+      "creationDate" : 1755241026542,
+      "lastModifiedBy" : "id=dsameuser,ou=user,dc=openam,dc=example,dc=org",
+      "lastModifiedDate" : 1755241026542,
+      "applicationType" : "iPlanetAMWebAgentService",
+      "subjects" : [ "NOT", "OR", "JwtClaim", "AuthenticatedUsers", "AND", "Identity", "NONE" ],
+      "saveIndex" : null,
+      "searchIndex" : null,
+      "resourceComparator" : null,
+      "editable" : true,
+      "resourceTypeUuids" : [ "76656a38-5f8e-401b-83aa-4ccb74ce88d2" ],
+      "entitlementCombiner" : "DenyOverride"
+    } ],
+    "version" : "2.1"
+  },
+  "policies" : {
+    "resources" : [ {
+      "_id" : "authenticated users",
+      "_rev" : "1755244690923",
+      "name" : "authenticated users",
+      "active" : true,
+      "description" : "",
+      "resources" : [ "*://*:*/*" ],
+      "applicationName" : "iPlanetAMWebAgentService",
+      "actionValues" : {
+        "POST" : true,
+        "GET" : true,
+        "OPTIONS" : true
+      },
+      "subject" : {
+        "type" : "AuthenticatedUsers"
+      },
+      "resourceTypeUuid" : "76656a38-5f8e-401b-83aa-4ccb74ce88d2",
+      "lastModifiedBy" : "id=amadmin,ou=user,dc=openam,dc=example,dc=org",
+      "lastModifiedDate" : "2025-08-15T07:58:10.923Z",
+      "createdBy" : "id=amadmin,ou=user,dc=openam,dc=example,dc=org",
+      "creationDate" : "2025-08-15T07:11:58.710Z"
+    } ],
+    "version" : "2.1"
+  }
+}

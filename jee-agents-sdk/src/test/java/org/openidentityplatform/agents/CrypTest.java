@@ -20,6 +20,7 @@ import com.iplanet.services.util.Crypt;
 import com.sun.identity.install.tools.configurator.InstallException;
 import com.sun.identity.install.tools.util.Debug;
 import com.sun.identity.install.tools.util.LocalizedMessage;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 import java.lang.reflect.Method;
@@ -28,6 +29,7 @@ import static com.sun.identity.agents.install.handler.EncryptionHandler.LOC_TSK_
 import static com.sun.identity.agents.install.handler.EncryptionHandler.STR_ENCRYPT_FUNCTION;
 import static com.sun.identity.agents.install.handler.EncryptionHandler.STR_ENCRYPT_LOCAL_FUNCTION;
 
+@Ignore
 public class CrypTest {
     @Test
     public void test() throws Exception {

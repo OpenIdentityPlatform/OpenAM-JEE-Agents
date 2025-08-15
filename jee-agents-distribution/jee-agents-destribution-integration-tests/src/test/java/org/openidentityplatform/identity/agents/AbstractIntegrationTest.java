@@ -14,10 +14,12 @@
  * Copyright 2025 3A Systems LLC.
  */
 
-package org.openidentityplatform.agents;
+package org.openidentityplatform.identity.agents;
 
 import org.forgerock.openam.sdk.com.fasterxml.jackson.core.type.TypeReference;
 import org.forgerock.openam.sdk.com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.runner.Description;
+import org.junit.runners.model.Statement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testcontainers.containers.Container;
@@ -32,8 +34,6 @@ import org.testcontainers.utility.DockerImageName;
 import org.testcontainers.utility.MountableFile;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Ignore;
-import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.net.URI;
@@ -47,77 +47,37 @@ import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.Map;
 
-@Ignore
-public class OpenAmDockerRunTest {
+public abstract class AbstractIntegrationTest {
 
-    final Logger logger = LoggerFactory.getLogger(OpenAmDockerRunTest.class);
+    final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     GenericContainer<?> openam;
 
     GenericContainer<?> tomcat;
 
-    Network network = Network.newNetwork();
-//    Network network = new Network() {
-//        @Override
-//        public String getId() {
-//            return "openam";
-//        }
-//
-//        @Override
-//        public void close() {
-//
-//        }
-//
-//        @Override
-//        public Statement apply(Statement base, Description description) {
-//            return null;
-//        }
-//    };
+    Network network;
+
+    HttpClient client;
 
     @BeforeClass
     public void setup() throws IOException, InterruptedException {
-        setupOpenAmDockerContainer();
+        client = HttpClient.newHttpClient();
+        network = Network.newNetwork();
+        network = getOpenAmNetwork();
 
-//        Thread.sleep(1000 * 60 * 10);
-
+//        setupOpenAmDockerContainer();
         setupTomcatDockerContainer();
-
         //Thread.sleep(1000 * 60 * 10);
-
     }
 
-    private void setupTomcatDockerContainer() throws IOException {
-        String userDirectory = FileSystems.getDefault()
-                .getPath("")
-                .toAbsolutePath()
-                .toString();
-        Path directory = Paths.get(userDirectory + "/target"); // Replace with your directory path
-        String globPattern = "jee-agents-sdk-*-uber.jar"; // Example: files starting with "prefix" and ending with ".txt"
-
-        String jeeAgentsSdkPath = null;
-        try (var stream = Files.newDirectoryStream(directory, globPattern)) {
-            for (Path entry : stream) {
-                jeeAgentsSdkPath = entry.toAbsolutePath().toString();
-            }
+    @AfterClass
+    public void tearDown() {
+        if (openam != null) {
+            openam.close();
         }
-
-
-        tomcat = new FixedHostPortGenericContainer<>("tomcat:10.1-jdk11")
-                .withFixedExposedPort(8081, 8080)
-                .withExposedPorts(8080)
-                .withNetwork(network)
-                .withLogConsumer(new Slf4jLogConsumer(logger))
-                .withCopyToContainer(
-                        MountableFile.forClasspathResource("docker/index.html"),
-                        "/usr/local/tomcat/webapps/demo/index.html"
-                )
-                .withCopyToContainer(MountableFile.forHostPath(jeeAgentsSdkPath), "/usr/local/tomcat/lib/jee-agents-sdk-uber.jar")
-                .withCopyToContainer(MountableFile.forClasspathResource("docker/tomcat/web.xml"), "/usr/local/tomcat/conf/web.xml")
-                .withCopyToContainer(MountableFile.forClasspathResource("/"), "/usr/local/tomcat/lib/")
-                .waitingFor(Wait.forHttp("/demo/").forPort(8080));
-
-        tomcat.start();
-
+        if (tomcat != null) {
+            tomcat.close();
+        }
     }
 
     private void setupOpenAmDockerContainer() throws IOException, InterruptedException {
@@ -172,49 +132,64 @@ public class OpenAmDockerRunTest {
 
     }
 
-    private void executeDockerCommand(String command, String workdir) throws IOException, InterruptedException {
-        var execConfig = ExecConfig.builder()
-                .user("openam")
-                .command(new String[]{"bash", "-c", command})
-                .workDir(workdir).build();
-        Container.ExecResult setupExecRes = openam.execInContainer(execConfig);
-        logger.info("command result: code {}, stdout: {}, stderr: {}",  setupExecRes.getExitCode(), setupExecRes.getStdout(), setupExecRes.getStderr());
-        if (setupExecRes.getExitCode() > 0) {
-            throw new IOException(setupExecRes.toString());
+    private void setupTomcatDockerContainer() throws IOException {
+
+        String userDirectory = FileSystems.getDefault()
+                .getPath("")
+                .toAbsolutePath()
+                .toString();
+        Path directory = Paths.get(userDirectory + "/../jee-agents-distribution-jar-with-lib/target");
+        String globPattern = "jee-agent-jar-with-lib_*";
+
+        String distPath = null;
+        try (var stream = Files.newDirectoryStream(directory, globPattern)) {
+            for (Path entry : stream) {
+                if(!entry.toFile().isDirectory()) {
+                    continue;
+                }
+                distPath = entry.toAbsolutePath().toString();
+                break;
+            }
         }
+
+        tomcat = new FixedHostPortGenericContainer<>("tomcat:10.1-jdk21")
+                .withFixedExposedPort(8081, 8080)
+                .withExposedPorts(8080)
+                .withNetwork(network)
+                .withLogConsumer(new Slf4jLogConsumer(logger))
+                .withCopyToContainer(
+                        MountableFile.forClasspathResource("docker/index.html"),
+                        "/usr/local/tomcat/webapps/demo/index.html"
+                )
+                .withCopyToContainer(MountableFile.forHostPath(distPath), "/usr/local/tomcat/lib/")
+                .withCopyToContainer(
+                        MountableFile.forClasspathResource("OpenSSOAgentBootstrap.properties"),
+                        "/usr/local/tomcat/lib/OpenSSOAgentBootstrap.properties")
+                .withCopyToContainer(
+                        MountableFile.forClasspathResource("debugconfig.properties"),
+                        "/usr/local/tomcat/lib/debugconfig.properties")
+                .withCopyToContainer(
+                        MountableFile.forClasspathResource("docker/tomcat/web.xml"),
+                        "/usr/local/tomcat/conf/web.xml")
+
+                .waitingFor(Wait.forHttp("/demo/").forPort(8080));
+
+        tomcat.start();
+
     }
 
-    public static class NeverPullPolicy implements ImagePullPolicy {
+    protected HttpResponse<String> callServlet(String token) throws IOException, InterruptedException {
 
-        @Override
-        public boolean shouldPull(DockerImageName imageName) {
-            return false;
-        }
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:8081/demo/"))
+                .header("Cookie", "iPlanetDirectoryPro="+ token)
+                .GET()
+                .build();
+
+        return client.send(request, HttpResponse.BodyHandlers.ofString());
     }
 
-    @AfterClass
-    public void tearDown() {
-        if (openam != null) {
-            openam.close();
-        }
-        if (tomcat != null) {
-            tomcat.close();
-        }
-    }
-
-    HttpClient client = HttpClient.newHttpClient();
-
-    @Test
-    public void runDockerContainer() throws IOException, InterruptedException {
-        //Thread.sleep(1000 * 60 * 10);
-        callServlet("");
-        String token = getAuthenticationToken();
-        callServlet(token);
-
-        Thread.sleep(1000 * 60 * 10);
-    }
-
-    private String getAuthenticationToken() throws IOException, InterruptedException {
+    protected String getAuthenticationToken() throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://openam.example.org:8080/openam/json/authenticate"))
                 .header("X-OpenAM-Username", "demo")
@@ -231,20 +206,43 @@ public class OpenAmDockerRunTest {
         return responseMap.get("tokenId");
     }
 
-    private void callServlet(String token) {
 
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:8081/demo/"))
-                .header("Cookie", "iPlanetDirectoryPro="+ token)
-                //.header("iPlanetDirectoryPro", token)
-                .GET()
-                .build();
-        try {
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            System.out.println("Status Code: " + response.statusCode());
-            System.out.println("Response Body:\n" + response.body());
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+    private Network getOpenAmNetwork() {
+        return new Network() {
+            @Override
+            public String getId() {
+                return "openam";
+            }
+
+            @Override
+            public void close() {
+
+            }
+
+            @Override
+            public Statement apply(Statement base, Description description) {
+                return null;
+            }
+        };
+    }
+
+    private void executeDockerCommand(String command, String workdir) throws IOException, InterruptedException {
+        var execConfig = ExecConfig.builder()
+                .user("openam")
+                .command(new String[]{"bash", "-c", command})
+                .workDir(workdir).build();
+        Container.ExecResult setupExecRes = openam.execInContainer(execConfig);
+        logger.info("command result: code {}, stdout: {}, stderr: {}",  setupExecRes.getExitCode(), setupExecRes.getStdout(), setupExecRes.getStderr());
+        if (setupExecRes.getExitCode() > 0) {
+            throw new IOException(setupExecRes.toString());
         }
     }
+
+    public static class NeverPullPolicy implements ImagePullPolicy {
+        @Override
+        public boolean shouldPull(DockerImageName imageName) {
+            return false;
+        }
+    }
+
 }

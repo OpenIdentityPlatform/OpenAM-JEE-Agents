@@ -23,6 +23,8 @@
  * "Portions Copyrighted [year] [name of copyright owner]"
  *
  * $Id: AmJettyAgentServiceResolver.java,v 1.1 2009/01/21 18:39:39 kanduls Exp $
+ *
+ * Portions Copyrighted 2025 3A Systems LLC.
  */
 
 /**
@@ -30,7 +32,7 @@
  * Portions Copyrighted 2012-2013 ForgeRock AS.
  * Portions Copyrighted 2025 3A Systems LLC.
  */
-package org.openidentityplatform.agents;
+package org.openidentityplatform.identity.agents;
 
 import com.sun.identity.agents.arch.ServiceResolver;
 import com.sun.identity.agents.filter.GenericJ2EELogoutHandler;

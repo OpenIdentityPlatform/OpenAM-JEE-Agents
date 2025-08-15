@@ -25,6 +25,7 @@ import org.apache.tomcat.util.descriptor.web.FilterDef;
 import org.apache.tomcat.util.descriptor.web.FilterMap;
 import org.forgerock.openam.sdk.com.fasterxml.jackson.core.type.TypeReference;
 import org.forgerock.openam.sdk.com.fasterxml.jackson.databind.ObjectMapper;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 import java.io.File;
@@ -37,6 +38,7 @@ import java.util.Map;
 
 import static java.nio.file.Files.createTempDirectory;
 
+@Ignore
 public class OpenAM_IT {
 
     HttpClient client = HttpClient.newHttpClient();

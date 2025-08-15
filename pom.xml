@@ -56,7 +56,7 @@
 <!--         <module>jee-agents-websphere</module> -->
 <!--        <module>jee-agents-jsr196</module>-->
 <!--        <module>jee-agents-sampleapp</module>-->
-<!--        <module>jee-agents-distribution</module>-->
+        <module>jee-agents-distribution</module>
     </modules>
     <licenses>
         <license>
@@ -190,6 +190,11 @@
                         <encoding>UTF-8</encoding>
                     </configuration>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.4.2</version>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
@@ -200,6 +205,18 @@
             <dependency>
                 <groupId>org.openidentityplatform.openam.agents</groupId>
                 <artifactId>jee-agents-sdk</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.openidentityplatform.openam.agents</groupId>
+                <artifactId>jee-agents-sdk</artifactId>
+                <classifier>with-lib</classifier>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.openidentityplatform.openam.agents</groupId>
+                <artifactId>jee-agents-sdk</artifactId>
+                <classifier>uber</classifier>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -524,14 +541,6 @@
                 <version>${openam.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
-             
-            <!-- Testing dependencies -->
-            <dependency>
-                <groupId>org.testng</groupId>
-                <artifactId>testng</artifactId>
-                <version>6.8.5</version>
-                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
