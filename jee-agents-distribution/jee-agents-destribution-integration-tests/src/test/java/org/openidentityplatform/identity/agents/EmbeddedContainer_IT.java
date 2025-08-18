@@ -28,11 +28,13 @@ import org.apache.tomcat.util.descriptor.web.FilterMap;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.net.URL;
 import java.net.http.HttpResponse;
 import java.util.EnumSet;
 
@@ -42,6 +44,23 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class EmbeddedContainer_IT extends AbstractIntegrationTest {
 
     private final int CONTAINER_PORT = 8081;
+
+    @BeforeClass
+    public void setProps() {
+        String resourceName = "embedded";
+
+        // Get the URL of the resource
+        URL resourceUrl = this.getClass().getClassLoader().getResource(resourceName);
+
+        if (resourceUrl != null) {
+            String absolutePath = resourceUrl.getPath();
+            System.out.println("Absolute path of '" + resourceName + "': " + absolutePath);
+            System.setProperty("openam.agents.bootstrap.dir", absolutePath);
+        } else {
+            throw new RuntimeException("resource not found");
+        }
+
+    }
 
     @Test
     public void testTomcat() throws IOException, LifecycleException, InterruptedException {
