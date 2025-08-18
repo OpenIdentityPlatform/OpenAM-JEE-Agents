@@ -29,7 +29,7 @@ import java.nio.file.Paths;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class JeeAgentsWithLib_IT extends AbstractIntegrationTest {
+public class JeeAgentsUberJar_IT extends AbstractIntegrationTest {
 
     @Test
     public void testJetty11() throws Exception {
@@ -64,8 +64,8 @@ public class JeeAgentsWithLib_IT extends AbstractIntegrationTest {
                 .getPath("")
                 .toAbsolutePath()
                 .toString();
-        Path directory = Paths.get(userDirectory + "/../jee-agents-distribution-jar-with-lib/target");
-        String globPattern = "jee-agent-jar-with-lib_*";
+        Path directory = Paths.get(userDirectory + "/../jee-agents-distribution-uberjar/target");
+        String globPattern = "jee-agent-uberjar_*";
 
         String distPath = null;
         try (var stream = Files.newDirectoryStream(directory, globPattern)) {

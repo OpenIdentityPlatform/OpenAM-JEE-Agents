@@ -40,10 +40,6 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.Map;
 
@@ -53,30 +49,27 @@ public abstract class AbstractIntegrationTest {
 
     GenericContainer<?> openam;
 
-    GenericContainer<?> tomcat;
-
     Network network;
 
     HttpClient client;
 
     @BeforeClass
     public void setup() throws IOException, InterruptedException {
+        System.setProperty("jdk.httpclient.allowRestrictedHeaders", "host");
+
         client = HttpClient.newHttpClient();
         network = Network.newNetwork();
         network = getOpenAmNetwork();
 
 //        setupOpenAmDockerContainer();
-        setupTomcatDockerContainer();
+        //setupTomcat10DockerContainer();
         //Thread.sleep(1000 * 60 * 10);
     }
 
     @AfterClass
-    public void tearDown() {
+    public void tearDown() throws Exception {
         if (openam != null) {
             openam.close();
-        }
-        if (tomcat != null) {
-            tomcat.close();
         }
     }
 
@@ -132,51 +125,6 @@ public abstract class AbstractIntegrationTest {
 
     }
 
-    private void setupTomcatDockerContainer() throws IOException {
-
-        String userDirectory = FileSystems.getDefault()
-                .getPath("")
-                .toAbsolutePath()
-                .toString();
-        Path directory = Paths.get(userDirectory + "/../jee-agents-distribution-jar-with-lib/target");
-        String globPattern = "jee-agent-jar-with-lib_*";
-
-        String distPath = null;
-        try (var stream = Files.newDirectoryStream(directory, globPattern)) {
-            for (Path entry : stream) {
-                if(!entry.toFile().isDirectory()) {
-                    continue;
-                }
-                distPath = entry.toAbsolutePath().toString();
-                break;
-            }
-        }
-
-        tomcat = new FixedHostPortGenericContainer<>("tomcat:10.1-jdk21")
-                .withFixedExposedPort(8081, 8080)
-                .withExposedPorts(8080)
-                .withNetwork(network)
-                .withLogConsumer(new Slf4jLogConsumer(logger))
-                .withCopyToContainer(
-                        MountableFile.forClasspathResource("docker/index.html"),
-                        "/usr/local/tomcat/webapps/demo/index.html"
-                )
-                .withCopyToContainer(MountableFile.forHostPath(distPath), "/usr/local/tomcat/lib/")
-                .withCopyToContainer(
-                        MountableFile.forClasspathResource("OpenSSOAgentBootstrap.properties"),
-                        "/usr/local/tomcat/lib/OpenSSOAgentBootstrap.properties")
-                .withCopyToContainer(
-                        MountableFile.forClasspathResource("debugconfig.properties"),
-                        "/usr/local/tomcat/lib/debugconfig.properties")
-                .withCopyToContainer(
-                        MountableFile.forClasspathResource("docker/tomcat/web.xml"),
-                        "/usr/local/tomcat/conf/web.xml")
-
-                .waitingFor(Wait.forHttp("/demo/").forPort(8080));
-
-        tomcat.start();
-
-    }
 
     protected HttpResponse<String> callServlet(String token) throws IOException, InterruptedException {
 
@@ -191,8 +139,9 @@ public abstract class AbstractIntegrationTest {
 
     protected String getAuthenticationToken() throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://openam.example.org:8080/openam/json/authenticate"))
+                .uri(URI.create("http://localhost:8080/openam/json/authenticate"))
                 .header("X-OpenAM-Username", "demo")
+                .header("Host", "openam.example.org:8080")
                 .header("X-OpenAM-Password", "changeit")
                 .POST(HttpRequest.BodyPublishers.noBody())
                 .build();
@@ -202,7 +151,6 @@ public abstract class AbstractIntegrationTest {
         String body = response.body();
         Map<String, String> responseMap = mapper.readValue(body, new TypeReference<>() {
         });
-
         return responseMap.get("tokenId");
     }
 

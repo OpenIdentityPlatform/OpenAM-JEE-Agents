@@ -57,6 +57,7 @@
 <!--        <module>jee-agents-distribution-jsr196</module>-->
         <module>jee-agents-distribution-jar-with-lib</module>
         <module>jee-agents-destribution-integration-tests</module>
+        <module>jee-agents-distribution-uberjar</module>
     </modules>
 
     <build>
