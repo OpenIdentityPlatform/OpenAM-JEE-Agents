@@ -20,6 +20,8 @@ import org.forgerock.openam.sdk.com.fasterxml.jackson.core.type.TypeReference;
 import org.forgerock.openam.sdk.com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testcontainers.DockerClientFactory;
+import org.testng.SkipException;
 import org.testng.annotations.BeforeClass;
 
 import java.io.IOException;
@@ -31,9 +33,16 @@ import java.util.Map;
 
 public abstract class AbstractIntegrationTest {
 
-    final static OpenAmContainer openamContainer = new OpenAmContainer();
+    final static Logger logger = LoggerFactory.getLogger(AbstractIntegrationTest.class);
+    static OpenAmContainer openamContainer;
+
     static {
-        openamContainer.start();
+        if(DockerClientFactory.instance().isDockerAvailable()) {
+            logger.warn("docker is not available");
+        } else {
+            openamContainer = new OpenAmContainer();
+            openamContainer.start();
+        }
     }
 
     HttpClient client;
@@ -41,6 +50,9 @@ public abstract class AbstractIntegrationTest {
 
     @BeforeClass
     public void setup() {
+        if(!DockerClientFactory.instance().isDockerAvailable()) {
+            throw new SkipException("docker is not available");
+        }
         System.setProperty("jdk.httpclient.allowRestrictedHeaders", "host");
         client = HttpClient.newHttpClient();
     }

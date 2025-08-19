@@ -26,14 +26,22 @@
         <version>4.2.2-SNAPSHOT</version>
     </parent>
 
-    <packaging>jar</packaging>
+    <name>OpenAM JavaEE Policy Agents Integration Tests</name>
+    <description>OpenAM JavaEE Policy Agents Integration Tests</description>
 
+    <packaging>jar</packaging>
     <artifactId>jee-agents-destribution-integration-tests</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>org.openidentityplatform.openam.agents</groupId>
             <artifactId>jee-agents-distribution-jar-with-lib</artifactId>
+            <type>pom</type>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openidentityplatform.openam.agents</groupId>
+            <artifactId>jee-agents-distribution-uberjar</artifactId>
             <type>pom</type>
             <version>${project.version}</version>
         </dependency>

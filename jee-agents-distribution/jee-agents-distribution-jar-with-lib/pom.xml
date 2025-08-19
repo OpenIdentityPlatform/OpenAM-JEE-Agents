@@ -26,6 +26,10 @@
         <version>4.2.2-SNAPSHOT</version>
     </parent>
 
+    <name>OpenAM JavaEE Policy Agents Distribution Jar With Libraries</name>
+    <description>OpenAM JavaEE Policy Agents Distribution Jar With Libraries</description>
+
+
     <packaging>pom</packaging>
     <artifactId>jee-agents-distribution-jar-with-lib</artifactId>
 

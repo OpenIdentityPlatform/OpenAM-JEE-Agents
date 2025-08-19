@@ -26,6 +26,9 @@
         <version>4.2.2-SNAPSHOT</version>
     </parent>
 
+    <name>OpenAM JavaEE Policy Agents Distribution Uber Jar</name>
+    <description>OpenAM JavaEE Policy Agents Distribution Uber Jar</description>
+
     <packaging>pom</packaging>
 
     <artifactId>jee-agents-distribution-uberjar</artifactId>
