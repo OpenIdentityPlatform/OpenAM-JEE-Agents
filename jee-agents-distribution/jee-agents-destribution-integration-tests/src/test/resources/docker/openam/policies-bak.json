@@ -1,7 +1,6 @@
 {
   "resourcetypes" : {
     "resources" : [ {
-      "_id" : "76656a38-5f8e-401b-83aa-4ccb74ce88d2",
       "uuid" : "76656a38-5f8e-401b-83aa-4ccb74ce88d2",
       "name" : "URL",
       "description" : "The built-in URL Resource Type available to OpenAM Policies.",

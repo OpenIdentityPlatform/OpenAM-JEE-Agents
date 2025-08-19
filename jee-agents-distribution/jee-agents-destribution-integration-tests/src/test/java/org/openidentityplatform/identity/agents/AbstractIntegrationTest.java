@@ -18,21 +18,8 @@ package org.openidentityplatform.identity.agents;
 
 import org.forgerock.openam.sdk.com.fasterxml.jackson.core.type.TypeReference;
 import org.forgerock.openam.sdk.com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.runner.Description;
-import org.junit.runners.model.Statement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testcontainers.containers.Container;
-import org.testcontainers.containers.ExecConfig;
-import org.testcontainers.containers.FixedHostPortGenericContainer;
-import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.containers.Network;
-import org.testcontainers.containers.output.Slf4jLogConsumer;
-import org.testcontainers.containers.wait.strategy.Wait;
-import org.testcontainers.images.ImagePullPolicy;
-import org.testcontainers.utility.DockerImageName;
-import org.testcontainers.utility.MountableFile;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
 import java.io.IOException;
@@ -40,94 +27,26 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.time.Duration;
 import java.util.Map;
 
 public abstract class AbstractIntegrationTest {
 
-    final Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    GenericContainer<?> openam;
-
-    Network network;
+    final static OpenAmContainer openamContainer = new OpenAmContainer();
+    static {
+        openamContainer.start();
+    }
 
     HttpClient client;
+//    OpenAmContainer openamContainer;
 
     @BeforeClass
-    public void setup() throws IOException, InterruptedException {
+    public void setup() {
         System.setProperty("jdk.httpclient.allowRestrictedHeaders", "host");
-
         client = HttpClient.newHttpClient();
-        network = Network.newNetwork();
-        network = getOpenAmNetwork();
-
-//        setupOpenAmDockerContainer();
-        //setupTomcat10DockerContainer();
-        //Thread.sleep(1000 * 60 * 10);
-    }
-
-    @AfterClass
-    public void tearDown() throws Exception {
-        if (openam != null) {
-            openam.close();
-        }
-    }
-
-    private void setupOpenAmDockerContainer() throws IOException, InterruptedException {
-//        String imageName = "openam-configured:latest";
-//        String imageName = "openam-configured-agents-policies";
-        String imageName = "openidentityplatform/openam:latest";
-        openam = new FixedHostPortGenericContainer<>(imageName)
-                .withFixedExposedPort(8080, 8080)
-                .withExposedPorts(8080)
-                .withNetwork(network)
-                .withImagePullPolicy(new NeverPullPolicy())
-                .withCopyToContainer(
-                        MountableFile.forClasspathResource("docker/openam.conf"),
-                        "/usr/openam/ssoconfiguratortools/openam.conf"
-                )
-                .withCopyToContainer(
-                        MountableFile.forClasspathResource("docker/agent.properties"),
-                        "/usr/openam/ssoadmintools/agent.properties"
-                )
-                .withCopyToContainer(
-                        MountableFile.forClasspathResource("docker/policies.json"),
-                        "/usr/openam/ssoadmintools/policies.json"
-                )
-                .withLogConsumer(new Slf4jLogConsumer(logger))
-
-                .withCreateContainerCmdModifier(it -> it.withHostName("openam.example.org"))
-                //.waitingFor(Wait.forListeningPort())
-                .waitingFor(Wait.forHealthcheck())
-                .withStartupTimeout(Duration.ofSeconds(300))
-        ;
-
-        openam.start();
-
-        executeDockerCommand("java -jar openam-configurator-tool*.jar --file openam.conf",
-                "/usr/openam/ssoconfiguratortools/");
-
-        executeDockerCommand("./setup -p $OPENAM_DATA_DIR " +
-                        "-d /usr/openam/ssoadmintools/debug -d /usr/openam/ssoadmintools/log --acceptLicense",
-                "/usr/openam/ssoadmintools");
-
-        executeDockerCommand("echo passw0rd > /tmp/pwd.txt && chmod 400 /tmp/pwd.txt", "");
-
-        executeDockerCommand("./openam/bin/ssoadm create-agent " +
-                        "--realm / --agentname myAgent --agenttype J2EEAgent --adminid amadmin " +
-                        "--password-file /tmp/pwd.txt --datafile agent.properties",
-                "/usr/openam/ssoadmintools");
-
-        executeDockerCommand("./openam/bin/ssoadm policy-import " +
-                        "--servername http://openam.example.org:8080/openam " +
-                        "--realm / --jsonfile policies.json --adminid amadmin --password-file /tmp/pwd.txt",
-                "/usr/openam/ssoadmintools");
-
     }
 
 
-    protected HttpResponse<String> callServlet(String token) throws IOException, InterruptedException {
-
+    protected HttpResponse<String> callDemoServlet(String token) throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:8081/demo/"))
                 .header("Cookie", "iPlanetDirectoryPro="+ token)
@@ -153,44 +72,4 @@ public abstract class AbstractIntegrationTest {
         });
         return responseMap.get("tokenId");
     }
-
-
-    private Network getOpenAmNetwork() {
-        return new Network() {
-            @Override
-            public String getId() {
-                return "openam";
-            }
-
-            @Override
-            public void close() {
-
-            }
-
-            @Override
-            public Statement apply(Statement base, Description description) {
-                return null;
-            }
-        };
-    }
-
-    private void executeDockerCommand(String command, String workdir) throws IOException, InterruptedException {
-        var execConfig = ExecConfig.builder()
-                .user("openam")
-                .command(new String[]{"bash", "-c", command})
-                .workDir(workdir).build();
-        Container.ExecResult setupExecRes = openam.execInContainer(execConfig);
-        logger.info("command result: code {}, stdout: {}, stderr: {}",  setupExecRes.getExitCode(), setupExecRes.getStdout(), setupExecRes.getStderr());
-        if (setupExecRes.getExitCode() > 0) {
-            throw new IOException(setupExecRes.toString());
-        }
-    }
-
-    public static class NeverPullPolicy implements ImagePullPolicy {
-        @Override
-        public boolean shouldPull(DockerImageName imageName) {
-            return false;
-        }
-    }
-
 }

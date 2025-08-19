@@ -29,6 +29,7 @@ public class Tomcat10Container extends WebContainer {
                 .withFixedExposedPort(8081, 8080)
                 .withExposedPorts(8080)
                 .withNetwork(network)
+                .withCreateContainerCmdModifier(it -> it.withHostName(AGENT_HOST_NAME))
                 .withLogConsumer(new Slf4jLogConsumer(logger))
                 .withCopyToContainer(
                         MountableFile.forClasspathResource("docker/index.html"),

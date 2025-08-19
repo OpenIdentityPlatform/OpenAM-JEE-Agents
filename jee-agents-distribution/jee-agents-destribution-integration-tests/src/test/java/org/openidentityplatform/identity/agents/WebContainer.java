@@ -16,36 +16,39 @@
 
 package org.openidentityplatform.identity.agents;
 
-import org.junit.runner.Description;
-import org.junit.runners.model.Statement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.Network;
+import org.testcontainers.images.ImagePullPolicy;
 import org.testcontainers.images.builder.Transferable;
+import org.testcontainers.utility.DockerImageName;
 
 public abstract class WebContainer implements AutoCloseable {
 
+    final static String AGENT_HOST_NAME = "app.example.org";
     protected Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
     protected GenericContainer<?> container;
 
-    protected Network network = new Network() {
-        @Override
-        public String getId() {
-            return "openam";
-        }
+    static final Network network = Network.newNetwork();
 
-        @Override
-        public void close() {
-
-        }
-
-        @Override
-        public Statement apply(Statement base, Description description) {
-            return null;
-        }
-    };
+//    static final Network network = new Network() {
+//        @Override
+//        public String getId() {
+//            return "openam";
+//        }
+//
+//        @Override
+//        public void close() {
+//
+//        }
+//
+//        @Override
+//        public Statement apply(Statement base, Description description) {
+//            return null;
+//        }
+//    };
 
     public GenericContainer<?> getContainer() {
         return this.container;
@@ -64,4 +67,10 @@ public abstract class WebContainer implements AutoCloseable {
 
     public abstract void mount(Transferable transferable);
 
+    public static class NeverPullPolicy implements ImagePullPolicy {
+        @Override
+        public boolean shouldPull(DockerImageName imageName) {
+            return false;
+        }
+    }
 }

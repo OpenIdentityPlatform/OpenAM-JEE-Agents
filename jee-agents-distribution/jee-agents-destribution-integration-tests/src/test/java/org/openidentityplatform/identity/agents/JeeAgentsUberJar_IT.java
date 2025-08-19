@@ -81,12 +81,12 @@ public class JeeAgentsUberJar_IT extends AbstractIntegrationTest {
         webContainer.mount(MountableFile.forHostPath(distPath));
         webContainer.start();
 
-        HttpResponse<String> unauthResponse = callServlet("");
+        HttpResponse<String> unauthResponse = callDemoServlet("");
         assertThat(unauthResponse.statusCode()).isEqualTo(HttpURLConnection.HTTP_MOVED_TEMP);
 
         String token = getAuthenticationToken();
 
-        HttpResponse<String> authResponse = callServlet(token);
+        HttpResponse<String> authResponse = callDemoServlet(token);
         assertThat(authResponse.statusCode()).isEqualTo(HttpURLConnection.HTTP_OK);
     }
 

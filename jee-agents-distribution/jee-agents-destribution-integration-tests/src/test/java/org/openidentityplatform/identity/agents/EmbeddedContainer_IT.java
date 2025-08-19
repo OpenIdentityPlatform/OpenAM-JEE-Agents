@@ -21,32 +21,25 @@ import jakarta.servlet.DispatcherType;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.apache.catalina.LifecycleException;
-import org.apache.catalina.startup.Tomcat;
-import org.apache.tomcat.util.descriptor.web.FilterDef;
-import org.apache.tomcat.util.descriptor.web.FilterMap;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.http.HttpResponse;
 import java.util.EnumSet;
 
-import static java.nio.file.Files.createTempDirectory;
 import static org.assertj.core.api.Assertions.assertThat;
 
+//@Ignore
 public class EmbeddedContainer_IT extends AbstractIntegrationTest {
 
-    private final int CONTAINER_PORT = 8081;
-
     @BeforeClass
-    public void setProps() {
+    public void setProperties() {
         String resourceName = "embedded";
 
         // Get the URL of the resource
@@ -59,27 +52,11 @@ public class EmbeddedContainer_IT extends AbstractIntegrationTest {
         } else {
             throw new RuntimeException("resource not found");
         }
-
-    }
-
-    @Test
-    public void testTomcat() throws IOException, LifecycleException, InterruptedException {
-        Tomcat tomcat = startTomcat();
-
-        HttpResponse<String> unauthResponse = callServlet("");
-        assertThat(unauthResponse.statusCode()).isEqualTo(HttpURLConnection.HTTP_MOVED_TEMP);
-
-        String token = getAuthenticationToken();
-
-        HttpResponse<String> authResponse = callServlet(token);
-        assertThat(authResponse.statusCode()).isEqualTo(HttpURLConnection.HTTP_OK);
-
-        tomcat.stop();
     }
 
     @Test
     public void testJetty() throws Exception {
-        Server jetty = new Server(CONTAINER_PORT); // You can change the port
+        Server jetty = new Server(8081); // You can change the port
 
         // Create a ServletContextHandler to manage servlets and filters
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
@@ -93,49 +70,16 @@ public class EmbeddedContainer_IT extends AbstractIntegrationTest {
         // Start the server
         jetty.start();
 
-        HttpResponse<String> unauthResponse = callServlet("");
+        HttpResponse<String> unauthResponse = callDemoServlet("");
         assertThat(unauthResponse.statusCode()).isEqualTo(HttpURLConnection.HTTP_MOVED_TEMP);
 
         String token = getAuthenticationToken();
 
-        HttpResponse<String> authResponse = callServlet(token);
+        HttpResponse<String> authResponse = callDemoServlet(token);
         assertThat(authResponse.statusCode()).isEqualTo(HttpURLConnection.HTTP_OK);
 
         jetty.stop();
 
-    }
-
-    private Tomcat startTomcat() throws LifecycleException, IOException {
-
-        String contextPath = "";
-        String appBase = ".";
-
-        Tomcat tomcat = new Tomcat();
-        tomcat.setPort(CONTAINER_PORT);
-        tomcat.getConnector();
-        tomcat.setBaseDir(createTempDirectory("tomcat").toAbsolutePath().toString());
-        tomcat.getHost().setAppBase(appBase);
-        tomcat.getHost().setAutoDeploy(true);
-        tomcat.getHost().setDeployOnStartup(true);
-
-        var context = tomcat.addContext(contextPath, new File(".").getAbsolutePath());
-
-        Class<AmAgentFilter> filterClass = AmAgentFilter.class;
-        String filterName = filterClass.getName();
-        FilterDef def = new FilterDef();
-        def.setFilterName(filterName);
-        def.setFilter(new AmAgentFilter());
-        context.addFilterDef( def );
-        FilterMap map = new FilterMap();
-        map.setFilterName(filterName);
-        map.addURLPattern("/*");
-        context.addFilterMap(map);
-
-        Tomcat.addServlet(context, "demoServlet", new DemoServlet());
-        context.addServletMappingDecoded("/demo/", "demoServlet");
-
-        tomcat.start();
-        return tomcat;
     }
 
     public static class DemoServlet extends HttpServlet {
