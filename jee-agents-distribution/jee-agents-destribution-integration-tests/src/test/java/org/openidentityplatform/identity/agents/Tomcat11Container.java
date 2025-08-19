@@ -17,6 +17,7 @@
 package org.openidentityplatform.identity.agents;
 
 import org.testcontainers.containers.FixedHostPortGenericContainer;
+import org.testcontainers.containers.Network;
 import org.testcontainers.containers.output.Slf4jLogConsumer;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.images.builder.Transferable;
@@ -28,7 +29,7 @@ public class Tomcat11Container extends WebContainer {
         this.container = new FixedHostPortGenericContainer<>("tomcat:11.0")
                 .withFixedExposedPort(8081, 8080)
                 .withExposedPorts(8080)
-                .withNetwork(network)
+                .withNetwork(Network.SHARED)
                 .withCreateContainerCmdModifier(it -> it.withHostName(AGENT_HOST_NAME))
                 .withLogConsumer(new Slf4jLogConsumer(logger))
                 .withCopyToContainer(

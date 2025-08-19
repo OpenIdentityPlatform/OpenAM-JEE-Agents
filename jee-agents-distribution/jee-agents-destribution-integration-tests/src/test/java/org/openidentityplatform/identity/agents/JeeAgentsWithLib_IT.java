@@ -30,7 +30,7 @@ import java.nio.file.Paths;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Ignore
+//@Ignore
 public class JeeAgentsWithLib_IT extends AbstractIntegrationTest {
 
     @Test

@@ -7,6 +7,7 @@ import org.testcontainers.containers.Container;
 import org.testcontainers.containers.ExecConfig;
 import org.testcontainers.containers.FixedHostPortGenericContainer;
 import org.testcontainers.containers.GenericContainer;
+import org.testcontainers.containers.Network;
 import org.testcontainers.containers.output.Slf4jLogConsumer;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.images.builder.Transferable;
@@ -79,7 +80,7 @@ public class OpenAmContainer extends WebContainer {
         container = new FixedHostPortGenericContainer<>(TEST_IMAGE_NAME_WITH_TAG)
                 .withFixedExposedPort(8080, 8080)
                 .withExposedPorts(8080)
-                .withNetwork(network)
+                .withNetwork(Network.SHARED)
                 .withImagePullPolicy(new NeverPullPolicy())
                 .withLogConsumer(new Slf4jLogConsumer(logger))
                 .withCreateContainerCmdModifier(it -> it.withHostName("openam.example.org"))

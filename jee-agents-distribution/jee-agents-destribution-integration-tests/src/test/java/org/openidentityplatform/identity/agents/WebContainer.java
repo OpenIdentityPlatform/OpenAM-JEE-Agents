@@ -31,7 +31,6 @@ public abstract class WebContainer implements AutoCloseable {
 
     protected GenericContainer<?> container;
 
-    static final Network network = Network.newNetwork();
 
 //    static final Network network = new Network() {
 //        @Override
