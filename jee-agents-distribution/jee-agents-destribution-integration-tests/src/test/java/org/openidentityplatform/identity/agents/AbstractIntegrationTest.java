@@ -37,7 +37,7 @@ public abstract class AbstractIntegrationTest {
     static OpenAmContainer openamContainer;
 
     static {
-        if(DockerClientFactory.instance().isDockerAvailable()) {
+        if(!DockerClientFactory.instance().isDockerAvailable()) {
             logger.warn("docker is not available");
         } else {
             openamContainer = new OpenAmContainer();
