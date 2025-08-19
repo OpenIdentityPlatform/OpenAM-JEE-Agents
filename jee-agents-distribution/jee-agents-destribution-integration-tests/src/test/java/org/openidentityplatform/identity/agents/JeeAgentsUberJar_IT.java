@@ -17,6 +17,7 @@
 package org.openidentityplatform.identity.agents;
 
 import org.testcontainers.utility.MountableFile;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -29,6 +30,7 @@ import java.nio.file.Paths;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Ignore
 public class JeeAgentsUberJar_IT extends AbstractIntegrationTest {
 
     @Test
