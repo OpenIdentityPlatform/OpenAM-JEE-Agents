@@ -35,7 +35,7 @@ jobs:
     - name: Build with Maven
       env:
         MAVEN_OPTS: -Dhttps.protocols=TLSv1.2 -Dmaven.wagon.httpconnectionManager.ttlSeconds=120 -Dmaven.wagon.http.retryHandler.requestSentEnabled=true -Dmaven.wagon.http.retryHandler.count=10
-      run: mvn --batch-mode --errors --update-snapshots verify --file pom.xml 
+      run: mvn --batch-mode --errors --update-snapshots verify --file pom.xml -P integration-test
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:

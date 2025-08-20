@@ -36,7 +36,6 @@ import java.util.EnumSet;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-//@Ignore
 public class EmbeddedContainer_IT extends AbstractIntegrationTest {
 
     @BeforeClass
