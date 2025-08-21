@@ -29,7 +29,7 @@ public class Jetty12Container extends WebContainer {
         this.container = new FixedHostPortGenericContainer<>("jetty:12.0")
                 .withFixedExposedPort(8081, 8080)
                 .withExposedPorts(8080)
-                .withNetwork(Network.SHARED)
+                .withNetwork(network)
                 .withCreateContainerCmdModifier(it -> it.withHostName(AGENT_HOST_NAME))
                 .withLogConsumer(new Slf4jLogConsumer(logger))
                 .withCopyToContainer(
@@ -47,7 +47,7 @@ public class Jetty12Container extends WebContainer {
                 .withCopyToContainer(
                         MountableFile.forClasspathResource("docker/jetty/12/webdefault-ee10.xml"),
                         "/usr/local/jetty/etc/webdefault-ee10.xml")
-                .withCopyToContainer(MountableFile.forClasspathResource("/"), "/var/lib/jetty/resources/")
+                .withCopyToContainer(MountableFile.forClasspathResource("docker/conf/"), "/var/lib/jetty/resources/")
                 .waitingFor(Wait.forHttp("/demo/").forPort(8080))
                 ;
     }

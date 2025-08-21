@@ -29,7 +29,7 @@ public class Tomcat10Container extends WebContainer {
         this.container = new FixedHostPortGenericContainer<>("tomcat:10.1")
                 .withFixedExposedPort(8081, 8080)
                 .withExposedPorts(8080)
-                .withNetwork(Network.SHARED)
+                .withNetwork(network)
                 .withCreateContainerCmdModifier(it -> it.withHostName(AGENT_HOST_NAME))
                 .withLogConsumer(new Slf4jLogConsumer(logger))
                 .withCopyToContainer(
@@ -37,11 +37,8 @@ public class Tomcat10Container extends WebContainer {
                         "/usr/local/tomcat/webapps/demo/index.html"
                 )
                 .withCopyToContainer(
-                        MountableFile.forClasspathResource("OpenSSOAgentBootstrap.properties"),
-                        "/usr/local/tomcat/lib/OpenSSOAgentBootstrap.properties")
-                .withCopyToContainer(
-                        MountableFile.forClasspathResource("debugconfig.properties"),
-                        "/usr/local/tomcat/lib/debugconfig.properties")
+                        MountableFile.forClasspathResource("docker/conf/"),
+                        "/usr/local/tomcat/lib/")
                 .withCopyToContainer(
                         MountableFile.forClasspathResource("docker/tomcat/10/web.xml"),
                         "/usr/local/tomcat/conf/web.xml")

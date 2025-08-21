@@ -28,6 +28,10 @@
 
 package com.sun.identity.agents.filter;
 
+import jakarta.servlet.FilterConfig;
+
+import java.util.Enumeration;
+
 /**
  * The entry point of the agent filter 
  */
@@ -52,4 +56,17 @@ public class AmAgentFilter extends AmAgentBaseFilter {
             AmFilterMode.MODE_J2EE_POLICY, AmFilterMode.MODE_URL_POLICY, 
             AmFilterMode.MODE_ALL
     };
+
+    @Override
+    public void init(FilterConfig filterConfig) {
+        super.init(filterConfig);
+        Enumeration<String> paramNames = filterConfig.getInitParameterNames();
+        while (paramNames.hasMoreElements()) {
+            String paramName = paramNames.nextElement();
+            if(System.getProperty(paramName) != null) {
+                continue;
+            }
+            System.setProperty(paramName, filterConfig.getInitParameter(paramName));
+        }
+    }
 }

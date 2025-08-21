@@ -16,6 +16,8 @@
 
 package org.openidentityplatform.identity.agents;
 
+import org.junit.runner.Description;
+import org.junit.runners.model.Statement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testcontainers.containers.GenericContainer;
@@ -32,7 +34,13 @@ public abstract class WebContainer implements AutoCloseable {
     protected GenericContainer<?> container;
 
 
+    static final Network network = Network.SHARED;
 //    static final Network network = new Network() {
+//        @Override
+//        public Statement apply(Statement base, Description description) {
+//            return null;
+//        }
+//
 //        @Override
 //        public String getId() {
 //            return "openam";
@@ -41,11 +49,6 @@ public abstract class WebContainer implements AutoCloseable {
 //        @Override
 //        public void close() {
 //
-//        }
-//
-//        @Override
-//        public Statement apply(Statement base, Description description) {
-//            return null;
 //        }
 //    };
 

@@ -61,7 +61,9 @@ implements ILogConfigurationConstants, IAmAgentLog {
                 setLogMode(INT_LOG_MODE_LOCAL);
             }
         }
-        setAmAgentLocalLog(ServiceFactory.getAmAgentLocalLog(getManager()));        
+        if(isLocalLogEnabled()) {
+            setAmAgentLocalLog(ServiceFactory.getAmAgentLocalLog(getManager()));
+        }
     }
 
     /**

@@ -22,10 +22,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.testcontainers.utility.MountableFile;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -38,30 +39,23 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class EmbeddedContainer_IT extends AbstractIntegrationTest {
 
-    @BeforeClass
-    public void setProperties() {
-        String resourceName = "embedded";
 
-        // Get the URL of the resource
-        URL resourceUrl = this.getClass().getClassLoader().getResource(resourceName);
-
-        if (resourceUrl != null) {
-            String absolutePath = resourceUrl.getPath();
-            System.out.println("Absolute path of '" + resourceName + "': " + absolutePath);
-            System.setProperty("openam.agents.bootstrap.dir", absolutePath);
-        } else {
-            throw new RuntimeException("resource not found");
-        }
-    }
 
     @Test
     public void testJetty() throws Exception {
-        Server jetty = new Server(8081); // You can change the port
+        Server jetty = new Server(8081);
 
-        // Create a ServletContextHandler to manage servlets and filters
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        context.setContextPath("/"); // Set the context path for your application
-        context.addFilter(AmAgentFilter.class, "/*", EnumSet.of(DispatcherType.REQUEST));
+        context.setContextPath("/");
+
+        FilterHolder amFilterHolder = new FilterHolder(AmAgentFilter.class);
+        amFilterHolder.setInitParameter("com.iplanet.am.naming.url", "http://openam.example.org:8080/openam/namingservice");
+        amFilterHolder.setInitParameter("com.sun.identity.agents.app.username", "amadmin");
+        amFilterHolder.setInitParameter("com.iplanet.am.service.secret", "passw0rd");
+        amFilterHolder.setInitParameter("com.sun.identity.agents.config.profilename", "myAgent");
+
+        context.addFilter(amFilterHolder, "/*", EnumSet.of(DispatcherType.REQUEST));
+
         jetty.setHandler(context);
 
         // Add your custom servlet
