@@ -22,6 +22,8 @@
  * your own identifying information:
  * "Portions Copyrighted [year] [name of copyright owner]"
  *
+ * Portions Copyrighted 2025 3A Systems LLC.
+ *
  * $Id: AmAgentLog.java,v 1.2 2008/06/25 05:51:53 qcheng Exp $
  *
  */
