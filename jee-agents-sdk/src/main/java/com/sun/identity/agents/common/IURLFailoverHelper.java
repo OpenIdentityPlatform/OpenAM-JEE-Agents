@@ -28,6 +28,7 @@
 
 /**
  * Portions Copyrighted 2012 ForgeRock Inc
+ * Portions Copyrighted 2025 3A Systems LLC.
  */
 package com.sun.identity.agents.common;
 
@@ -35,7 +36,7 @@ import com.sun.identity.agents.arch.AgentException;
 import com.sun.identity.agents.filter.AmFilterRequestContext;
 import java.util.Map;
 import java.util.Set;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * The interface for URLFailoverHelper

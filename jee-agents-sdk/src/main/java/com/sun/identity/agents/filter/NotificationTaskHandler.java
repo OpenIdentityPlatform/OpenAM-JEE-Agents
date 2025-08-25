@@ -25,6 +25,7 @@
  * $Id: NotificationTaskHandler.java,v 1.8 2008/06/25 05:51:48 qcheng Exp $
  *
  * Portions Copyrighted 2015 ForgeRock AS.
+ * Portions Copyrighted 2025 3A Systems LLC.
  */
 
 package com.sun.identity.agents.filter;
@@ -36,7 +37,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Vector;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import com.iplanet.services.comm.client.NotificationHandler;
 import com.iplanet.services.comm.client.PLLClient;

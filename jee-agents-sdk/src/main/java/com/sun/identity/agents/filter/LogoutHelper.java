@@ -20,19 +20,20 @@
  * with the fields enclosed by brackets [] replaced by
  * your own identifying information:
  * "Portions Copyrighted [year] [name of copyright owner]"
+ *
+ * Portions Copyrighted 2025 3A Systems LLC.
  */
 package com.sun.identity.agents.filter;
 
-import com.iplanet.dpro.session.Session;
 import com.iplanet.dpro.session.SessionID;
 import com.sun.identity.agents.arch.AgentException;
 import com.sun.identity.agents.common.ICookieResetHelper;
 
 import java.util.Hashtable;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import org.forgerock.openam.session.SessionCache;
 

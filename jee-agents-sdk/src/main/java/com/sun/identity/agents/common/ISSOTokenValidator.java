@@ -24,11 +24,12 @@
  *
  * $Id: ISSOTokenValidator.java,v 1.3 2008/07/02 18:27:10 leiming Exp $
  *
+ * Portions Copyrighted 2025 3A Systems LLC.
  */
 
 package com.sun.identity.agents.common;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import com.sun.identity.agents.arch.AgentException;
 

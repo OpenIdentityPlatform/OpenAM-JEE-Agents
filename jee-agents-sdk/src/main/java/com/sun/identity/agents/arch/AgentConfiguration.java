@@ -25,6 +25,7 @@
  * $Id: AgentConfiguration.java,v 1.39 2009/04/02 00:02:11 leiming Exp $
  *
  * Portions Copyrighted 2010-2015 ForgeRock AS.
+ * Portions Copyrighted 2025 3A Systems LLC.
  */
 
 package com.sun.identity.agents.arch;
@@ -45,12 +46,14 @@ import com.iplanet.services.comm.client.AlreadyRegisteredException;
 import com.iplanet.services.comm.client.PLLClient;
 import com.iplanet.services.naming.URLNotFoundException;
 import com.iplanet.services.naming.WebtopNaming;
+import com.iplanet.services.util.Crypt;
 import com.iplanet.sso.SSOException;
 import com.iplanet.sso.SSOToken;
 import com.iplanet.sso.SSOTokenManager;
 
 import com.sun.identity.agents.common.CommonFactory;
 import com.sun.identity.agents.common.IApplicationSSOTokenProvider;
+import com.sun.identity.agents.install.configurator.EncryptTask;
 import com.sun.identity.agents.util.AgentRemoteConfigUtils;
 
 import com.sun.identity.common.DebugPropertiesObserver;
@@ -61,6 +64,9 @@ import com.sun.identity.shared.debug.Debug;
 
 import org.forgerock.openam.util.Version;
 import org.forgerock.openam.utils.StringUtils;
+import org.openidentityplatform.identity.agents.GenericAgentServiceResolver;
+
+import static com.sun.identity.shared.Constants.ENC_PWD_PROPERTY;
 
 /**
  * <p>
@@ -677,12 +683,17 @@ public class AgentConfiguration implements
     private static synchronized void bootStrapClientConfiguration() {
         if (!isInitialized()) {
             HashMap sysPropertyMap = null;
-            setConfigurationFilePath();
+
             try {
                 sysPropertyMap = new HashMap();
                 Properties properties = getProperties();
                 properties.clear();
-                properties.putAll(getPropertiesFromConfigFile());
+                try {
+                    setConfigurationFilePath();
+                    properties.putAll(getPropertiesFromConfigFile());
+                } catch (Exception e) {
+                    System.err.println("WARNING: loading properties from configuration file failed, using system properties");
+                }
                
                 //debug level can optionally be set in OpenSSOAgentBootstrap.properties
                 //but by default is not set, so we provide default if no value
@@ -721,7 +732,7 @@ public class AgentConfiguration implements
                 setServiceResolver();
                 setApplicationUser();
                 setApplicationPassword();               
-		setPolicyAdminLoc();
+                setPolicyAdminLoc();
                 setAppSSOToken();
                 setLockConfig();
                 setProfileName();
@@ -858,7 +869,15 @@ public class AgentConfiguration implements
     private static synchronized void setServiceResolver() {
         if (!isInitialized()) {
             String serviceResolverClassName =
-                    getProperty(CONFIG_SERVICE_RESOLVER);        
+                    getProperty(CONFIG_SERVICE_RESOLVER);
+             if(serviceResolverClassName == null) {
+                 if (isLogMessageEnabled()) {
+                    logMessage(
+                            "AgentConfiguration: service resolver is not defined, fallback to : "
+                                    + GenericAgentServiceResolver.class.getName());
+                 }
+                 serviceResolverClassName = GenericAgentServiceResolver.class.getName();
+            }
                 try {
                     if (isLogMessageEnabled()) {
                         logMessage(
@@ -1020,8 +1039,13 @@ public class AgentConfiguration implements
     
     private static synchronized void setApplicationPassword() {           
         if (!isInitialized()) {
+            if(getProperty(ENC_PWD_PROPERTY) == null) {
+                logMessage("Application password is not encrypted, using as a plain text");
+                _applicationPassword = getProperty(SDKPROP_APP_PASSWORD);
+                return;
+            }
             try {
-                    _crypt = ServiceFactory.getCryptProvider();
+                _crypt = ServiceFactory.getCryptProvider();
                 if(_crypt != null) {
                     String encodedPass = getProperty(SDKPROP_APP_PASSWORD);
                     _applicationPassword = 

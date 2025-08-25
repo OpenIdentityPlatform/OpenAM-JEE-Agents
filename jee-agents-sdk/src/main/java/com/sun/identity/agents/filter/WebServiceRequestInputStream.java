@@ -24,6 +24,7 @@
  *
  * $Id: WebServiceRequestInputStream.java,v 1.2 2008/06/25 05:51:49 qcheng Exp $
  *
+ * Portions Copyrighted 2025 3A Systems LLC.
  */
 
 package com.sun.identity.agents.filter;
@@ -31,19 +32,21 @@ package com.sun.identity.agents.filter;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-import javax.servlet.ServletInputStream;
+import jakarta.servlet.ReadListener;
+import jakarta.servlet.ServletInputStream;
 
 public class WebServiceRequestInputStream extends ServletInputStream {
 
-    public WebServiceRequestInputStream(String body, String encoding) 
-    throws Exception {
+    public WebServiceRequestInputStream(String body, String encoding) throws Exception {
         setInputStream(new ByteArrayInputStream(body.getBytes(encoding)));
     }
 
+    @Override
     public int read() throws IOException {
         return getInputStream().read();
     }
 
+    @Override
     public int available() throws IOException {
         return getInputStream().available();
     }
@@ -57,4 +60,19 @@ public class WebServiceRequestInputStream extends ServletInputStream {
     }
 
     private ByteArrayInputStream _inputStream;
+
+    @Override
+    public boolean isFinished() {
+        return _inputStream.available() <= 0;
+    }
+
+    @Override
+    public boolean isReady() {
+        return true;
+    }
+
+    @Override
+    public void setReadListener(ReadListener readListener) {
+        throw new UnsupportedOperationException();
+    }
 }

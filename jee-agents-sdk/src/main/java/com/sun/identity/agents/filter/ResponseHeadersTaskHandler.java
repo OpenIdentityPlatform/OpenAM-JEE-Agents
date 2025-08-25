@@ -24,13 +24,14 @@
  *
  * $Id: ResponseHeadersTaskHandler.java,v 1.3 2008/06/25 05:51:48 qcheng Exp $
  *
+ * Portions Copyrighted 2025 3A Systems LLC.
  */
 
 package com.sun.identity.agents.filter;
 
 import com.sun.identity.agents.arch.AgentException;
 import com.sun.identity.agents.arch.Manager;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import java.util.Map;
 import java.util.Iterator;
 
