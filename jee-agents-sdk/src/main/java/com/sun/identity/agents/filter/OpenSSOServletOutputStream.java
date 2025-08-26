@@ -24,12 +24,14 @@
  *
  * $Id: OpenSSOServletOutputStream.java,v 1.1 2008/10/07 17:36:32 huacui Exp $
  *
+ * Portions Copyrighted 2025 3A Systems LLC.
  */
 
 package com.sun.identity.agents.filter;
 
-import javax.servlet.ServletOutputStream;
-import java.io.ByteArrayOutputStream;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.WriteListener;
+
 import java.io.OutputStream;
 import java.io.IOException;
 
@@ -46,5 +48,15 @@ public class OpenSSOServletOutputStream extends ServletOutputStream
 
     public void write(int b) throws IOException {
         os.write(b);
+    }
+
+    @Override
+    public boolean isReady() {
+        return false;
+    }
+
+    @Override
+    public void setWriteListener(WriteListener writeListener) {
+
     }
 }

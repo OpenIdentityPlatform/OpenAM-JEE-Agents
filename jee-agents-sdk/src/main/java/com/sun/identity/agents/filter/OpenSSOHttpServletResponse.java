@@ -24,16 +24,16 @@
  *
  * $Id: OpenSSOHttpServletResponse.java,v 1.1 2008/10/07 17:36:32 huacui Exp $
  *
+ * Portions Copyrighted 2025 3A Systems LLC.
  */
 
 package com.sun.identity.agents.filter;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
-import javax.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponseWrapper;
+import jakarta.servlet.ServletOutputStream;
 
 import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
 
 /**
  * A helper class used to manage the servlet response content. 

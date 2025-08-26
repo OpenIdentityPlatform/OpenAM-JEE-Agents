@@ -26,7 +26,11 @@
  *
  */
 
-/* Portions Copyrighted 2011 ForgeRock AS */
+/*
+ * Portions Copyrighted 2011 ForgeRock AS
+ * Portions Copyrighted 2025 3A Systems LLC.
+ */
+
 
 /* author Bernhard Thalmayr */
 
@@ -34,7 +38,7 @@ package com.sun.identity.agents.filter;
 
 import java.net.URLEncoder;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import com.sun.identity.agents.arch.AgentException;
 import com.sun.identity.agents.arch.IBaseModuleConstants;

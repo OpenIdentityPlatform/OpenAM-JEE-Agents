@@ -24,6 +24,7 @@
  *
  * $Id: IHttpServletRequestHelper.java,v 1.2 2008/06/25 05:51:39 qcheng Exp $
  *
+ * Portions Copyrighted 2025 3A Systems LLC.
  */
 
 package com.sun.identity.agents.common;
@@ -31,7 +32,7 @@ package com.sun.identity.agents.common;
 import java.util.Enumeration;
 import java.util.Map;
 
-import javax.servlet.ServletInputStream;
+import jakarta.servlet.ServletInputStream;
 
 /**
  * The interface for HttpServletRequestHelper
