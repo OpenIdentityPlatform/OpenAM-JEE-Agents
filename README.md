@@ -39,6 +39,26 @@ For example, for Apache Tomcat it is `web.xml`, for Eclipse Jetty - `webdefault.
 <filter>
     <filter-name>Agent</filter-name>
     <filter-class>com.sun.identity.agents.filter.AmAgentFilter</filter-class>
+    <init-param>
+        <param-name>com.iplanet.am.naming.url</param-name>
+        <param-value>http://openam.example.org:8080/openam/namingservice</param-value>
+    </init-param>
+    <init-param>
+        <param-name>com.sun.identity.agents.app.username</param-name>
+        <param-value>amadmin</param-value>
+    </init-param>
+    <init-param>
+        <param-name>com.iplanet.am.service.secret</param-name>
+        <param-value>AQIC5wM2LY4SfcwrWIPia7mlGbsTreZGLWhi</param-value>
+    </init-param>
+    <init-param>
+        <param-name>cam.encryption.pwd</param-name>
+        <param-value>KmhUnWR1MYWDYW4xuqdF5nbm+CXIyOVt</param-value>
+    </init-param>
+    <init-param>
+       <param-name>com.sun.identity.agents.config.profilename</param-name>
+       <param-value>myAgent</param-value>
+    </init-param>
 </filter>
 <filter-mapping>
     <filter-name>Agent</filter-name>
@@ -69,8 +89,8 @@ You can use the Agent filter in your Java project as a Maven dependency when run
 
 ```xml
 <dependency>
-    <groupId>org.openidentityplatform.openam</groupId>
-    <artifactId>openam-clientsdk</artifactId>
+    <groupId>org.openidentityplatform.openam.agents</groupId>
+    <artifactId>jee-agents-sdk</artifactId>
     <version>5.0.0</version>
 </dependency>
 ```
