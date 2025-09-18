@@ -55,39 +55,15 @@ jobs:
           MAVEN_OPTS: -Dhttps.protocols=TLSv1.2 -Dmaven.wagon.httpconnectionManager.ttlSeconds=120 -Dmaven.wagon.http.retryHandler.requestSentEnabled=true -Dmaven.wagon.http.retryHandler.count=10
         if: ${{ github.event.workflow_run.event=='push' && env.MAVEN_USERNAME!='' && env.MAVEN_PASSWORD!=''}}
         run: mvn --batch-mode --errors --update-snapshots -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }} deploy --file pom.xml
-      - name: Upload artifacts OpenAM Distribution Kit, containing all distributable artifacts
+      - name: Upload artifacts OpenAM-J2EE Distribution Kit, containing all distributable artifacts
         uses: actions/upload-artifact@v4
         with:
-         name: OpenAM Java Policy Agent (Appserver v10 ZIP)
-         path: jee-agents-distribution/jee-agents-distribution-appserver-v10/target/*.zip
-      - name: Upload artifacts OpenAM Distribution Kit, containing all distributable artifacts
+         name: OpenAM Java Policy Agent (JAR with External Libraries)
+         path: jee-agents-distribution/jee-agents-distribution-jar-with-lib/target/*.zip
+      - name: Upload artifacts OpenAM-J2EE Distribution Kit, containing all distributable artifacts
         uses: actions/upload-artifact@v4
         with:
-         name: OpenAM Java Policy Agent (JBoss v42 ZIP)
-         path: jee-agents-distribution/jee-agents-distribution-jboss-v42/target/*.zip
-      - name: Upload artifacts OpenAM Distribution Kit, containing all distributable artifacts
-        uses: actions/upload-artifact@v4
-        with:
-         name: OpenAM Java Policy Agent (JBoss v7 ZIP)
-         path: jee-agents-distribution/jee-agents-distribution-jboss-v7/target/*.zip
-      - name: Upload artifacts OpenAM Distribution Kit, containing all distributable artifacts
-        uses: actions/upload-artifact@v4
-        with:
-         name: OpenAM Java Policy Agent (Jetty v61 ZIP)
-         path: jee-agents-distribution/jee-agents-distribution-jetty-v61/target/*.zip
-      - name: Upload artifacts OpenAM Distribution Kit, containing all distributable artifacts
-        uses: actions/upload-artifact@v4
-        with:
-         name: OpenAM Java Policy Agent (Jetty v7-v8 ZIP)
-         path: jee-agents-distribution/jee-agents-distribution-jetty-v7/target/*.zip
-      - name: Upload artifacts OpenAM Distribution Kit, containing all distributable artifacts
-        uses: actions/upload-artifact@v4
-        with:
-         name: OpenAM Java Policy Agent (JSR196 ZIP)
-         path: jee-agents-distribution/jee-agents-distribution-jsr196/target/*.zip
-      - name: Upload artifacts OpenAM Distribution Kit, containing all distributable artifacts
-        uses: actions/upload-artifact@v4
-        with:
-         name: OpenAM Java Policy Agent (Tomcat v6-v9 ZIP) 
-         path: jee-agents-distribution/jee-agents-distribution-tomcat-v6/target/*.zip
+         name: OpenAM Java Policy Agent (Uber JAR)
+         path: jee-agents-distribution/jee-agents-distribution-uberjar/target/*.zip
+
   

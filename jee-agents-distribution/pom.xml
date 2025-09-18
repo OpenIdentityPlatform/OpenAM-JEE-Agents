@@ -15,7 +15,7 @@
  * Header, with the fields enclosed by brackets [] replaced by your own identifying
  * information: "Portions copyright [year] [name of copyright owner]".
  *
- * Portions copyright 2023 3A Systems LLC
+ * Portions copyright 2023-2025 3A Systems LLC
  *
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -46,15 +46,18 @@
 
     <modules>
         <!-- Distribution Modules -->
-        <module>jee-agents-distribution-tomcat-v6</module>
-        <module>jee-agents-distribution-jetty-v61</module>
-        <module>jee-agents-distribution-jetty-v7</module>
-        <module>jee-agents-distribution-appserver-v10</module>
-        <module>jee-agents-distribution-jboss-v42</module>
-        <module>jee-agents-distribution-jboss-v7</module>
+<!--        <module>jee-agents-distribution-tomcat-v6</module>-->
+<!--        <module>jee-agents-distribution-jetty-v61</module>-->
+<!--        <module>jee-agents-distribution-jetty-v7</module>-->
+<!--        <module>jee-agents-distribution-appserver-v10</module>-->
+<!--        <module>jee-agents-distribution-jboss-v42</module>-->
+<!--        <module>jee-agents-distribution-jboss-v7</module>-->
 <!--         <module>jee-agents-distribution-weblogic-v10</module> -->
 <!--         <module>jee-agents-distribution-websphere-v61</module> -->
-        <module>jee-agents-distribution-jsr196</module>
+<!--        <module>jee-agents-distribution-jsr196</module>-->
+        <module>jee-agents-distribution-jar-with-lib</module>
+        <module>jee-agents-destribution-integration-tests</module>
+        <module>jee-agents-distribution-uberjar</module>
     </modules>
 
     <build>

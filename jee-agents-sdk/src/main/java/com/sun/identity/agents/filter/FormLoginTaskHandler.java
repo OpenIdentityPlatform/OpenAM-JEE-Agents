@@ -24,18 +24,14 @@
  *
  * $Id: FormLoginTaskHandler.java,v 1.3 2008/07/22 18:01:41 sean_brydon Exp $
  *
+ * Portions Copyrighted 2025 3A Systems LLC.
  */
 
 package com.sun.identity.agents.filter;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.HashSet;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import com.sun.identity.agents.arch.AgentException;
 import com.sun.identity.agents.arch.IBaseModuleConstants;

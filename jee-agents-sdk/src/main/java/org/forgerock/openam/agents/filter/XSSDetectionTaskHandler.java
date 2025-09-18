@@ -21,6 +21,7 @@
  * your own identifying information:
  * "Portions Copyrighted [year] [name of copyright owner]"
  *
+ * Portions Copyrighted 2025 3A Systems LLC.
  */
 
 package org.forgerock.openam.agents.filter;
@@ -36,7 +37,7 @@ import com.sun.identity.agents.filter.AmFilterTaskHandler;
 import com.sun.identity.agents.filter.ISSOContext;
 import java.net.MalformedURLException;
 import java.net.URL;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.forgerock.openam.agents.common.XSSDetector;
 
 /**

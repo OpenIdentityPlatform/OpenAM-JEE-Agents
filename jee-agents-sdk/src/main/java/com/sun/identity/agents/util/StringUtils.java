@@ -25,13 +25,14 @@
  * $Id: StringUtils.java,v 1.3 2008/08/30 01:40:55 huacui Exp $
  *
  * Portions Copyrighted 2014 ForgeRock AS
+ * Portions Copyrighted 2025 3A Systems LLC.
  */
 
 package com.sun.identity.agents.util;
 
 import java.net.URLDecoder;
 import java.util.StringTokenizer;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import com.sun.identity.agents.arch.AgentException;
 

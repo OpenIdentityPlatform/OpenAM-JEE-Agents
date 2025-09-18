@@ -21,6 +21,7 @@
  * with the fields enclosed by brackets [] replaced by
  * your own identifying information:
  * "Portions Copyrighted [year] [name of copyright owner]"
+ * Portions Copyrighted 2025 3A Systems LLC.
  *
  * $Id: AmAgentServletRequest.java,v 1.2 2008/06/25 05:51:42 qcheng Exp $
  *
@@ -31,9 +32,9 @@ package com.sun.identity.agents.filter;
 import java.io.IOException;
 import java.util.Enumeration;
 
-import javax.servlet.ServletInputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
+import jakarta.servlet.ServletInputStream;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequestWrapper;
 
 import com.sun.identity.agents.common.IHttpServletRequestHelper;
 

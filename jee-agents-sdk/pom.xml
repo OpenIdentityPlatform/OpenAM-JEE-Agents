@@ -15,7 +15,7 @@
  * Header, with the fields enclosed by brackets [] replaced by your own identifying
  * information: "Portions copyright [year] [name of copyright owner]".
  *
- * Portions copyright 2023 3A Systems LLC
+ * Portions copyright 2023-2025 3A Systems LLC
  *
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
@@ -114,23 +114,78 @@
                             <Build-Time>${maven.build.timestamp}</Build-Time>
                             <Version>${project.version}</Version>
                             <Create-On>${maven.build.timestamp}</Create-On>
-                            <SVN-Revision>${svn-revision.revision}</SVN-Revision>
+                            <Class-Path>agent-locale/</Class-Path>
                             <!-- TODO Add License to Manifest -->
                             <License />
                         </manifestEntries>
                     </archive>
                 </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>with-lib</classifier>
+                            <archive>
+                                <manifest>
+                                    <addClasspath>true</addClasspath>
+                                    <classpathPrefix>agent-lib/</classpathPrefix>
+                                    <classpathLayoutType>simple</classpathLayoutType>
+                                    <useUniqueVersions>false</useUniqueVersions>
+                                </manifest>
+                            </archive>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.6.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <minimizeJar>true</minimizeJar>
+                            <shadedArtifactAttached>true</shadedArtifactAttached>
+                            <shadedClassifierName>uber</shadedClassifierName> <!-- Any name that makes sense -->
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/agent-lib</outputDirectory>
+                            <useRepositoryLayout>false</useRepositoryLayout>
+                            <includeScope>compile</includeScope>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
     <dependencies>
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>6.0.0</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>javaee</groupId>
-            <artifactId>javaee-api</artifactId>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
         </dependency>
 <!--         <dependency> -->
 <!--             <groupId>external</groupId> -->
@@ -139,6 +194,12 @@
          <dependency>
          	<groupId>org.owasp.esapi</groupId>
             <artifactId>esapi</artifactId>
+             <exclusions>
+                 <exclusion>
+                     <groupId>org.owasp.antisamy</groupId>
+                     <artifactId>antisamy</artifactId>
+                 </exclusion>
+             </exclusions>
         </dependency>
         <!-- OpenAM project dependencies -->
         <dependency>
@@ -152,6 +213,30 @@
         <dependency>
             <groupId>org.openidentityplatform.openam</groupId>
             <artifactId>openam-installtools-launcher</artifactId>
+        </dependency>
+
+        <!--test dependecies-->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-server</artifactId>
+            <version>11.0.26</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-servlet</artifactId>
+            <version>11.0.26</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>
