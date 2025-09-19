@@ -3,7 +3,7 @@ name: Build
 on:
   push:
   pull_request:
-    branches: [ 'master','sustaining/4.2.x','release/5.0.0-SNAPSHOT' ]
+    branches: [ 'sustaining/4.2.x','master' ]
 
 jobs:
   build-maven:
