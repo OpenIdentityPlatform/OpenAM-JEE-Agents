@@ -43,6 +43,7 @@
 <!--         <forgerock.guice.version>1.0.0</forgerock.guice.version> -->
         <maven.compiler.target>11</maven.compiler.target>
         <maven.compiler.source>11</maven.compiler.source>
+        <org.apache.tomcat>10.1.48</org.apache.tomcat>
     </properties>
     <modules>
         <!-- OpenAM JavaEE Policy Agent Modules -->
@@ -410,7 +411,7 @@
             <dependency>
                 <groupId>org.apache.tomcat</groupId>
                 <artifactId>tomcat-catalina</artifactId>
-                <version>10.1.44</version>
+                <version>${org.apache.tomcat}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
