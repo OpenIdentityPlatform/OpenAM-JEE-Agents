@@ -68,5 +68,5 @@ jobs:
           fail_on_unmatched_files: false
           generate_release_notes: true
           files: |
-            jee-agents-distribution/jee-agents-distribution-jar-with-lib/target/*.zip
-            jee-agents-distribution/jee-agents-distribution-uberjar/target/*.zip
+            target/checkout/jee-agents-distribution/jee-agents-distribution-jar-with-lib/target/*.zip
+            target/checkout/jee-agents-distribution/jee-agents-distribution-uberjar/target/*.zip
