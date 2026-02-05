@@ -187,13 +187,10 @@
             <groupId>jakarta.platform</groupId>
             <artifactId>jakarta.jakartaee-api</artifactId>
         </dependency>
-<!--         <dependency> -->
-<!--             <groupId>external</groupId> -->
-<!--             <artifactId>esapiport</artifactId> -->
-<!--         </dependency> -->
-         <dependency>
+        <dependency>
          	<groupId>org.owasp.esapi</groupId>
             <artifactId>esapi</artifactId>
+            <classifier>jakarta</classifier>
              <exclusions>
                  <exclusion>
                      <groupId>org.owasp.antisamy</groupId>
