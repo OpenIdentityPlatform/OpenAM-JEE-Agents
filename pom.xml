@@ -30,7 +30,7 @@
     <packaging>pom</packaging>
     <url>https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents</url>
     <properties>
-        <openam.version>16.0.3</openam.version>
+        <openam.version>16.0.5</openam.version>
 <!--         <websphere.libraries.v61.system.path>/var/tmp/extlib/websphere/v61</websphere.libraries.v61.system.path> -->
 <!--         <com.ibm.ws.runtime.v61.version>6.1.0</com.ibm.ws.runtime.v61.version> -->
 <!--         <weblogic.libraries.v10.system.path>/var/tmp/extlib/weblogic/v10</weblogic.libraries.v10.system.path> -->
