@@ -43,7 +43,7 @@
 <!--         <forgerock.guice.version>1.0.0</forgerock.guice.version> -->
         <maven.compiler.target>11</maven.compiler.target>
         <maven.compiler.source>11</maven.compiler.source>
-        <org.apache.tomcat>10.1.48</org.apache.tomcat>
+        <org.apache.tomcat>10.1.49</org.apache.tomcat>
     </properties>
     <modules>
         <!-- OpenAM JavaEE Policy Agent Modules -->
