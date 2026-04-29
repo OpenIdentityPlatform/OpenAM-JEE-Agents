@@ -11,7 +11,7 @@
  * Header, with the fields enclosed by brackets [] replaced by your own identifying
  * information: "Portions copyright [year] [name of copyright owner]".
  *
- * Copyright 2025 3A Systems LLC.
+ * Copyright 2025-2026 3A Systems LLC.
  */
 
 package org.openidentityplatform.identity.agents;
@@ -25,13 +25,13 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import org.testcontainers.utility.MountableFile;
-import org.testng.annotations.BeforeClass;
+import org.openidentityplatform.identity.agents.filters.NotificationTestFilter;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.URI;
+import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.EnumSet;
 
@@ -47,14 +47,17 @@ public class EmbeddedContainer_IT extends AbstractIntegrationTest {
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/");
+        context.addFilter(new FilterHolder(NotificationTestFilter.class), "/UpdateAgentCacheServlet", EnumSet.of(DispatcherType.REQUEST));
 
         FilterHolder amFilterHolder = new FilterHolder(AmAgentFilter.class);
         amFilterHolder.setInitParameter("com.iplanet.am.naming.url", "http://openam.example.org:8080/openam/namingservice");
         amFilterHolder.setInitParameter("com.sun.identity.agents.app.username", "amadmin");
         amFilterHolder.setInitParameter("com.iplanet.am.service.secret", "passw0rd");
         amFilterHolder.setInitParameter("com.sun.identity.agents.config.profilename", "myAgent");
+        amFilterHolder.setInitParameter("com.iplanet.am.cookie.name", "iPlanetDirectoryPro");
 
         context.addFilter(amFilterHolder, "/*", EnumSet.of(DispatcherType.REQUEST));
+
 
         jetty.setHandler(context);
 
@@ -69,8 +72,26 @@ public class EmbeddedContainer_IT extends AbstractIntegrationTest {
 
         String token = getAuthenticationToken();
 
+
         HttpResponse<String> authResponse = callDemoServlet(token);
         assertThat(authResponse.statusCode()).isEqualTo(HttpURLConnection.HTTP_OK);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:8080/openam/json/sessions/?_action=logout"))
+                .header("Host", "openam.example.org:8080")
+                .header("iPlanetDirectoryPro", token)
+                .POST(HttpRequest.BodyPublishers.noBody())
+                .build();
+
+        //logout
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        assertThat(response.statusCode()).isEqualTo(HttpURLConnection.HTTP_OK);
+
+        HttpResponse<String> loggedOutTokenResponse = callDemoServlet(token);
+        assertThat(loggedOutTokenResponse.statusCode()).isEqualTo(HttpURLConnection.HTTP_MOVED_TEMP);
+
+        //test received notifications
+        assertThat(NotificationTestFilter.getReceivedRequests().size()).isNotZero();
 
         jetty.stop();
 
