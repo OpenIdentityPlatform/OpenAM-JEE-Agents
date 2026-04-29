@@ -21,7 +21,7 @@
     <parent>
         <groupId>org.openidentityplatform.openam.agents</groupId>
         <artifactId>jee-agents-distribution</artifactId>
-        <version>5.0.2-SNAPSHOT</version>
+        <version>5.0.4-SNAPSHOT</version>
     </parent>
 
     <name>OpenAM JavaEE Policy Agents Integration Tests</name>
@@ -100,7 +100,12 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.27.7</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

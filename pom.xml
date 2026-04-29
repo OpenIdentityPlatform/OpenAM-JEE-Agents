@@ -15,7 +15,7 @@
  * Header, with the fields enclosed by brackets [] replaced by your own identifying
  * information: "Portions copyright [year] [name of copyright owner]".
  *
- * Portions copyright 2023-2025 3A Systems LLC
+ * Portions copyright 2023-2026 3A Systems LLC
  *
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
@@ -26,11 +26,11 @@
     <description>OpenAM JavaEE Policy Agents</description>
     <groupId>org.openidentityplatform.openam.agents</groupId>
     <artifactId>jee-agents</artifactId>
-    <version>5.0.2-SNAPSHOT</version>
+    <version>5.0.4-SNAPSHOT</version>
     <packaging>pom</packaging>
     <url>https://github.com/OpenIdentityPlatform/OpenAM-JEE-Agents</url>
     <properties>
-        <openam.version>16.0.3</openam.version>
+        <openam.version>16.0.6</openam.version>
 <!--         <websphere.libraries.v61.system.path>/var/tmp/extlib/websphere/v61</websphere.libraries.v61.system.path> -->
 <!--         <com.ibm.ws.runtime.v61.version>6.1.0</com.ibm.ws.runtime.v61.version> -->
 <!--         <weblogic.libraries.v10.system.path>/var/tmp/extlib/weblogic/v10</weblogic.libraries.v10.system.path> -->
@@ -43,7 +43,7 @@
 <!--         <forgerock.guice.version>1.0.0</forgerock.guice.version> -->
         <maven.compiler.target>11</maven.compiler.target>
         <maven.compiler.source>11</maven.compiler.source>
-        <org.apache.tomcat>10.1.48</org.apache.tomcat>
+        <org.apache.tomcat>10.1.54</org.apache.tomcat>
     </properties>
     <modules>
         <!-- OpenAM JavaEE Policy Agent Modules -->
